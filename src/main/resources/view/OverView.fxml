@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1250.0" style="-fx-background-color: #000000;" stylesheets="@../images/OverViewBtnStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.OverViewController">
+<AnchorPane prefHeight="1000.0" prefWidth="1250.0" style="-fx-background-color: #778ba5;" stylesheets="@../images/OverViewBtnStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.OverViewController">
     <children>
         <GridPane hgap="50.0" layoutX="325.0" layoutY="290.0" prefHeight="1000.0" prefWidth="1250.0" vgap="50.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="150.0">
             <columnConstraints>

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.DashBoardController">
+<AnchorPane prefHeight="1000.0" prefWidth="1600.0" stylesheets="@../images/OverViewBtnStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.DashBoardController">
    <children>
       <HBox layoutX="100.0" layoutY="50.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -44,7 +44,7 @@
                         <HBox layoutY="50.0" prefHeight="75.0" prefWidth="350.0" />
                         <HBox layoutY="125.0" prefHeight="75.0" prefWidth="350.0">
                            <children>
-                              <Button fx:id="btnOrderPlacement" alignment="CENTER" mnemonicParsing="false" onAction="#orderPlacementOnAction" prefHeight="75.0" prefWidth="345.0" style="-fx-background-color: #000000;" text="Order Placement" textFill="WHITE">
+                              <Button fx:id="btnOrderPlacement" alignment="CENTER" mnemonicParsing="false" onAction="#orderPlacementOnAction" prefHeight="75.0" prefWidth="345.0" style="-fx-background-color: #000000; " stylesheets="@../images/OverViewBtnStyles.css" text="Order Placement" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -56,7 +56,7 @@
                         </HBox>
                         <HBox layoutY="200.0" prefHeight="75.0" prefWidth="350.0">
                            <children>
-                              <Button fx:id="btnProductionPlacement" alignment="CENTER" mnemonicParsing="false" onAction="#productionPlacementOnAction" prefHeight="75.0" prefWidth="343.0" style="-fx-background-color: #000000;" text="Production Placement" textFill="WHITE">
+                              <Button fx:id="btnProductionPlacement" alignment="CENTER" mnemonicParsing="false" onAction="#productionPlacementOnAction" prefHeight="75.0" prefWidth="343.0" style="-fx-background-color: #000000; " stylesheets="@../images/OverViewBtnStyles.css" text="Production Placement" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -65,7 +65,7 @@
                         </HBox>
                         <HBox layoutY="275.0" prefHeight="75.0" prefWidth="350.0">
                            <children>
-                              <Button fx:id="btnOverView" alignment="CENTER" mnemonicParsing="false" onAction="#OverViewOnAction" prefHeight="75.0" prefWidth="343.0" style="-fx-background-color: #000000;" text="Over View" textFill="WHITE">
+                              <Button fx:id="btnOverView" alignment="CENTER" mnemonicParsing="false" onAction="#OverViewOnAction" prefHeight="75.0" prefWidth="343.0" style="-fx-background-color: #000000; " stylesheets="@../images/OverViewBtnStyles.css" text="Over View" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
