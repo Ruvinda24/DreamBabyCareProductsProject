@@ -8,10 +8,11 @@ import javafx.scene.layout.AnchorPane;
 
 
 public class OverViewController {
-    private AnchorPane ancMainContainer;
+
+    public AnchorPane ancOverViewContainer;
 
     public void goToCustomerPageOnAction(ActionEvent actionEvent) {
-
+        navigateTo("/view/CustomerView.fxml");
     }
 
     public void goToDiscountPageOnAction(ActionEvent actionEvent) {
@@ -57,14 +58,14 @@ public class OverViewController {
     }
     private void navigateTo(String path) {
         try {
-            ancMainContainer.getChildren().clear();
+            ancOverViewContainer.getChildren().clear();
 
             AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
 
-            anchorPane.prefWidthProperty().bind(ancMainContainer.widthProperty());
-            anchorPane.prefHeightProperty().bind(ancMainContainer.heightProperty());
+            anchorPane.prefWidthProperty().bind(ancOverViewContainer.widthProperty());
+            anchorPane.prefHeightProperty().bind(ancOverViewContainer.heightProperty());
 
-            ancMainContainer.getChildren().add(anchorPane);
+            ancOverViewContainer.getChildren().add(anchorPane);
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
             e.printStackTrace();
