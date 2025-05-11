@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1250.0" style="-fx-background-color: #778ba5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.CustomerController">
+<AnchorPane fx:id="ancCustomerViewContainer" prefHeight="1000.0" prefWidth="1250.0" style="-fx-background-color: #778ba5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.CustomerController">
    <children>
       <VBox layoutX="64.0" layoutY="126.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -20,7 +20,7 @@
                <children>
                   <HBox prefHeight="50.0" prefWidth="625.0">
                      <children>
-                        <Label prefHeight="46.0" prefWidth="200.0" text="Over View">
+                        <Label fx:id="overViewLabelButton" onMouseClicked="#labelOverViewClickOnAction" prefHeight="46.0" prefWidth="200.0" text="Over View">
                            <HBox.margin>
                               <Insets left="25.0" />
                            </HBox.margin>
@@ -55,7 +55,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Label prefHeight="75.0" prefWidth="200.0" text="Id " />
+                        <Label fx:id="customerIdLabel" prefHeight="75.0" prefWidth="200.0" text="Id " />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="1230.0">
@@ -68,7 +68,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField prefHeight="50.0" prefWidth="500.0" promptText="John Doe" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
+                        <TextField fx:id="txtName" prefHeight="50.0" prefWidth="500.0" promptText="John Doe" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
                            <HBox.margin>
                               <Insets top="20.0" />
                            </HBox.margin>
@@ -76,7 +76,7 @@
                               <Font size="18.0" />
                            </font>
                         </TextField>
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #FC5C65;" text="Reset">
+                        <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetBtnOnAction" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #FC5C65;" text="Reset">
                            <HBox.margin>
                               <Insets left="100.0" top="20.0" />
                            </HBox.margin>
@@ -93,7 +93,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField prefHeight="50.0" prefWidth="500.0" promptText="07**********" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
+                        <TextField fx:id="txtNumber" prefHeight="50.0" prefWidth="500.0" promptText="07**********" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
                            <HBox.margin>
                               <Insets top="20.0" />
                            </HBox.margin>
@@ -101,7 +101,7 @@
                               <Font size="18.0" />
                            </font>
                         </TextField>
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2D98DA;" text="Update">
+                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateBtnOnAction" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2D98DA;" text="Update">
                            <HBox.margin>
                               <Insets left="100.0" top="20.0" />
                            </HBox.margin>
@@ -118,7 +118,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField prefHeight="50.0" prefWidth="500.0" promptText="404/A Nagoda Kalutara" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
+                        <TextField fx:id="txtAddress" prefHeight="50.0" prefWidth="500.0" promptText="404/A Nagoda Kalutara" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
                            <HBox.margin>
                               <Insets top="20.0" />
                            </HBox.margin>
@@ -126,7 +126,7 @@
                               <Font size="18.0" />
                            </font>
                         </TextField>
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #EB3B5A;" text="Delete">
+                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteBtnOnAction" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #EB3B5A;" text="Delete">
                            <HBox.margin>
                               <Insets left="100.0" top="20.0" />
                            </HBox.margin>
@@ -143,25 +143,25 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <ComboBox prefHeight="50.0" prefWidth="300.0" promptText="FaceBook" visibleRowCount="5" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
+                        <ComboBox fx:id="cmbOrderPlatform" prefHeight="50.0" prefWidth="300.0" promptText="FaceBook" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" visibleRowCount="5">
                            <HBox.margin>
                               <Insets top="30.0" />
                            </HBox.margin>
                         </ComboBox>
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #26DE81;" text="Save">
+                        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveBtnOnAction" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #26DE81;" text="Save">
                            <HBox.margin>
                               <Insets left="300.0" top="20.0" />
                            </HBox.margin>
                         </Button>
                      </children>
                   </HBox>
-                  <TableView prefHeight="430.0" prefWidth="1186.0">
+                  <TableView fx:id="tblCustomer" onMouseClicked="#onClickTable" prefHeight="430.0" prefWidth="1186.0">
                     <columns>
-                      <TableColumn prefWidth="100.0" text="Customer ID" />
-                      <TableColumn prefWidth="300.0" text="Name" />
-                        <TableColumn prefWidth="200.0" text="Phone Number" />
-                        <TableColumn prefWidth="400.0" text="Address" />
-                        <TableColumn prefWidth="200.0" text="Order Platform" />
+                      <TableColumn fx:id="colId" prefWidth="100.0" text="Customer ID" />
+                      <TableColumn fx:id="colName" prefWidth="300.0" text="Name" />
+                        <TableColumn fx:id="colNumber" prefWidth="200.0" text="Phone Number" />
+                        <TableColumn fx:id="colAddress" prefWidth="400.0" text="Address" />
+                        <TableColumn fx:id="colOrderPlatform" prefWidth="200.0" text="Order Platform" />
                     </columns>
                      <VBox.margin>
                         <Insets top="20.0" />
