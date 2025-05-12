@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
 
-    public AnchorPane anchorPaneCustomer;
     public Label overViewLabelButton;
     public Label customerIdLabel;
     public TextField txtName;
@@ -64,6 +63,11 @@ public class CustomerController implements Initializable {
         String address = txtAddress.getText();
         String orderPlatform = (String) cmbOrderPlatform.getValue();
 
+        if (customerId.isEmpty() || name.isEmpty() || number.isEmpty() || address.isEmpty() || orderPlatform.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").show();
+            return;
+        }
+
         CustomerDto customerDto = new CustomerDto(
                 customerId,
                 name,
@@ -93,6 +97,8 @@ public class CustomerController implements Initializable {
                 ButtonType.YES,
                 ButtonType.NO
         );
+        alert.setTitle("Confirmation");
+
         Optional<ButtonType> response = alert.showAndWait();
 
         if (response.isPresent() && response.get() == ButtonType.YES) {
@@ -113,6 +119,7 @@ public class CustomerController implements Initializable {
     }
 
     public void saveBtnOnAction(ActionEvent actionEvent) {
+
         String customerId = customerIdLabel.getText();
         String name = txtName.getText();
         String number = txtNumber.getText();
@@ -126,6 +133,11 @@ public class CustomerController implements Initializable {
         txtName.setStyle(txtName.getStyle() + ";-fx-border-color: #7367F0;");
         txtNumber.setStyle(txtNumber.getStyle() + ";-fx-border-color: #7367F0;");
         txtAddress.setStyle(txtAddress.getStyle() + ";-fx-border-color: #7367F0;");
+
+        if (customerId.isEmpty() || name.isEmpty() || number.isEmpty() || address.isEmpty() || orderPlatform.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").show();
+            return;
+        }
 
         if (!isValidName) {
             txtName.setStyle(txtName.getStyle() + ";-fx-border-color: red;");

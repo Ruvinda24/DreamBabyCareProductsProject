@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class EmployeeModel {
 
-    public String saveEmployees(EmployeeDto employeeDto) throws ClassNotFoundException, SQLException {
+    public boolean saveEmployees(EmployeeDto employeeDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO employee VALUES (?,?,?,?,?)",
@@ -25,7 +25,7 @@ public class EmployeeModel {
 
 
     }
-    public String updateEmployees(EmployeeDto employeeDto) throws ClassNotFoundException, SQLException{
+    public boolean updateEmployees(EmployeeDto employeeDto) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "UPDATE employee SET name = ?, nic = ?, number = ?, role = ? WHERE employee_id= ?",
@@ -37,7 +37,7 @@ public class EmployeeModel {
         );
     }
 
-    public String deleteEmployees(String employee_id) throws ClassNotFoundException, SQLException{
+    public boolean deleteEmployees(String employee_id) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "DELETE FROM employee WHERE employee_id = ?",
@@ -85,13 +85,13 @@ public class EmployeeModel {
         }
         return employeeDto;
     }
-    public String getNextEmployeeId() throws SQLException, ClassNotFoundException {
+    public static String getNextEmployeeId() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = CrudUtil.execute("SELECT employee_id FROM employee ORDER BY employee_id DESC LIMIT 1");
         String tableCharacter = "EMP"; // Use any character Ex:- customer table for C, item table for I
         if (resultSet.next()) {
             String lastId = resultSet.getString(1); // "C001"
-            String lastIdNumberString = lastId.substring(1); // "001"
+            String lastIdNumberString = lastId.substring(tableCharacter.length()); // "001"
             int lastIdNumber = Integer.parseInt(lastIdNumberString); // 1
             int nextIdNUmber = lastIdNumber + 1; // 2
             // "C002"

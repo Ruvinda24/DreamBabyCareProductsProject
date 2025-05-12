@@ -19,6 +19,7 @@ public class OverViewController {
     }
 
     public void goToEmployeePageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/EmployeeView.fxml");
     }
 
     public void goToInventoryPageOnAction(ActionEvent actionEvent) {
