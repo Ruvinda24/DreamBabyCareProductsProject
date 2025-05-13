@@ -77,6 +77,7 @@ public class EmployeeController implements Initializable {
             boolean isUpdated = employeeModel.updateEmployees(employeeDto);
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Employee updated successfully").show();
+                loadEmployeeTableData();
                 resetPage();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Failed to update employee").show();
@@ -105,6 +106,7 @@ public class EmployeeController implements Initializable {
                 boolean isDeleted = employeeModel.deleteEmployees(employeeId);
                 if (isDeleted) {
                     new Alert(Alert.AlertType.INFORMATION, "Employee deleted successfully").show();
+                    loadEmployeeTableData();
                     resetPage();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Failed to delete employee").show();
@@ -173,6 +175,7 @@ public class EmployeeController implements Initializable {
                 boolean isSaved = employeeModel.saveEmployees(employeeDto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.INFORMATION, "Employee saved successfully").show();
+                    loadEmployeeTableData();
                     resetPage();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Failed to save employee").show();
@@ -214,7 +217,7 @@ public class EmployeeController implements Initializable {
 
         cmbRole.setItems(FXCollections.observableArrayList("Tailor", "Cutting Staff", "Packaging & Quality Control", "Inventory & Stock Manager ", "Supervisor"));
         try {
-            loadEmployeeTableDate();
+            loadEmployeeTableData();
             loadNextId();
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,7 +235,7 @@ public class EmployeeController implements Initializable {
         }
     }
 
-    private void loadEmployeeTableDate() throws SQLException, ClassNotFoundException {
+    private void loadEmployeeTableData() throws SQLException, ClassNotFoundException {
 
         tblEmployee.setItems(FXCollections.observableArrayList(
                 employeeModel.getAllEmployees()
@@ -267,7 +270,7 @@ public class EmployeeController implements Initializable {
 
     private void resetPage() {
         try {
-            loadEmployeeTableDate();
+            loadEmployeeTableData();
             loadNextId();
 
             //save button(id) -> enable
@@ -289,5 +292,4 @@ public class EmployeeController implements Initializable {
 
         }
     }
-
 }

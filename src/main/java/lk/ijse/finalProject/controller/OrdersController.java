@@ -79,6 +79,7 @@ public class OrdersController implements Initializable {
             boolean isUpdated = ordersModel.updateOrders(ordersDto);
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Order Updated Successfully").show();
+                loadOrdersTableData();
                 resetPage();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Failed to update Order").show();
@@ -106,6 +107,7 @@ public class OrdersController implements Initializable {
                 boolean isDeleted = ordersModel.deleteOrders(orderId);
                 if (isDeleted) {
                     new Alert(Alert.AlertType.INFORMATION, "Order Deleted Successfully").show();
+                    loadOrdersTableData();
                     resetPage();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Failed to delete Order").show();
@@ -132,6 +134,34 @@ public class OrdersController implements Initializable {
         if (orderId.isEmpty() || orderDate.isEmpty() || customerId.isEmpty() || shipmentId.isEmpty() || status == null) {
             new Alert(Alert.AlertType.ERROR, "Please fill all fields").show();
             return;
+        }
+        if (!isValidDate) {
+            txtOrderDate.setStyle(txtOrderDate.getStyle() + ";-fx-border-color: red");
+            new Alert(Alert.AlertType.ERROR, "Invalid date format. Use YYYY/MM/DD").show();
+            return;
+        }
+        OrdersDto ordersDto = new OrdersDto(
+                orderId,
+                orderDate,
+                customerId,
+                shipmentId,
+                status
+        );
+
+        if (isValidDate){
+            try {
+                boolean isSaved = ordersModel.saveOrders(ordersDto);
+                if (isSaved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Order Saved Successfully").show();
+                    loadOrdersTableData();
+                    resetPage();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Failed to save Order").show();
+                }
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to save Order").show();
+            }
         }
 
 
@@ -173,7 +203,7 @@ public class OrdersController implements Initializable {
 
     private void resetPage() {
         try {
-            loadOrdersTableDate();
+            loadOrdersTableData();
             loadNextId();
 
             //save button(id) -> enable
@@ -199,7 +229,7 @@ public class OrdersController implements Initializable {
 
     }
 
-    private void loadOrdersTableDate() throws SQLException, ClassNotFoundException {
+    private void loadOrdersTableData() throws SQLException, ClassNotFoundException {
         tblOrders.setItems(FXCollections.observableArrayList(
                 ordersModel.getAllOrders()
                         .stream()
@@ -249,7 +279,7 @@ public class OrdersController implements Initializable {
         }
 
         try {
-            loadOrdersTableDate();
+            loadOrdersTableData();
             loadNextId();
             loadCustomerIds();
             loadShipmentIds();
@@ -299,4 +329,5 @@ public class OrdersController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Failed to load tracking number").show();
         }
     }
+
 }

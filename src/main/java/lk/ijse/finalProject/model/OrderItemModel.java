@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class OrderItemModel {
 
-    public String saveOrderItems(OrderItemDto orderItemDto) throws ClassNotFoundException, SQLException {
+    public boolean saveOrderItems(OrderItemDto orderItemDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO order_item VALUES (?,?,?,?,?)",
@@ -23,7 +23,7 @@ public class OrderItemModel {
                 orderItemDto.getAmount()
         );
     }
-    public String updateOrderItems(OrderItemDto orderItemDto) throws ClassNotFoundException, SQLException{
+    public boolean updateOrderItems(OrderItemDto orderItemDto) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "UPDATE order_item SET order_id = ?, inventory_id = ?, quantity = ?, amount = ?WHERE order_item_id= ?",
@@ -35,7 +35,7 @@ public class OrderItemModel {
         );
     }
 
-    public String deleteOrderItems(String order_item_id) throws ClassNotFoundException, SQLException{
+    public boolean deleteOrderItems(String order_item_id) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute("DELETE FROM order_item WHERE order_item_id = ?", order_item_id);
     }
@@ -91,6 +91,33 @@ public class OrderItemModel {
         }
         // No data recode in table so return initial primary key
         return tableCharacter + "001";
+    }
+
+    public ArrayList<String> getAllOrderIds() throws ClassNotFoundException, SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT order_id FROM orders");
+        ArrayList<String> orderIds = new ArrayList<>();
+
+        while (rst.next()) {
+            orderIds.add(rst.getString("order_id"));
+        }
+        return orderIds;
+    }
+
+    public ArrayList<String> getAllInventoryIds() throws ClassNotFoundException, SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT inventory_id FROM inventory");
+        ArrayList<String> inventoryIds = new ArrayList<>();
+
+        while (rst.next()) {
+            inventoryIds.add(rst.getString("inventory_id"));
+        }
+        return inventoryIds;
+    }
+    public String getInventoryItemNameById(String inventoryId) throws ClassNotFoundException, SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT item_name FROM inventory WHERE inventory_id = ?", inventoryId);
+        if (rst.next()) {
+            return rst.getString("item_name");
+        }
+        return null;
     }
 
 }

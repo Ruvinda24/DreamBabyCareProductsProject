@@ -80,6 +80,7 @@ public class CustomerController implements Initializable {
             boolean isUpdated = customerModel.updateCustomers(customerDto);
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully").show();
+                loadCustomerTableData();
                 resetPage();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Failed to update customer").show();
@@ -107,6 +108,7 @@ public class CustomerController implements Initializable {
                 boolean isDeleted = customerModel.deleteCustomers(customerId);
                 if (isDeleted) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully").show();
+                    loadCustomerTableData();
                     resetPage();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Failed to delete customer").show();
@@ -173,6 +175,7 @@ public class CustomerController implements Initializable {
                 boolean isSaved = customerModel.saveCustomers(customerDto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully").show();
+                    loadCustomerTableData();
                     resetPage();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Failed to save customer").show();
@@ -186,7 +189,7 @@ public class CustomerController implements Initializable {
 
 
 
-    public void loadCustomerTableDate() throws SQLException, ClassNotFoundException {
+    public void loadCustomerTableData() throws SQLException, ClassNotFoundException {
 
         tblCustomer.setItems(FXCollections.observableArrayList(
                 customerModel.getAllCustomers()
@@ -204,7 +207,7 @@ public class CustomerController implements Initializable {
 
     private void resetPage() {
         try {
-            loadCustomerTableDate();
+            loadCustomerTableData();
             loadNextId();
 
             //save button(id) -> enable
@@ -272,7 +275,7 @@ public class CustomerController implements Initializable {
 
         cmbOrderPlatform.setItems(FXCollections.observableArrayList("WhatsApp", "Facebook", "Instagram", "Direct Call", "Wholesale", "Online", "Retail Store"));
         try {
-            loadCustomerTableDate();
+            loadCustomerTableData();
             loadNextId();
         } catch (Exception e) {
             e.printStackTrace();
