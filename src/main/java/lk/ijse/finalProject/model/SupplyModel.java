@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SupplyModel {
-    public String saveSupply(SupplyDto supplyDto) throws ClassNotFoundException, SQLException {
+    public boolean saveSupply(SupplyDto supplyDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO supply VALUES (?,?,?,?,?)",
@@ -22,7 +22,7 @@ public class SupplyModel {
                 supplyDto.getQuantity()
         );
     }
-    public String updateSupply(SupplyDto supplyDto) throws ClassNotFoundException, SQLException{
+    public boolean updateSupply(SupplyDto supplyDto) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "UPDATE supply SET supplier_id = ?, material_id = ?, amount = ?, quantity = ?WHERE supply_id= ?",
@@ -35,7 +35,7 @@ public class SupplyModel {
         );
     }
 
-    public String deleteSupply(String supply_id) throws ClassNotFoundException, SQLException{
+    public boolean deleteSupply(String supply_id) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute("DELETE FROM supply WHERE supply_id = ?", supply_id);
     }
@@ -80,7 +80,7 @@ public class SupplyModel {
         String tableCharacter = "SUPPLY"; // Use any character Ex:- customer table for C, item table for I
         if (resultSet.next()) {
             String lastId = resultSet.getString(1); // "C001"
-            String lastIdNumberString = lastId.substring(1); // "001"
+            String lastIdNumberString = lastId.substring(tableCharacter.length()); // "001"
             int lastIdNumber = Integer.parseInt(lastIdNumberString); // 1
             int nextIdNUmber = lastIdNumber + 1; // 2
             // "C002"
@@ -88,6 +88,42 @@ public class SupplyModel {
         }
         // No data recode in table so return initial primary key
         return tableCharacter + "001";
+    }
+
+    public ArrayList<String> getAllSupplierIds() throws ClassNotFoundException, SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT supplier_id FROM supplier");
+        ArrayList<String> supplierIds = new ArrayList<>();
+
+        while (rst.next()) {
+            supplierIds.add(rst.getString("supplier_id"));
+        }
+        return supplierIds;
+    }
+
+    public ArrayList<String> getAllMaterialIds() throws ClassNotFoundException, SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT material_id FROM material");
+        ArrayList<String> materialIds = new ArrayList<>();
+
+        while (rst.next()) {
+            materialIds.add(rst.getString("material_id"));
+        }
+        return materialIds;
+    }
+
+    public String getMaterialNameById(String materialId) throws ClassNotFoundException, SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT name FROM material WHERE material_id = ?", materialId);
+        if (rst.next()) {
+            return rst.getString("name");
+        }
+        return null;
+    }
+
+    public String getSupplierNameById(String supplierId) throws ClassNotFoundException, SQLException {
+        ResultSet rst = CrudUtil.execute("SELECT name FROM supplier WHERE supplier_id = ?", supplierId);
+        if (rst.next()) {
+            return rst.getString("name");
+        }
+        return null;
     }
 
 }

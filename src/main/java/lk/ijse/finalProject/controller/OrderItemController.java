@@ -169,6 +169,21 @@ public class OrderItemController implements Initializable {
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
+        OrderItemTM selectedOrderItem = (OrderItemTM) tblOrderItems.getSelectionModel().getSelectedItem();
+        if (selectedOrderItem != null) {
+            ordersItemIdLabel.setText(selectedOrderItem.getOrder_item_id());
+            cmbOrderId1.getSelectionModel().select(selectedOrderItem.getOrder_id());
+            cmbInventoryId1.getSelectionModel().select(selectedOrderItem.getInventory_id());
+            txtQuantity.setText(String.valueOf(selectedOrderItem.getQuantity()));
+            txtAmount.setText(String.valueOf(selectedOrderItem.getAmount()));
+
+            //save button(id) -> disable
+            btnSave.setDisable(true);
+            //update button(id) -> enable
+            btnUpdate.setDisable(false);
+            //delete button(id) -> enable
+            btnDelete.setDisable(false);
+        }
     }
 
     @Override

@@ -247,7 +247,7 @@ public class OrdersController implements Initializable {
 
     private void loadNextId() {
         try {
-            String nextId = EmployeeModel.getNextEmployeeId();
+            String nextId = ordersModel.getNextOrderId();
             ordersIdLabel.setText(nextId);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
