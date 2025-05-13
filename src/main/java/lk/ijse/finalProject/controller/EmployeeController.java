@@ -219,7 +219,6 @@ public class EmployeeController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load employees").show();
-            ;
         }
     }
 

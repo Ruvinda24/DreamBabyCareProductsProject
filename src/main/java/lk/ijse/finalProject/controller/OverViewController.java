@@ -35,6 +35,7 @@ public class OverViewController {
     }
 
     public void goToOrdersPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/OrdersView.fxml");
     }
 
     public void goToPaymentsPageOnAction(ActionEvent actionEvent) {
