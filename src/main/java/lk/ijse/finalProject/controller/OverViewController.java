@@ -16,6 +16,7 @@ public class OverViewController {
     }
 
     public void goToDiscountPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/DiscountView.fxml");
     }
 
     public void goToEmployeePageOnAction(ActionEvent actionEvent) {
@@ -55,6 +56,7 @@ public class OverViewController {
     }
 
     public void goToSuppliesPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/SupplyView.fxml");
     }
 
     public void goToTasksPageOnAction(ActionEvent actionEvent) {

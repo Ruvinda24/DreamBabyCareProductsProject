@@ -287,6 +287,7 @@ public class SupplyController implements Initializable {
         }
     }
 
+    //load supplier ids (forieng keys)
     private void loadSupplierIds() throws SQLException, ClassNotFoundException {
         cmbSupplierId1.setItems(FXCollections.observableArrayList(supplyModel.getAllSupplierIds()));
     }
@@ -338,7 +339,7 @@ public class SupplyController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load customers").show();
+            new Alert(Alert.AlertType.ERROR, "Failed to Reset").show();
 
         }
     }
