@@ -20,7 +20,8 @@ public class CustomerModel {
                 customerDto.getOrderPlatForm()
         );
     }
-    public boolean updateCustomers(CustomerDto customerDto) throws ClassNotFoundException, SQLException{
+
+    public boolean updateCustomers(CustomerDto customerDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "UPDATE customer SET name = ?, phone = ?, address = ?, order_platform = ?WHERE customer_id= ?",
@@ -32,30 +33,36 @@ public class CustomerModel {
 
         );
     }
-    public boolean deleteCustomers(String customer_id) throws ClassNotFoundException, SQLException{
+
+    public boolean deleteCustomers(String customer_id) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute("DELETE FROM customer WHERE customer_id = ?",
                 customer_id);
     }
 
-    public CustomerDto searchCustomers(String customer_id) throws ClassNotFoundException, SQLException{
+    public ArrayList<CustomerDto> searchCustomers(String searchText) throws ClassNotFoundException, SQLException {
 
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM customer WHERE customer_id = ?",
-                customer_id);
+        /*ResultSet resultSet = CrudUtil.execute("SELECT * FROM customer WHERE customer_id = ?",
+                customer_id);*/
+        ArrayList<CustomerDto> customerDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM customer WHERE customer_id LIKE ? OR name LIKE ? OR phone LIKE ? OR address LIKE ? OR order_platform LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet resultSet = CrudUtil.execute(sql, pattern, pattern, pattern, pattern, pattern);
 
-        if(resultSet.next()){
-            CustomerDto dto = new CustomerDto(
-                    resultSet.getString("customer_id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("phone"),
-                    resultSet.getString("address"),
-                    resultSet.getString("order_platform")
+        while (resultSet.next()) {
+            CustomerDto customerDto = new CustomerDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5)
             );
-            return dto;
+            customerDtoArrayList.add(customerDto);
         }
-        return null;
+        return customerDtoArrayList;
     }
-    public ArrayList<CustomerDto> getAllCustomers() throws ClassNotFoundException, SQLException{
+
+    public ArrayList<CustomerDto> getAllCustomers() throws ClassNotFoundException, SQLException {
 
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM customer");
         ArrayList<CustomerDto> customerDtoArrayList = new ArrayList<>();
@@ -89,4 +96,24 @@ public class CustomerModel {
         return tableCharacter + "001";
     }
 
+    public ArrayList<CustomerDto> searchCustomersByPhoneNumber(String searchText) {
+        ArrayList<CustomerDto> customerDtoArrayList = new ArrayList<>();
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM customer WHERE phone LIKE ?", "%" + searchText + "%");
+            while (resultSet.next()) {
+                CustomerDto customerDTO = new CustomerDto(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5)
+                );
+                customerDtoArrayList.add(customerDTO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return customerDtoArrayList;
+    }
 }

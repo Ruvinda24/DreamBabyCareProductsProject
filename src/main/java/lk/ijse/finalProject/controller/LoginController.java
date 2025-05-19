@@ -1,6 +1,7 @@
 package lk.ijse.finalProject.controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -9,8 +10,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.finalProject.util.CrudUtil;
+import javafx.application.Platform;
+
 
 import java.sql.ResultSet;
 
@@ -19,6 +23,8 @@ public class LoginController {
     public TextField userNameField;
     public PasswordField passwordField;
     public Button loginButton;
+    @FXML
+    private AnchorPane loginAnc;
 
     private final String userNamePattern = "^[A-Za-z0-9_]{3,}$";
     private final String passwordPattern = "^[A-Za-z0-9@#$%^&+=]{6,}$";
@@ -65,13 +71,25 @@ public class LoginController {
                     inputUserName, inputPassword);
             if(resultSet.next()){
                 try {
-                    Parent dashBoardRoot = FXMLLoader.load(getClass().getResource("/view/DashBoardView.fxml"));
+                    /*Parent dashBoardRoot = FXMLLoader.load(getClass().getResource("/view/DashBoardView.fxml"));
                     Stage dashBoardStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    Stage dashBoardStage = (Stage) this.loginAnc.getScene().getWindow();
                     dashBoardStage.setScene(new Scene(dashBoardRoot));
                     dashBoardStage.setTitle("Dream Baby Care Products");
                     dashBoardStage.setResizable(true);
-                    dashBoardStage.setMaximized(true); // Maximizes the window with window controls
-                    dashBoardStage.show();
+                    // Fix: Delay maximization until after rendering
+                    Platform.runLater(() -> {
+                        dashBoardStage.setMaximized(true);
+                    });
+                    dashBoardStage.show();*/
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DashboardView.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+                    stage.setScene(scene);
+                    stage.setMaximized(true);
+                    stage.setTitle("Dream Baby Care Products");
+                    stage.show();
                 }catch (Exception e){
                     e.printStackTrace();
                     new Alert(Alert.AlertType.ERROR, "Failed to load to dash board").show();

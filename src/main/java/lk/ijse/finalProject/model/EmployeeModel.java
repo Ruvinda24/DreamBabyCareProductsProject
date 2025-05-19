@@ -45,25 +45,24 @@ public class EmployeeModel {
         );
     }
 
-    public EmployeeDto searchEmployees(String employee_id) throws ClassNotFoundException, SQLException{
-        Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "SELECT * FROM employee WHERE employee_id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, employee_id);
+    public ArrayList<EmployeeDto> searchEmployees(String searchText) throws ClassNotFoundException, SQLException{
 
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM employee WHERE employee_id = ?", employee_id);
+        ArrayList<EmployeeDto> employeeDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM employee WHERE employee_id LIKE ? OR name LIKE ? OR nic LIKE ? OR number LIKE ? OR role LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet resultSet = CrudUtil.execute(sql, pattern, pattern, pattern, pattern, pattern);
 
-        if(resultSet.next()){
-            EmployeeDto dto = new EmployeeDto(
-                    resultSet.getString("employee_id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("nic"),
-                    resultSet.getString("number"),
-                    resultSet.getString("role")
+        while (resultSet.next()){
+            EmployeeDto employeeDto = new EmployeeDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5)
             );
-            return dto;
+            employeeDtoArrayList.add(employeeDto);
         }
-        return null;
+        return employeeDtoArrayList;
     }
     public ArrayList<EmployeeDto> getAllEmployees() throws ClassNotFoundException, SQLException{
         Connection connection = DBConnection.getInstance().getConnection();

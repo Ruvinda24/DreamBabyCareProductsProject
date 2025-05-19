@@ -1,6 +1,7 @@
 package lk.ijse.finalProject;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,7 +27,9 @@ public class AppInitializer extends Application {
         }
         stage.setScene(new Scene(root));
         stage.setResizable(true);
-        stage.setMaximized(true);
+        Platform.runLater(() -> {
+            stage.setMaximized(true);
+        });
         stage.show();
     }
 

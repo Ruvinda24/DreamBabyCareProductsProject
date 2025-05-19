@@ -71,6 +71,8 @@ public class OverViewController {
             anchorPane.prefWidthProperty().bind(ancOverViewContainer.widthProperty());
             anchorPane.prefHeightProperty().bind(ancOverViewContainer.heightProperty());
 
+            anchorPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
             ancOverViewContainer.getChildren().add(anchorPane);
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Page not found..!").show();

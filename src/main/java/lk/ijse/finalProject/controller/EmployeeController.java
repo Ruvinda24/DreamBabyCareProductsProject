@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.finalProject.dto.EmployeeDto;
@@ -19,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class EmployeeController implements Initializable {
 
-    public Label overViewLabelButton;
+    //public Label overViewLabelButton;
     public Label employeeIdLabel;
     public TextField txtName;
     public Button btnReset;
@@ -44,6 +45,7 @@ public class EmployeeController implements Initializable {
     private final String namePattern = "^[A-Za-z ]+$";
     private final String numberPattern = "^[0-9]{10}$";
     private final String nicPattern = "^[0-9]{9}[V]$";
+    public TextField searchField;
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
         navigateTo("/view/OverView.fxml");
@@ -236,20 +238,18 @@ public class EmployeeController implements Initializable {
     }
 
     private void loadEmployeeTableData() throws SQLException, ClassNotFoundException {
-
         tblEmployee.setItems(FXCollections.observableArrayList(
-                employeeModel.getAllEmployees()
-                        .stream()
-                        .map(employeeDto -> new EmployeeTM(
-                                employeeDto.getEmployee_id(),
-                                employeeDto.getName(),
-                                employeeDto.getNic(),
-                                employeeDto.getNumber(),
-                                employeeDto.getRole()
-                        ))
-                        .toList()
-        ));
-        
+                        employeeModel.getAllEmployees()
+                                .stream()
+                                .map(employeeDto -> new EmployeeTM(
+                                        employeeDto.getEmployee_id(),
+                                        employeeDto.getName(),
+                                        employeeDto.getNic(),
+                                        employeeDto.getNumber(),
+                                        employeeDto.getRole()
+                                ))
+                .toList()
+                ));
     }
 
     private void navigateTo(String path) {
@@ -290,6 +290,36 @@ public class EmployeeController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load customers").show();
 
+        }
+    }
+
+    public void search(KeyEvent keyEvent) {
+        String searchText = searchField.getText();
+        if (searchText.isEmpty()) {
+            try {
+                loadEmployeeTableData();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load employees").show();
+            }
+        } else {
+            try {
+                tblEmployee.setItems(FXCollections.observableArrayList(
+                                employeeModel.searchEmployees(searchText)
+                                        .stream()
+                                        .map(employeeDto -> new EmployeeTM(
+                                                employeeDto.getEmployee_id(),
+                                                employeeDto.getName(),
+                                                employeeDto.getNic(),
+                                                employeeDto.getNumber(),
+                                                employeeDto.getRole()
+                                        ))
+                        .toList()
+                ));
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search employees").show();
+            }
         }
     }
 }

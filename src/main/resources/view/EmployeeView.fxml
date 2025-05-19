@@ -7,169 +7,258 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancEmployeeViewContainer" prefHeight="1000.0" prefWidth="1250.0" style="-fx-background-color: #778ba5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.EmployeeController">
+<AnchorPane fx:id="ancEmployeeViewContainer" prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.EmployeeController">
     <children>
-        <VBox layoutX="64.0" layoutY="126.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox layoutX="14.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
-                <HBox prefHeight="50.0" prefWidth="1250.0">
+                <VBox prefHeight="658.0" prefWidth="350.0">
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
                     <children>
-                        <HBox prefHeight="50.0" prefWidth="625.0">
+                        <HBox prefHeight="30.0" prefWidth="350.0">
                             <children>
-                                <Label fx:id="overViewLabelButton" onMouseClicked="#labelOverViewClickOnAction" prefHeight="46.0" prefWidth="200.0" text="Over View">
+                                <Label onMouseClicked="#labelOverViewClickOnAction" text="OverView">
                                     <HBox.margin>
-                                        <Insets left="25.0" />
+                                        <Insets left="10.0" top="2.0" />
                                     </HBox.margin>
                                     <font>
-                                        <Font name="System Bold" size="24.0" />
+                                        <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="10.0" layoutY="10.0" prefHeight="46.0" prefWidth="275.0" text="&gt;          Employee">
+                                <Label text="  &gt;  ">
+                                    <HBox.margin>
+                                        <Insets top="2.0" />
+                                    </HBox.margin>
                                     <font>
-                                        <Font name="System Bold" size="24.0" />
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label text="Employee">
+                                    <HBox.margin>
+                                        <Insets top="2.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="14.0" />
                                     </font>
                                 </Label>
                             </children>
                         </HBox>
+                        <HBox prefHeight="48.0" prefWidth="350.0" style="-fx-background-radius: 20;">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <children>
+                                <TextField fx:id="searchField" onKeyTyped="#search" prefHeight="30.0" prefWidth="330.0" promptText="Search" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </HBox.margin>
+                                </TextField>
+                            </children>
+                        </HBox>
+                        <VBox prefHeight="58.0" prefWidth="349.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <children>
+                                <HBox prefHeight="43.0" prefWidth="344.0" style="-fx-background-color: #fff; -fx-background-radius: 20;">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="115.0" text="Employee Id" HBox.hgrow="ALWAYS">
+                                            <font>
+                                                <Font name="System Bold" size="20.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label fx:id="employeeIdLabel" text="01" HBox.hgrow="ALWAYS">
+                                            <font>
+                                                <Font name="System Bold" size="20.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets left="100.0" top="10.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets top="5.0" />
+                                    </VBox.margin>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <VBox prefHeight="220.0" prefWidth="350.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #003049; -fx-border-radius: 20; -fx-border-width: 1px;">
+                            <children>
+                                <HBox prefHeight="50.0" prefWidth="350.0">
+                                    <children>
+                                        <VBox prefHeight="50.0" prefWidth="350.0" HBox.hgrow="ALWAYS">
+                                            <HBox.margin>
+                                                <Insets />
+                                            </HBox.margin>
+                                            <children>
+                                                <Label text="Employee Name" VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font name="System Bold" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <TextField fx:id="txtName" promptText="John Doe" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets left="5.0" right="5.0" top="5.0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="350.0">
+                                    <children>
+                                        <VBox prefHeight="50.0" prefWidth="350.0" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label text="NIC" VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font name="System Bold" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <TextField fx:id="txtNIC" promptText="20*********7" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets left="5.0" right="5.0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <HBox layoutX="10.0" layoutY="69.0" prefHeight="50.0" prefWidth="350.0">
+                                    <children>
+                                        <VBox prefHeight="50.0" prefWidth="350.0" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label text="Phone Number" VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font name="System Bold" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <TextField fx:id="txtNumber" promptText="07********" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets left="5.0" right="5.0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <HBox layoutX="10.0" layoutY="128.0" prefHeight="50.0" prefWidth="350.0">
+                                    <children>
+                                        <VBox prefHeight="50.0" prefWidth="350.0">
+                                            <children>
+                                                <Label text="Role" VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font name="System Bold" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <ComboBox fx:id="cmbRole" prefHeight="26.0" prefWidth="250.0" promptText="Tailor" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets left="5.0" right="5.0" />
+                                    </VBox.margin>
+                                </HBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="12.0" />
+                            </VBox.margin>
+                        </VBox>
+                        <VBox prefHeight="232.0" prefWidth="349.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #003049; -fx-border-radius: 20; -fx-border-width: 1px;">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <children>
+                                <VBox prefHeight="195.0" prefWidth="349.0" style="-fx-background-color: #fff; -fx-background-radius: 20;">
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                    <children>
+                                        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveBtnOnAction" prefHeight="35.0" prefWidth="330.0" style="-fx-background-radius: 20; -fx-background-color: linear-gradient(to right, #B2FEFA, #0ED2F7);;" text="Save" VBox.vgrow="ALWAYS">
+                                            <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                            </VBox.margin>
+                                        </Button>
+                                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateBtnOnAction" prefHeight="35.0" prefWidth="330.0" style="-fx-background-radius: 20; -fx-background-color: linear-gradient(to right, #00b09b, #96c93d);;" text="Update" VBox.vgrow="ALWAYS">
+                                            <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                            </VBox.margin>
+                                        </Button>
+                                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteBtnOnAction" prefHeight="35.0" prefWidth="330.0" style="-fx-background-radius: 20; -fx-background-color: linear-gradient(to right, #FF5F6D, #FFC371);;" text="Delete" VBox.vgrow="ALWAYS">
+                                            <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                            </VBox.margin>
+                                        </Button>
+                                        <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetBtnOnAction" prefHeight="35.0" prefWidth="330.0" style="-fx-background-radius: 20; -fx-background-color: linear-gradient(to right, #ff0000, #ff6600);" text="Reset" VBox.vgrow="ALWAYS">
+                                            <font>
+                                                <Font name="Arial Bold" size="15.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                            </VBox.margin>
+                                        </Button>
+                                    </children>
+                                </VBox>
+                            </children>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                        </VBox>
                     </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </HBox>
-                <VBox prefHeight="780.0" prefWidth="1186.0" style="-fx-background-color: #ffffff;">
-                    <VBox.margin>
-                        <Insets left="25.0" right="40.0" />
-                    </VBox.margin>
+                </VBox>
+                <VBox prefHeight="700.0" prefWidth="970.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets bottom="50.0" left="20.0" right="20.0" top="20.0" />
+                    </HBox.margin>
                     <children>
-                        <HBox prefHeight="75.0" prefWidth="1230.0">
-                            <children>
-                                <Label prefHeight="100.0" prefWidth="300.0" text="Employee ID">
+                        <BorderPane prefHeight="125.0" prefWidth="974.0">
+                            <center>
+                                <Label text="Employee Details" BorderPane.alignment="CENTER">
                                     <font>
-                                        <Font name="System Bold" size="18.0" />
+                                        <Font name="Bookman Old Style Bold" size="32.0" />
                                     </font>
-                                    <HBox.margin>
-                                        <Insets left="20.0" />
-                                    </HBox.margin>
                                 </Label>
-                                <Label fx:id="employeeIdLabel" prefHeight="75.0" prefWidth="200.0" text="Id " />
-                            </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="1230.0">
-                            <children>
-                                <Label prefHeight="100.0" prefWidth="300.0" text="Name">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="20.0" />
-                                    </HBox.margin>
-                                </Label>
-                                <TextField fx:id="txtName" prefHeight="50.0" prefWidth="500.0" promptText="John Doe" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
-                                    <HBox.margin>
-                                        <Insets top="20.0" />
-                                    </HBox.margin>
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </TextField>
-                                <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetBtnOnAction" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #FC5C65;" text="Reset">
-                                    <HBox.margin>
-                                        <Insets left="100.0" top="20.0" />
-                                    </HBox.margin>
-                                </Button>
-                            </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="85.0" prefHeight="50.0" prefWidth="1230.0">
-                            <children>
-                                <Label prefHeight="100.0" prefWidth="300.0" text="NIC">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="20.0" />
-                                    </HBox.margin>
-                                </Label>
-                                <TextField fx:id="txtNIC" prefHeight="50.0" prefWidth="500.0" promptText="99**********v/2002*******7" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
-                                    <HBox.margin>
-                                        <Insets top="20.0" />
-                                    </HBox.margin>
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </TextField>
-                                <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateBtnOnAction" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2D98DA;" text="Update">
-                                    <HBox.margin>
-                                        <Insets left="100.0" top="20.0" />
-                                    </HBox.margin>
-                                </Button>
-                            </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="160.0" prefHeight="50.0" prefWidth="1230.0">
-                            <children>
-                                <Label prefHeight="100.0" prefWidth="300.0" text="Phone Number">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="20.0" />
-                                    </HBox.margin>
-                                </Label>
-                                <TextField fx:id="txtNumber" prefHeight="50.0" prefWidth="500.0" promptText="07********" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;">
-                                    <HBox.margin>
-                                        <Insets top="20.0" />
-                                    </HBox.margin>
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </TextField>
-                                <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteBtnOnAction" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #EB3B5A;" text="Delete">
-                                    <HBox.margin>
-                                        <Insets left="100.0" top="20.0" />
-                                    </HBox.margin>
-                                </Button>
-                            </children>
-                        </HBox>
-                        <HBox layoutX="10.0" layoutY="236.0" prefHeight="50.0" prefWidth="1230.0">
-                            <children>
-                                <Label prefHeight="100.0" prefWidth="300.0" text="Role">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="20.0" />
-                                    </HBox.margin>
-                                </Label>
-                                <ComboBox fx:id="cmbRole" prefHeight="50.0" prefWidth="300.0" promptText="Tailor" style="-fx-background-color: #fff; -fx-border-color: #7367F0; -fx-border-width: 0 0 1px 0;" visibleRowCount="5">
-                                    <HBox.margin>
-                                        <Insets top="30.0" />
-                                    </HBox.margin>
-                                </ComboBox>
-                                <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveBtnOnAction" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #26DE81;" text="Save">
-                                    <HBox.margin>
-                                        <Insets left="300.0" top="20.0" />
-                                    </HBox.margin>
-                                </Button>
-                            </children>
-                        </HBox>
-                        <TableView fx:id="tblEmployee" onMouseClicked="#onClickTable" prefHeight="430.0" prefWidth="1186.0">
+                            </center>
+                            <right>
+                                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                    <image>
+                                        <Image url="@../images/dbcp_logo-removebg-preview.png" />
+                                    </image>
+                                </ImageView>
+                            </right>
+                        </BorderPane>
+                        <TableView fx:id="tblEmployee" fixedCellSize="0.0" onMouseClicked="#onClickTable" prefHeight="400.0" prefWidth="925.0" stylesheets="@../Styles/tableView.css">
                             <columns>
-                                <TableColumn fx:id="colId" prefWidth="100.0" text="Employee ID" />
-                                <TableColumn fx:id="colName" prefWidth="300.0" text="Name" />
-                                <TableColumn fx:id="colNIC" prefWidth="200.0" text="NIC" />
-                                <TableColumn fx:id="colNumber" prefWidth="400.0" text="Phone Number" />
-                                <TableColumn fx:id="colRole" prefWidth="200.0" text="Role" />
+                                <TableColumn fx:id="colId" prefWidth="106.40013694763184" text="Employee Id" />
+                                <TableColumn fx:id="colName" prefWidth="260.80005645751953" text="Name" />
+                                <TableColumn fx:id="colNIC" prefWidth="203.99993896484375" text="NIC" />
+                                <TableColumn fx:id="colNumber" minWidth="0.0" prefWidth="196.00006103515625" text="Phone Number" />
+                                <TableColumn fx:id="colRole" minWidth="0.0" prefWidth="122.4000244140625" text="Role" />
                             </columns>
                             <VBox.margin>
-                                <Insets top="20.0" />
+                                <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
                             </VBox.margin>
                         </TableView>
                     </children>
                 </VBox>
             </children>
-        </VBox>
+        </HBox>
     </children>
 </AnchorPane>

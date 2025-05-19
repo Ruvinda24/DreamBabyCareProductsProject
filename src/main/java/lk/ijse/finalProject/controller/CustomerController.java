@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
 
-    public Label overViewLabelButton;
+    //public Label overViewLabelButton;
     public Label customerIdLabel;
     public TextField txtName;
     public Button btnReset;
@@ -295,7 +295,65 @@ public class CustomerController implements Initializable {
         }
     }
 
-    public void searchByPhoneNumber(KeyEvent keyEvent) {
+    public void search(KeyEvent keyEvent) {
+        String searchText = searchField.getText();
+        if (searchText.isEmpty()) {
+            try {
+                loadCustomerTableData();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load customers").show();
+            }
+        } else {
+            try {
+                ArrayList<CustomerDto> customerList = customerModel.searchCustomers(searchText);
+                tblCustomer.setItems(FXCollections.observableArrayList(
+                        customerList.stream()
+                                .map(customerDto -> new CustomerTM(
+                                        customerDto.getCustomerId(),
+                                        customerDto.getCustomerName(),
+                                        customerDto.getCustomerPhone(),
+                                        customerDto.getCustomerAddress(),
+                                        customerDto.getOrderPlatForm()
+                                ))
+                                .toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search customers").show();
+            }
+        }
     }
+
+    /*public void searchByPhoneNumber(KeyEvent keyEvent) {
+
+        String searchText = searchField.getText();
+        if (searchText.isEmpty()) {
+            try {
+                loadCustomerTableData();
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load customers").show();
+            }
+        } else {
+            try {
+                ArrayList<CustomerDto> customerList = customerModel.searchCustomersByPhoneNumber(searchText);
+                tblCustomer.setItems(FXCollections.observableArrayList(
+                        customerList.stream()
+                                .map(customerDto -> new CustomerTM(
+                                        customerDto.getCustomerId(),
+                                        customerDto.getCustomerName(),
+                                        customerDto.getCustomerPhone(),
+                                        customerDto.getCustomerAddress(),
+                                        customerDto.getOrderPlatForm()
+                                ))
+                                .toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search customers").show();
+            }
+        }
+    }*/
 }
 

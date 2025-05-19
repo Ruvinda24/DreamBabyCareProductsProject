@@ -57,7 +57,7 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                      <children>
-                        <TextField fx:id="searchField" onKeyTyped="#searchByPhoneNumber" prefHeight="30.0" prefWidth="330.0" promptText="Search-07********" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="searchField" onKeyTyped="#search" prefHeight="30.0" prefWidth="330.0" promptText="Search" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>
@@ -223,7 +223,7 @@
                   </VBox>
                </children>
             </VBox>
-            <VBox prefHeight="534.0" prefWidth="970.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="700.0" prefWidth="970.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="50.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
@@ -244,20 +244,17 @@
                         </ImageView>
                      </right>
                   </BorderPane>
-                  <TableView fx:id="tblCustomer" onMouseClicked="#onClickTable" prefHeight="383.0" prefWidth="925.0" stylesheets="@../Styles/tableView.css">
+                  <TableView fx:id="tblCustomer" fixedCellSize="0.0" onMouseClicked="#onClickTable" prefHeight="400.0" prefWidth="925.0" stylesheets="@../Styles/tableView.css">
                      <columns>
-                        <TableColumn fx:id="colId" prefWidth="75.0" text="Customer Id" />
-                        <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />
-                        <TableColumn fx:id="colNumber" prefWidth="75.0" text="Phone Number" />
-                        <TableColumn fx:id="colAddress" prefWidth="75.0" text="Address" />
-                        <TableColumn fx:id="colOrderPlatform" prefWidth="75.0" text="Order Platform" />
+                        <TableColumn fx:id="colId" prefWidth="106.40013694763184" text="Customer Id" />
+                        <TableColumn fx:id="colName" prefWidth="215.19995880126953" text="Name" />
+                        <TableColumn fx:id="colNumber" prefWidth="166.40005493164062" text="Phone Number" />
+                        <TableColumn fx:id="colAddress" minWidth="0.0" prefWidth="278.3999938964844" text="Address" />
+                        <TableColumn fx:id="colOrderPlatform" minWidth="0.0" prefWidth="122.4000244140625" text="Order Platform" />
                      </columns>
                      <VBox.margin>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
                      </VBox.margin>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
                   </TableView>
                </children>
             </VBox>
