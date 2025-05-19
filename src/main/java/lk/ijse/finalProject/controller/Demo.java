@@ -1,12 +1,16 @@
 package lk.ijse.finalProject.controller;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 
-import java.util.Optional;
+public class Demo {
+    public void orderPlacementOnAction(ActionEvent actionEvent) {
+    }
 
-public class demo {
+    public void productionPlacementOnAction(ActionEvent actionEvent) {
+    }
+
+    public void OverViewOnAction(ActionEvent actionEvent) {
+    }
     /*public void btnSaveOnAction(ActionEvent actionEvent) {
         String customerId = lblCustomerId.getText();
         String name = txtName.getText();

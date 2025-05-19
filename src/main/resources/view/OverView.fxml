@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancOverViewContainer" prefHeight="1000.0" prefWidth="1250.0" style="-fx-background-color: #778ba5;" stylesheets="@../images/OverViewBtnStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.OverViewController">
+<AnchorPane fx:id="ancOverViewContainer" prefHeight="700.0" prefWidth="1400.0" style="-fx-background-color: linear-gradient(to right, #f7c6c7, #ffffff);" stylesheets="@../Styles/OverViewBtnStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.OverViewController">
     <children>
-        <GridPane hgap="50.0" layoutX="325.0" layoutY="290.0" prefHeight="1000.0" prefWidth="1250.0" vgap="50.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="150.0">
+        <GridPane hgap="50.0" layoutX="325.0" layoutY="290.0" prefHeight="500.0" prefWidth="1300.0" vgap="50.0" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="70.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -31,7 +31,7 @@
             <children>
                 <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToCustomerPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" stylesheets="@../images/OverViewBtnStyles.css" text="Customer">
+                        <Button mnemonicParsing="false" onAction="#goToCustomerPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" stylesheets="@../Styles/OverViewBtnStyles.css" text="Customer">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
@@ -40,139 +40,161 @@
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                     <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#goToDiscountPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Discount">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#goToDiscountPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Discount">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToEmployeePageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Employee">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToEmployeePageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Employee">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToInventoryPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Inventory">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToInventoryPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Inventory">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToMaterialPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Material">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToMaterialPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Material">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToMaterialUsagePageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Material Usage">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToMaterialUsagePageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Material Usage">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToOrderItemsPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Order Items">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToOrderItemsPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Order Items">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToOrdersPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Orders">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToOrdersPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Orders">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToPaymentsPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Payments">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToPaymentsPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Payments">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToProductionPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Production">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToProductionPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Production">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToProductionTaskPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Production Task">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToProductionTaskPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Production Task">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToShipmentPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Shipment">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToShipmentPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Shipment">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToSuppliersPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Suppliers">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToSuppliersPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Suppliers">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToSuppliesPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Supplies" />
+                        <Button mnemonicParsing="false" onAction="#goToSuppliesPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Supplies">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToTasksPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" text="Tasks">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font></Button>
+                        <Button mnemonicParsing="false" onAction="#goToTasksPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" text="Tasks">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin></Button>
                     </children>
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-               <children>
-                  <ImageView fitHeight="145.0" fitWidth="145.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/dbcp logo.jpg" />
-                     </image>
-                     <VBox.margin>
-                        <Insets left="108.0" />
-                     </VBox.margin>
-                  </ImageView>
-               </children>
+                    <children>
+                        <ImageView fitHeight="145.0" fitWidth="145.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/dbcp_logo-removebg-preview.png" />
+                            </image>
+                            <VBox.margin>
+                                <Insets left="108.0" />
+                            </VBox.margin>
+                        </ImageView>
+                    </children>
                 </VBox>
             </children>
         </GridPane>
         <HBox layoutX="43.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="850.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <VBox prefHeight="150.0" prefWidth="625.0">
+                <VBox prefHeight="58.0" prefWidth="149.0">
                     <children>
-                        <Label alignment="CENTER" prefHeight="150.0" prefWidth="250.0" text="Over View" textFill="WHITE">
+                        <Label alignment="CENTER" onMouseClicked="#goToDashboard" prefHeight="46.0" prefWidth="98.0" text="Home">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="30.0" />
                             </font>
+                            <VBox.margin>
+                                <Insets left="49.0" top="12.0" />
+                            </VBox.margin>
                         </Label>
                     </children>
                 </VBox>
-                <VBox layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="625.0" />
+                <VBox layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="625.0">
+                    <children>
+                        <Label text="&gt;   Over View">
+                            <font>
+                                <Font name="System Bold" size="30.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets top="12.0" />
+                            </VBox.margin>
+                        </Label>
+                    </children></VBox>
             </children>
         </HBox>
     </children>

@@ -70,6 +70,7 @@ public class LoginController {
                     dashBoardStage.setScene(new Scene(dashBoardRoot));
                     dashBoardStage.setTitle("Dream Baby Care Products");
                     dashBoardStage.setResizable(true);
+                    dashBoardStage.setMaximized(true); // Maximizes the window with window controls
                     dashBoardStage.show();
                 }catch (Exception e){
                     e.printStackTrace();
@@ -93,6 +94,7 @@ public class LoginController {
             dashBoardStage.setScene(new Scene(dashBoardRoot));
             dashBoardStage.setTitle("Dream Baby Care Products");
             dashBoardStage.setResizable(true);
+            dashBoardStage.setMaximized(true); // Maximizes the window with window controls
             dashBoardStage.show();
         }catch (Exception e){
             e.printStackTrace();

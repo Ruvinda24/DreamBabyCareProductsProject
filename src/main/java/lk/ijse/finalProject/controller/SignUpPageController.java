@@ -84,6 +84,7 @@ public class SignUpPageController {
             dashBoardStage.setScene(new Scene(dashBoardRoot));
             dashBoardStage.setTitle("Dream Baby Care Products");
             dashBoardStage.setResizable(true);
+            dashBoardStage.setMaximized(true);
             dashBoardStage.show();
         }catch (Exception e){
             e.printStackTrace();

@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.finalProject.dto.CustomerDto;
@@ -46,6 +47,7 @@ public class CustomerController implements Initializable {
     ;
 
     public AnchorPane ancCustomerViewContainer;
+    public TextField searchField;
 
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
@@ -280,7 +282,6 @@ public class CustomerController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load customers").show();
-            ;
         }
     }
 
@@ -292,6 +293,9 @@ public class CustomerController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load next customer ID").show();
         }
+    }
+
+    public void searchByPhoneNumber(KeyEvent keyEvent) {
     }
 }
 

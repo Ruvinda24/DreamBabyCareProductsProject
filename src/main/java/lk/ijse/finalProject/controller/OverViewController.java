@@ -3,6 +3,7 @@ package lk.ijse.finalProject.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 
@@ -75,5 +76,9 @@ public class OverViewController {
             new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
             e.printStackTrace();
         }
+    }
+
+    public void goToDashboard(MouseEvent mouseEvent) {
+        navigateTo("/view/DashBoardView.fxml");
     }
 }
