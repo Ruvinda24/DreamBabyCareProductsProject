@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.finalProject.dto.OrderItemDto;
@@ -15,6 +16,7 @@ import lk.ijse.finalProject.model.SupplyModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -43,6 +45,7 @@ public class SupplyController implements Initializable {
     private final SupplyModel supplyModel = new SupplyModel();
     private final String quantityRegex = "^\\d+$";
     private final String amountRegex = "^\\d+(\\.\\d{2})?$";
+    public TextField searchField;
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
         navigateTo("/view/OverView.fxml");
@@ -176,8 +179,8 @@ public class SupplyController implements Initializable {
         SupplyTM selectedItem = tblSupply.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             supplyIdLabel.setText(selectedItem.getSupply_id());
-            cmbSupplierId1.getSelectionModel().select(selectedItem.getSupplier_id());
-            cmbMaterialId1.getSelectionModel().select(selectedItem.getMaterial_id());
+            cmbSupplierId1.setValue(selectedItem.getSupplier_id());
+            cmbMaterialId1.setValue(selectedItem.getMaterial_id());
             txtQuantity.setText(String.valueOf(selectedItem.getQuantity()));
             txtAmount.setText(String.valueOf(selectedItem.getAmount()));
 
@@ -218,27 +221,6 @@ public class SupplyController implements Initializable {
             loadSupplierIds();
             loadMaterialIds();
 
-            cmbSupplierId1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    try {
-                        displaySupplierName((String) newValue);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        new Alert(Alert.AlertType.ERROR, "Failed to load Supplier Name..!").show();
-                    }
-                }
-            });
-
-            cmbMaterialId1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    try {
-                        displayMaterialName((String) newValue);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        new Alert(Alert.AlertType.ERROR, "Failed to load Material Name..!").show();
-                    }
-                }
-            });
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load Supply Table Data..!").show();
@@ -296,7 +278,7 @@ public class SupplyController implements Initializable {
         cmbMaterialId1.setItems(FXCollections.observableArrayList(supplyModel.getAllMaterialIds()));
     }
 
-    private void displaySupplierName(String supplierId) throws SQLException, ClassNotFoundException {
+    /*private void displaySupplierName(String supplierId) throws SQLException, ClassNotFoundException {
         try {
             String item = supplyModel.getSupplierNameById(supplierId);
             lblSupplierName11.setText(item);
@@ -304,9 +286,9 @@ public class SupplyController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load Item Names..!").show();
         }
-    }
+    }*/
 
-    private void displayMaterialName(String materialId) throws SQLException, ClassNotFoundException {
+    /*private void displayMaterialName(String materialId) throws SQLException, ClassNotFoundException {
         try {
             String item = supplyModel.getMaterialNameById(materialId);
             lblMaterialName1.setText(item);
@@ -314,7 +296,7 @@ public class SupplyController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load Item Names..!").show();
         }
-    }
+    }*/
 
     private void resetPage(){
         try {
@@ -342,5 +324,44 @@ public class SupplyController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Failed to Reset").show();
 
         }
+    }
+
+    public void search(KeyEvent keyEvent) {
+        String searchText = searchField.getText();
+        if (searchText.isEmpty()) {
+            try {
+                loadSupplyTableData();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load Supply Table Data..!").show();
+            }
+        }else {
+            try {
+                ArrayList<SupplyDto> supplyList = supplyModel.searchSupply(searchText);
+                tblSupply.setItems(FXCollections.observableArrayList(
+                        supplyList.stream()
+                                .map(
+                                        supplyDto -> new SupplyTM(
+                                                supplyDto.getSupply_id(),
+                                                supplyDto.getSupplier_id(),
+                                                supplyDto.getMaterial_id(),
+                                                supplyDto.getAmount(),
+                                                supplyDto.getQuantity()
+                                        ))
+                        .toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load Supplier Name..!").show();
+            }
+        }
+    }
+
+    public void goToAddSupplierLabel(MouseEvent mouseEvent) {
+        navigateTo("/view/SupplierView.fxml");
+    }
+
+    public void goToAddMaterialLabel(MouseEvent mouseEvent) {
+        navigateTo("/view/MaterialView.fxml");
     }
 }

@@ -40,21 +40,24 @@ public class SupplyModel {
         return CrudUtil.execute("DELETE FROM supply WHERE supply_id = ?", supply_id);
     }
 
-    public SupplyDto searchSupply(String supply_id) throws ClassNotFoundException, SQLException{
+    public ArrayList<SupplyDto> searchSupply(String searchText) throws ClassNotFoundException, SQLException{
 
-        ResultSet rst = CrudUtil.execute("SELECT * FROM supply WHERE supply_id = ?", supply_id);
+        ArrayList<SupplyDto> supplyDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM supply WHERE supply_id LIKE ? OR supplier_id LIKE ? OR material_id LIKE ? OR amount LIKE ? OR quantity LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet rst = CrudUtil.execute(sql, pattern, pattern, pattern, pattern, pattern);
 
-        if(rst.next()){
-            SupplyDto dto = new SupplyDto(
-                    rst.getString("supply_id"),
-                    rst.getString("supplier_id"),
-                    rst.getString("material_id"),
-                    rst.getDouble("amount"),
-                    rst.getInt("quantity")
+        while(rst.next()){
+            SupplyDto supplyDto = new SupplyDto(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getDouble(4),
+                    rst.getInt(5)
             );
-            return dto;
+            supplyDtoArrayList.add(supplyDto);
         }
-        return null;
+        return supplyDtoArrayList;
     }
     public ArrayList<SupplyDto> getAllSupply() throws ClassNotFoundException, SQLException{
 
