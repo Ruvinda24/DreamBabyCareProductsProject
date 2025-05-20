@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.finalProject.dto.OrderItemDto;
@@ -14,6 +15,7 @@ import lk.ijse.finalProject.model.OrderItemModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -43,6 +45,7 @@ public class OrderItemController implements Initializable {
 
     private final String quantityRegex = "^\\d+$";
     private final String amountRegex = "^\\d+(\\.\\d{2})?$";
+    public TextField searchField;
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
         navigateTo("/view/OverView.fxml");
@@ -188,9 +191,9 @@ public class OrderItemController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        colOrderItemId.setCellValueFactory(new PropertyValueFactory<>("orderItemId"));
-        colOrderId.setCellValueFactory(new PropertyValueFactory<>("orderId"));
-        colInventoryId.setCellValueFactory(new PropertyValueFactory<>("inventoryId"));
+        colOrderItemId.setCellValueFactory(new PropertyValueFactory<>("order_item_id"));
+        colOrderId.setCellValueFactory(new PropertyValueFactory<>("order_id"));
+        colInventoryId.setCellValueFactory(new PropertyValueFactory<>("inventory_id"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
@@ -213,18 +216,6 @@ public class OrderItemController implements Initializable {
             loadNextId();
             loadOrdersIds();
             loadInventoryIds();
-
-            cmbOrderId1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    try {
-                        displayItemName((String) newValue);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        new Alert(Alert.AlertType.ERROR, "Failed to load Item Names..!").show();
-                    }
-                }
-                });
-
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load Order Item IDs..!").show();
@@ -282,7 +273,7 @@ public class OrderItemController implements Initializable {
         cmbInventoryId1.setItems(FXCollections.observableArrayList(orderItemModel.getAllInventoryIds()));
     }
 
-    private void displayItemName(String inventoryId) throws SQLException, ClassNotFoundException {
+    /*private void displayItemName(String inventoryId) throws SQLException, ClassNotFoundException {
         try {
             String item = orderItemModel.getInventoryItemNameById(inventoryId);
             lblInventoryId1.setText(item);
@@ -290,7 +281,7 @@ public class OrderItemController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load Item Names..!").show();
         }
-    }
+    }*/
 
     private void resetPage(){
         try {
@@ -315,8 +306,46 @@ public class OrderItemController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load customers").show();
+            new Alert(Alert.AlertType.ERROR, "Failed to load order item table").show();
 
         }
+    }
+
+    public void search(KeyEvent keyEvent) {
+        String searchText = searchField.getText();
+        if (searchText.isEmpty()) {
+            try{
+                loadOrderItemTableData();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load order items").show();
+            }
+        }else {
+            try {
+                ArrayList<OrderItemDto> orderItemList = orderItemModel.searchOrderItems(searchText);
+                tblOrderItems.setItems(FXCollections.observableArrayList(
+                        orderItemList.stream()
+                                .map(orderItemDto -> new OrderItemTM(
+                                        orderItemDto.getOrder_item_id(),
+                                        orderItemDto.getOrder_id(),
+                                        orderItemDto.getInventory_id(),
+                                        orderItemDto.getQuantity(),
+                                        orderItemDto.getAmount()
+                                ))
+                        .toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load order items").show();
+            }
+        }
+    }
+
+    public void goToAddOrderLabel(MouseEvent mouseEvent) {
+        navigateTo("/view/OrdersView.fxml");
+    }
+
+    public void goToAddItemsLabel(MouseEvent mouseEvent) {
+        navigateTo("/view/InventoryView.fxml");
     }
 }

@@ -34,7 +34,7 @@ public class OverViewController {
     }
 
     public void goToOrderItemsPageOnAction(ActionEvent actionEvent) {
-        navigateTo("/view/OrderItemsView.fxml");
+        navigateTo("/view/OrderItemView.fxml");
     }
 
     public void goToOrdersPageOnAction(ActionEvent actionEvent) {
