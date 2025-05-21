@@ -244,7 +244,7 @@
                                 </ImageView>
                             </right>
                         </BorderPane>
-                        <TableView fx:id="tblEmployee" fixedCellSize="0.0" onMouseClicked="#onClickTable" prefHeight="400.0" prefWidth="925.0" stylesheets="@../Styles/tableView.css">
+                        <TableView fx:id="tblEmployee" fixedCellSize="0.0" onMouseClicked="#onClickTable" prefHeight="400.0" prefWidth="925.0" stylesheets="@../styles/tableView.css">
                             <columns>
                                 <TableColumn fx:id="colId" prefWidth="106.40013694763184" text="Employee Id" />
                                 <TableColumn fx:id="colName" prefWidth="260.80005645751953" text="Name" />

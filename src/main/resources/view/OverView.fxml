@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancOverViewContainer" prefHeight="700.0" prefWidth="1400.0" style="-fx-background-color: linear-gradient(to right, #f7c6c7, #ffffff);" stylesheets="@../Styles/OverViewBtnStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.OverViewController">
+<AnchorPane fx:id="ancOverViewContainer" prefHeight="700.0" prefWidth="1400.0" style="-fx-background-color: linear-gradient(to right, #f7c6c7, #ffffff);" stylesheets="@../styles/OverViewBtnStyles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.OverViewController">
     <children>
         <GridPane hgap="50.0" layoutX="325.0" layoutY="290.0" prefHeight="500.0" prefWidth="1300.0" vgap="50.0" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="70.0">
             <columnConstraints>
@@ -31,7 +31,7 @@
             <children>
                 <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToCustomerPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" stylesheets="@../Styles/OverViewBtnStyles.css" text="Customer">
+                        <Button mnemonicParsing="false" onAction="#goToCustomerPageOnAction" opacity="0.5" prefHeight="164.0" prefWidth="249.0" styleClass="cur-button" stylesheets="@../styles/OverViewBtnStyles.css" text="Customer">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>

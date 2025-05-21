@@ -41,21 +41,25 @@ public class OrdersModel {
         return CrudUtil.execute("DELETE FROM orders WHERE order_id = ?", order_id);
     }
 
-    public OrdersDto searchOrders(String order_id) throws ClassNotFoundException, SQLException {
+    public ArrayList<OrdersDto> searchOrders(String searchText) throws ClassNotFoundException, SQLException {
 
-        ResultSet rst = CrudUtil.execute("SELECT * FROM orders WHERE order_id = ?", order_id);
 
-        if (rst.next()) {
-            OrdersDto dto = new OrdersDto(
-                    rst.getString("order_id"),
-                    rst.getString("order_date"),
-                    rst.getString("customer_id"),
-                    rst.getString("shipment_id"),
-                    rst.getString("status")
+        ArrayList<OrdersDto> ordersDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM orders WHERE order_id LIKE ? OR order_date LIKE ? OR customer_id LIKE ? OR shipment_id LIKE ? OR status LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet rst = CrudUtil.execute(sql, pattern, pattern, pattern, pattern, pattern);
+
+        while (rst.next()) {
+            OrdersDto ordersDto = new OrdersDto(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getString(5)
             );
-            return dto;
+            ordersDtoArrayList.add(ordersDto);
         }
-        return null;
+        return ordersDtoArrayList;
     }
 
     public ArrayList<OrdersDto> getAllOrders() throws ClassNotFoundException, SQLException {

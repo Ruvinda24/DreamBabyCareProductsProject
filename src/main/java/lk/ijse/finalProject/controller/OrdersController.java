@@ -6,16 +6,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.finalProject.dto.OrdersDto;
 import lk.ijse.finalProject.dto.tm.EmployeeTM;
+import lk.ijse.finalProject.dto.tm.OrderItemTM;
 import lk.ijse.finalProject.dto.tm.OrdersTM;
 import lk.ijse.finalProject.model.EmployeeModel;
 import lk.ijse.finalProject.model.OrdersModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -45,6 +50,8 @@ public class OrdersController implements Initializable {
     public Label lbTrackingNumber;
 
     private final String datePattern = "^\\d{4}/\\d{2}/\\d{2}$";
+    public TextField searchField;
+    public DatePicker ordersDatePicker;
 
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
@@ -171,10 +178,10 @@ public class OrdersController implements Initializable {
         OrdersTM selectedItem = tblOrders.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             ordersIdLabel.setText(selectedItem.getOrder_id());
-            txtOrderDate.setText(selectedItem.getOrder_date());
-            cmbCustomerId.getSelectionModel().select(selectedItem.getCustomer_id());
-            cmbShipmentId.getSelectionModel().select(selectedItem.getShipment_id());
-            cmbStatus.getSelectionModel().select(selectedItem.getStatus());
+            ordersDatePicker.setValue(LocalDate.parse(selectedItem.getOrder_date(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            cmbCustomerId.setValue(selectedItem.getCustomer_id());
+            cmbShipmentId.setValue(selectedItem.getShipment_id());
+            cmbStatus.setValue(selectedItem.getStatus());
 
             //save button(id) -> disable
             btnSave.setDisable(true);
@@ -213,9 +220,10 @@ public class OrdersController implements Initializable {
             //delete button(id) -> disable
             btnDelete.setDisable(true);
 
-            txtOrderDate.setText("");
-            lblCustomerName.setText("");
-            lbTrackingNumber.setText("");
+            //txtOrderDate.setText("");
+            //lblCustomerName.setText("");
+            //lbTrackingNumber.setText("");
+            ordersDatePicker.setValue(null);
             cmbCustomerId.getSelectionModel().clearSelection();
             cmbShipmentId.getSelectionModel().clearSelection();
             cmbStatus.getSelectionModel().clearSelection();
@@ -223,7 +231,7 @@ public class OrdersController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load customers").show();
+            new Alert(Alert.AlertType.ERROR, "Failed to Reset").show();
 
         }
 
@@ -283,8 +291,8 @@ public class OrdersController implements Initializable {
             loadNextId();
             loadCustomerIds();
             loadShipmentIds();
-
-            cmbCustomerId.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            setOrdersDateTimePicker();
+            /*cmbCustomerId.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     displayCustomerName((String) newValue);
                 }
@@ -294,7 +302,7 @@ public class OrdersController implements Initializable {
                 if (newValue != null) {
                     displayTrackingNumber((String) newValue);
                 }
-            });
+            });*/
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -302,6 +310,7 @@ public class OrdersController implements Initializable {
         }
 
     }
+
     private void loadCustomerIds() throws SQLException, ClassNotFoundException {
         cmbCustomerId.setItems(FXCollections.observableArrayList(ordersModel.getAllCustomerIds()));
     }
@@ -310,7 +319,7 @@ public class OrdersController implements Initializable {
         cmbShipmentId.setItems(FXCollections.observableArrayList(ordersModel.getAllShipmentIds()));
     }
 
-    private void displayCustomerName(String customerId) {
+    /*private void displayCustomerName(String customerId) {
         try {
             String customerName = ordersModel.getCustomerNameById(customerId);
             lblCustomerName.setText(customerName);
@@ -328,6 +337,68 @@ public class OrdersController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load tracking number").show();
         }
+    }*/
+
+    public void search(KeyEvent keyEvent) {
+        String searchText = searchField.getText();
+        if (searchText.isEmpty()) {
+            try {
+                loadOrdersTableData();
+            }catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load orders").show();
+            }
+        }else {
+            try {
+                ArrayList<OrdersDto> ordersList = ordersModel.searchOrders(searchText);
+                tblOrders.setItems(FXCollections.observableArrayList(
+                        ordersList.stream()
+                                .map(ordersDto -> new OrdersTM(
+                                        ordersDto.getOrder_id(),
+                                        ordersDto.getOrder_date(),
+                                        ordersDto.getCustomer_id(),
+                                        ordersDto.getShipment_id(),
+                                        ordersDto.getStatus()
+                                        ))
+                                .toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load orders").show();
+            }
+        }
     }
 
+    public void goToAddCustomersLabel(MouseEvent mouseEvent) {
+        navigateTo("/view/CustomerView.fxml");
+    }
+
+    public void goToAddShipmentLabel(MouseEvent mouseEvent) {
+        navigateTo("/view/ShipmentView.fxml");
+    }
+
+    private TableRow<OrdersTM> setOrdersDateTimePicker() {
+        // Set prompt text to today's date
+        ordersDatePicker.setPromptText(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        // Set up row click to load date into DatePicker
+        tblOrders.setRowFactory(tv -> {
+            TableRow<OrdersTM> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty()) {
+                    OrdersTM rowData = row.getItem();
+                    // Assuming OrdersTM has a getDate() method returning String in yyyy-MM-dd or similar format
+                    try {
+                        LocalDate date = LocalDate.parse(rowData.getOrder_date(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        ordersDatePicker.setValue(date);
+                    } catch (Exception e) {
+                        ordersDatePicker.setValue(null);
+                    }
+                }
+            });
+            return row;
+        });
+        return null;
+    }
 }
+
