@@ -110,7 +110,7 @@
                                                 </Label>
                                     <HBox prefHeight="27.0" prefWidth="338.0">
                                        <children>
-                                          <ComboBox fx:id="cmbSupplierId1" prefHeight="26.0" prefWidth="200.0" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;"/>
+                                          <ComboBox fx:id="cmbSupplierId1" prefHeight="26.0" prefWidth="200.0" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
                                           <Label onMouseClicked="#goToAddSupplierLabel" prefHeight="34.0" prefWidth="89.0" text="Add Supplier">
                                              <font>
                                                 <Font name="System Bold" size="14.0" />
@@ -268,7 +268,7 @@
                                 </ImageView>
                             </right>
                         </BorderPane>
-                        <TableView fx:id="tblSupply" fixedCellSize="0.0" onMouseClicked="#onClickTable" prefHeight="400.0" prefWidth="925.0" stylesheets="@../styles/tableView.css" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="tblSupply" fixedCellSize="0.0" onMouseClicked="#onClickTable" prefHeight="400.0" prefWidth="925.0" stylesheets="@../styles/tableView.css">
                             <columns>
                                 <TableColumn fx:id="colSupplyId" prefWidth="106.40013694763184" text="Supply ID" />
                                 <TableColumn fx:id="colSupplierId" prefWidth="215.19995880126953" text="Supplier ID" />

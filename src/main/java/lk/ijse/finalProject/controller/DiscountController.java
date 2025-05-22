@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.finalProject.dto.DiscountDto;
@@ -37,6 +38,7 @@ public class DiscountController implements Initializable {
     public TableColumn<DiscountTM, String> colDiscountAmount;
 
     private final DiscountModel discountModel = new DiscountModel();
+    public TextField searchField;
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
         navigateTo("/view/OverView.fxml");
@@ -143,8 +145,8 @@ public class DiscountController implements Initializable {
         DiscountTM selectedItem = tblDiscount.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             discountIdLabel.setText(selectedItem.getDiscount_id());
-            cmbPaymentId1.getSelectionModel().select(selectedItem.getPayment_id());
-            cmbDiscountType1.getSelectionModel().select(selectedItem.getDiscount_type());
+            cmbPaymentId1.setValue(selectedItem.getPayment_id());
+            cmbDiscountType1.setValue(selectedItem.getDiscount_type());
             txtDiscountAmount.setText(String.valueOf(selectedItem.getDiscount_percentage()));
 
             btnSave.setDisable(true);
@@ -180,7 +182,7 @@ public class DiscountController implements Initializable {
             loadPaymentIds();
             loadDiscountTypes();
 
-            cmbPaymentId1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            /*cmbPaymentId1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if(newValue != null) {
                     try {
                         lblAmount1.setText(String.valueOf(discountModel.getPaymentAmountById(newValue.toString())));
@@ -189,7 +191,7 @@ public class DiscountController implements Initializable {
                         new Alert(Alert.AlertType.ERROR, "Failed to load Discount Amount").show();
                     }
                 }
-            });
+            });*/
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load Discounts").show();
@@ -266,5 +268,39 @@ public class DiscountController implements Initializable {
 
     private void loadDiscountTypes() {
         cmbDiscountType1.setItems(FXCollections.observableArrayList("Retail Online", "Retail Local", "Wholesale Online", "Wholesale Local"));
+    }
+
+    public void search(KeyEvent keyEvent) {
+        String searchText = searchField.getText();
+        if (searchText.isEmpty()) {
+            try {
+                loadDiscountTableData();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load Discounts").show();
+            }
+        } else {
+            try {
+                tblDiscount.setItems(FXCollections.observableArrayList(
+                        discountModel.searchDiscounts(searchText)
+                                .stream()
+                                .map(discountDto -> new DiscountTM(
+                                        discountDto.getDiscount_id(),
+                                        discountDto.getPayment_id(),
+                                        discountDto.getDiscount_type(),
+                                        discountDto.getDiscount_percentage()
+                                ))
+                                .toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load Discounts").show();
+            }
+        }
+    }
+
+    public void goToAddPaymentLabel(MouseEvent mouseEvent) {
+        navigateTo("/view/PaymentView.fxml");
+
     }
 }

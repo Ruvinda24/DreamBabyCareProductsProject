@@ -40,23 +40,23 @@ public class DiscountModel {
         );
     }
 
-    public DiscountDto searchDiscounts(String discount_id) throws ClassNotFoundException, SQLException{
+    public ArrayList<DiscountDto> searchDiscounts(String searchText) throws ClassNotFoundException, SQLException{
 
-        ResultSet resultSet = CrudUtil.execute(
-                "SELECT * FROM discount WHERE discount_id = ?",
-                discount_id
-        );
+        ArrayList<DiscountDto> discountDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM discount WHERE discount_id LIKE ? OR payment_id LIKE ? OR discount_type LIKE ? OR discount_percentage LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet resultSet = CrudUtil.execute(sql, pattern, pattern, pattern, pattern);
 
-        if(resultSet.next()){
-            DiscountDto dto = new DiscountDto(
-                    resultSet.getString("discount_id"),
-                    resultSet.getString("payment_id"),
-                    resultSet.getString("discount_type"),
-                    resultSet.getDouble("discount_percentage")
+        while (resultSet.next()){
+            DiscountDto discountDto = new DiscountDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDouble(4)
             );
-            return dto;
+            discountDtoArrayList.add(discountDto);
         }
-        return null;
+        return discountDtoArrayList;
     }
     public ArrayList<DiscountDto> getAllDiscounts() throws ClassNotFoundException, SQLException{
         ResultSet resultSet = CrudUtil.execute(
