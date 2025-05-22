@@ -11,9 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.finalProject.dto.OrdersDto;
 import lk.ijse.finalProject.dto.tm.EmployeeTM;
-import lk.ijse.finalProject.dto.tm.OrderItemTM;
 import lk.ijse.finalProject.dto.tm.OrdersTM;
-import lk.ijse.finalProject.model.EmployeeModel;
 import lk.ijse.finalProject.model.OrdersModel;
 
 import java.net.URL;
@@ -64,12 +62,13 @@ public class OrdersController implements Initializable {
 
     public void updateBtnOnAction(ActionEvent actionEvent) {
         String orderId = ordersIdLabel.getText();
-        String orderDate = txtOrderDate.getText();
+        //String orderDate = txtOrderDate.getText();
+        LocalDate orderDate = ordersDatePicker.getValue();
         String customerId = (String) cmbCustomerId.getSelectionModel().getSelectedItem();
         String shipmentId = (String) cmbShipmentId.getSelectionModel().getSelectedItem();
         String status = (String) cmbStatus.getSelectionModel().getSelectedItem();
 
-        if (orderId.isEmpty() || orderDate.isEmpty() || customerId.isEmpty() || shipmentId.isEmpty() || status == null) {
+        if (orderId.isEmpty() || orderDate == null || customerId.isEmpty() || shipmentId.isEmpty() || status == null) {
             new Alert(Alert.AlertType.ERROR, "Please fill all fields").show();
             return;
         }
@@ -129,16 +128,17 @@ public class OrdersController implements Initializable {
     public void saveBtnOnAction(ActionEvent actionEvent) {
 
         String orderId = ordersIdLabel.getText();
-        String orderDate = txtOrderDate.getText();
+        //String orderDate = txtOrderDate.getText();
+        LocalDate orderDate = ordersDatePicker.getValue();
         String customerId = (String) cmbCustomerId.getSelectionModel().getSelectedItem();
         String shipmentId = (String) cmbShipmentId.getSelectionModel().getSelectedItem();
         String status = (String) cmbStatus.getSelectionModel().getSelectedItem();
 
-        boolean isValidDate = orderDate.matches(datePattern);
+        boolean isValidDate = orderDate != null && orderDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")).matches(datePattern);
 
-        txtOrderDate.setStyle(txtOrderDate.getStyle() + ";-fx-border-color: #7367F0");
+        ordersDatePicker.setStyle(txtOrderDate.getStyle() + ";-fx-border-color: #7367F0");
 
-        if (orderId.isEmpty() || orderDate.isEmpty() || customerId.isEmpty() || shipmentId.isEmpty() || status == null) {
+        if (orderId.isEmpty() || orderDate == null || customerId.isEmpty() || shipmentId.isEmpty() || status == null) {
             new Alert(Alert.AlertType.ERROR, "Please fill all fields").show();
             return;
         }
@@ -178,7 +178,7 @@ public class OrdersController implements Initializable {
         OrdersTM selectedItem = tblOrders.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             ordersIdLabel.setText(selectedItem.getOrder_id());
-            ordersDatePicker.setValue(LocalDate.parse(selectedItem.getOrder_date(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            ordersDatePicker.setValue(selectedItem.getOrder_date());
             cmbCustomerId.setValue(selectedItem.getCustomer_id());
             cmbShipmentId.setValue(selectedItem.getShipment_id());
             cmbStatus.setValue(selectedItem.getStatus());
@@ -232,7 +232,6 @@ public class OrdersController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to Reset").show();
-
         }
 
     }
@@ -297,7 +296,6 @@ public class OrdersController implements Initializable {
                     displayCustomerName((String) newValue);
                 }
             });
-
             cmbShipmentId.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     displayTrackingNumber((String) newValue);
@@ -377,7 +375,7 @@ public class OrdersController implements Initializable {
         navigateTo("/view/ShipmentView.fxml");
     }
 
-    private TableRow<OrdersTM> setOrdersDateTimePicker() {
+    private void setOrdersDateTimePicker() {
         // Set prompt text to today's date
         ordersDatePicker.setPromptText(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
@@ -389,7 +387,7 @@ public class OrdersController implements Initializable {
                     OrdersTM rowData = row.getItem();
                     // Assuming OrdersTM has a getDate() method returning String in yyyy-MM-dd or similar format
                     try {
-                        LocalDate date = LocalDate.parse(rowData.getOrder_date(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        LocalDate date = rowData.getOrder_date();
                         ordersDatePicker.setValue(date);
                     } catch (Exception e) {
                         ordersDatePicker.setValue(null);
@@ -398,7 +396,5 @@ public class OrdersController implements Initializable {
             });
             return row;
         });
-        return null;
     }
 }
-

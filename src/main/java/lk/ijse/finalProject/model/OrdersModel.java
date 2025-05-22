@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class OrdersModel {
@@ -52,7 +53,7 @@ public class OrdersModel {
         while (rst.next()) {
             OrdersDto ordersDto = new OrdersDto(
                     rst.getString(1),
-                    rst.getString(2),
+                    LocalDate.parse(rst.getString(2)),
                     rst.getString(3),
                     rst.getString(4),
                     rst.getString(5)
@@ -70,7 +71,7 @@ public class OrdersModel {
         while (rst.next()) {
             OrdersDto dto = new OrdersDto(
                     rst.getString("order_id"),
-                    rst.getString("order_date"),
+                    LocalDate.parse(rst.getString("order_date")),
                     rst.getString("customer_id"),
                     rst.getString("shipment_id"),
                     rst.getString("status")
