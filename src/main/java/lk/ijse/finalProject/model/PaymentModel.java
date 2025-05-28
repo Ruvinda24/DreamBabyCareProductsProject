@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class PaymentModel {
 
-    public String savePayments(PaymentDto paymentDto) throws ClassNotFoundException, SQLException {
+    public boolean savePayments(PaymentDto paymentDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO payment VALUES (?,?,?,?)",
@@ -23,7 +23,7 @@ public class PaymentModel {
         );
     }
 
-    public String updatePayments(PaymentDto paymentDto) throws ClassNotFoundException, SQLException {
+    public boolean updatePayments(PaymentDto paymentDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "UPDATE payment SET order_id = ?, amount = ?, payment_method = ?WHERE payment_id= ?",
@@ -34,25 +34,28 @@ public class PaymentModel {
         );
     }
 
-    public String deletePayments(String payment_id) throws ClassNotFoundException, SQLException {
+    public boolean deletePayments(String payment_id) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute("DELETE FROM payment WHERE payment_id = ?", payment_id);
     }
 
-    public PaymentDto searchPayments(String payment_id) throws ClassNotFoundException, SQLException {
+    public ArrayList<PaymentDto> searchPayments(String searchText) throws ClassNotFoundException, SQLException {
 
-        ResultSet rst = CrudUtil.execute("SELECT * FROM payment WHERE payment_id = ?", payment_id);
+        ArrayList<PaymentDto> paymentDtoArrayList = new ArrayList<>();
+        String sql ="SELECT * FROM payment WHERE payment_id LIKE ? OR order_id LIKE ? OR amount LIKE ? OR payment_method LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet rst = CrudUtil.execute(sql, pattern, pattern, pattern, pattern);
 
         if (rst.next()) {
             PaymentDto dto = new PaymentDto(
-                    rst.getString("payment_id"),
-                    rst.getString("order_id"),
-                    rst.getDouble("amount"),
-                    rst.getString("payment_method")
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getDouble(3),
+                    rst.getString(4)
             );
-            return dto;
+            paymentDtoArrayList.add(dto);
         }
-        return null;
+        return paymentDtoArrayList;
     }
 
     public ArrayList<PaymentDto> getAllPayments() throws ClassNotFoundException, SQLException {
@@ -88,4 +91,12 @@ public class PaymentModel {
         return tableCharacter + "001";
     }
 
+    public ArrayList<String> getAllOrderIds() throws ClassNotFoundException, SQLException {
+        ArrayList<String> orderIds = new ArrayList<>();
+        ResultSet rst = CrudUtil.execute("SELECT order_id FROM orders");
+        while (rst.next()) {
+            orderIds.add(rst.getString("order_id"));
+        }
+        return orderIds;
+    }
 }
