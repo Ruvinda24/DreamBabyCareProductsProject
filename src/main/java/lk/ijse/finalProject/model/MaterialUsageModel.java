@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class MaterialUsageModel {
 
-    public String saveMaterialUsage(MaterialUsageDto materialUsageDto) throws ClassNotFoundException, SQLException {
+    public boolean saveMaterialUsage(MaterialUsageDto materialUsageDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO material_usage VALUES (?,?,?,?)",
@@ -23,15 +23,7 @@ public class MaterialUsageModel {
         );
     }
 
-    public String updateMaterialUsage(MaterialUsageDto materialUsageDto) throws ClassNotFoundException, SQLException{
-        Connection connection = DBConnection.getInstance().getConnection();
-        String sql = "";
-        PreparedStatement statement = connection.prepareStatement(sql);
-
-        statement.setString(1, materialUsageDto.getProduction_id());
-        statement.setString(2, materialUsageDto.getMaterial_id());
-        statement.setInt(3, materialUsageDto.getQuantity_used());
-        statement.setString(4, materialUsageDto.getUsage_id());
+    public boolean updateMaterialUsage(MaterialUsageDto materialUsageDto) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "UPDATE material_usage SET production_id = ?, material_id = ?, quantity_used = ?WHERE usage_id= ?",
@@ -42,25 +34,28 @@ public class MaterialUsageModel {
         );
     }
 
-    public String deleteMaterialUsage(String usage_id) throws ClassNotFoundException, SQLException{
+    public boolean deleteMaterialUsage(String usage_id) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute("DELETE FROM material_usage WHERE usage_id = ?", usage_id);
     }
 
-    public MaterialUsageDto searchMaterialUsage(String usage_id) throws ClassNotFoundException, SQLException{
+    public ArrayList<MaterialUsageDto> searchMaterialUsage(String searchText) throws ClassNotFoundException, SQLException{
 
-        ResultSet rst = CrudUtil.execute("SELECT * FROM material_usage WHERE usage_id = ?", usage_id);
+        ArrayList<MaterialUsageDto> materialUsageDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM material_usage WHERE usage_id LIKE ? OR production_id LIKE ? OR material_id LIKE ? OR quantity_used LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet rst = CrudUtil.execute(sql,pattern, pattern, pattern, pattern);
 
-        if(rst.next()){
+        while(rst.next()){
             MaterialUsageDto dto = new MaterialUsageDto(
-                    rst.getString("usage_id"),
-                    rst.getString("production_id"),
-                    rst.getString("material_id"),
-                    rst.getInt("quantity_used")
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getInt(4)
             );
-            return dto;
+            materialUsageDtoArrayList.add(dto);
         }
-        return null;
+        return materialUsageDtoArrayList;
     }
     public ArrayList<MaterialUsageDto> getAllMaterialUsage() throws ClassNotFoundException, SQLException{
 
@@ -95,4 +90,21 @@ public class MaterialUsageModel {
         return tableCharacter + "001";
     }
 
+    public ArrayList<String> getAllProductionIds() throws ClassNotFoundException, SQLException {
+        ArrayList<String> productionIds = new ArrayList<>();
+        ResultSet rst = CrudUtil.execute("SELECT production_id FROM production");
+        while (rst.next()) {
+            productionIds.add(rst.getString(1));
+        }
+        return productionIds;
+    }
+
+    public ArrayList<String> getAllMaterialIds() throws ClassNotFoundException, SQLException {
+        ArrayList<String> materialIds = new ArrayList<>();
+        ResultSet rst = CrudUtil.execute("SELECT material_id FROM material");
+        while (rst.next()) {
+            materialIds.add(rst.getString(1));
+        }
+        return materialIds;
+    }
 }

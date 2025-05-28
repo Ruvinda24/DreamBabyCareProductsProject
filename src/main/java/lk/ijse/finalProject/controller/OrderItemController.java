@@ -298,8 +298,8 @@ public class OrderItemController implements Initializable {
             cmbOrderId1.getSelectionModel().clearSelection();
             cmbInventoryId1.getSelectionModel().clearSelection();
             txtQuantity.setText("");
-            lblInventoryId1.setText("");
-            lblOrderId1.setText("");
+            //lblInventoryId1.setText("");
+            //lblOrderId1.setText("");
             txtAmount.setText("");
 
 

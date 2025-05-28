@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancSupplyContainer" prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.OrderItemController">
+<AnchorPane fx:id="ancOrdersItemViewContainer" prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.OrderItemController">
     <children>
         <HBox layoutX="14.0" layoutY="14.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
@@ -79,7 +79,7 @@
                                                 <Insets left="10.0" top="10.0" />
                                             </HBox.margin>
                                         </Label>
-                                        <Label fx:id="supplyIdLabel" text="01" HBox.hgrow="ALWAYS">
+                                        <Label fx:id="ordersItemIdLabel" text="01" HBox.hgrow="ALWAYS">
                                             <font>
                                                 <Font name="System Bold" size="20.0" />
                                             </font>
@@ -110,7 +110,7 @@
                                                 </Label>
                                                 <HBox prefHeight="27.0" prefWidth="338.0">
                                                     <children>
-                                                        <ComboBox fx:id="cmbSupplierId1" prefHeight="26.0" prefWidth="200.0" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
+                                                        <ComboBox fx:id="cmbOrderId1" prefHeight="26.0" prefWidth="200.0" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
                                                         <Label onMouseClicked="#goToAddOrderLabel" prefHeight="34.0" prefWidth="89.0" text="Add Order">
                                                             <font>
                                                                 <Font name="System Bold" size="14.0" />
@@ -166,7 +166,7 @@
                                                         <Font name="System Bold" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="txtAmount" promptText="10" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
+                                                <TextField fx:id="txtQuantity" promptText="10" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
                                             </children>
                                         </VBox>
                                     </children>
@@ -183,7 +183,7 @@
                                                         <Font name="System Bold" size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <TextField fx:id="txtQuantity" promptText="1500.00" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
+                                                <TextField fx:id="txtAmount" promptText="1500.00" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;" />
                                             </children>
                                         </VBox>
                                     </children>
@@ -268,13 +268,13 @@
                                 </ImageView>
                             </right>
                         </BorderPane>
-                        <TableView fx:id="tblSupply" fixedCellSize="0.0" onMouseClicked="#onClickTable" prefHeight="400.0" prefWidth="925.0" stylesheets="@../styles/tableView.css" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="tblOrderItems" fixedCellSize="0.0" onMouseClicked="#onClickTable" prefHeight="400.0" prefWidth="925.0" stylesheets="@../styles/tableView.css" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="colSupplyId" prefWidth="127.73327445983887" text="Order Item ID" />
-                                <TableColumn fx:id="colSupplierId" prefWidth="199.46673583984375" text="Order ID" />
-                                <TableColumn fx:id="colMaterialId" prefWidth="166.40005493164062" text="Inventory ID" />
-                                <TableColumn fx:id="colAmount" minWidth="0.0" prefWidth="278.3999938964844" text="Quantity" />
-                                <TableColumn fx:id="colQuantity" minWidth="0.0" prefWidth="122.4000244140625" text="Amount" />
+                                <TableColumn fx:id="colOrderItemId" prefWidth="127.73327445983887" text="Order Item ID" />
+                                <TableColumn fx:id="colOrderId" prefWidth="199.46673583984375" text="Order ID" />
+                                <TableColumn fx:id="colInventoryId" prefWidth="166.40005493164062" text="Inventory ID" />
+                                <TableColumn fx:id="colQuantity" minWidth="0.0" prefWidth="278.3999938964844" text="Quantity" />
+                                <TableColumn fx:id="colAmount" minWidth="0.0" prefWidth="122.4000244140625" text="Amount" />
                             </columns>
                             <VBox.margin>
                                 <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
