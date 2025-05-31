@@ -19,6 +19,7 @@ public class CustomerDto extends ArrayList<CustomerDto> {
     private String customerAddress;
     private String orderPlatForm;
 
+
     @Override
     public <T> T[] toArray(IntFunction<T[]> generator) {
         return super.toArray(generator);
