@@ -25,12 +25,15 @@ public class OverViewController {
     }
 
     public void goToInventoryPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/InventoryView.fxml");
     }
 
     public void goToMaterialPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/MaterialView.fxml");
     }
 
     public void goToMaterialUsagePageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/MaterialUsageView.fxml");
     }
 
     public void goToOrderItemsPageOnAction(ActionEvent actionEvent) {
@@ -42,18 +45,23 @@ public class OverViewController {
     }
 
     public void goToPaymentsPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/PaymentView.fxml");
     }
 
     public void goToProductionPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/ProductionView.fxml");
     }
 
     public void goToProductionTaskPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/ProductionTaskView.fxml");
     }
 
     public void goToShipmentPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/ShipmentView.fxml");
     }
 
     public void goToSuppliersPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/SupplierView.fxml");
     }
 
     public void goToSuppliesPageOnAction(ActionEvent actionEvent) {
@@ -61,6 +69,7 @@ public class OverViewController {
     }
 
     public void goToTasksPageOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/TasksView.fxml");
     }
     private void navigateTo(String path) {
         try {
