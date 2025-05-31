@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.finalProject.dto.tm.ShipmentTM;
+import lk.ijse.finalProject.model.ShipmentModel;
 
 public class ShipmentController {
     public AnchorPane ancShipmentContainer;
@@ -16,10 +18,12 @@ public class ShipmentController {
     public Button btnUpdate;
     public Button btnDelete;
     public Button btnReset;
-    public TableView tblShipment;
-    public TableColumn colShipmentDate;
-    public TableColumn colTrackingNumber;
-    public TableColumn colShipmentId;
+    public TableView<ShipmentTM> tblShipment;
+    public TableColumn<ShipmentTM,String> colShipmentDate;
+    public TableColumn<ShipmentTM,String> colTrackingNumber;
+    public TableColumn<ShipmentTM,String> colShipmentId;
+
+    private final ShipmentModel shipmentModel = new ShipmentModel();
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
     }

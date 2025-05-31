@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.finalProject.dto.tm.TaskTM;
+import lk.ijse.finalProject.model.TaskModel;
 
 public class TaskController {
     public AnchorPane ancTaskContainer;
@@ -17,11 +19,13 @@ public class TaskController {
     public Button btnUpdate;
     public Button btnDelete;
     public Button btnReset;
-    public TableView tblTask;
-    public TableColumn colTaskId;
-    public TableColumn colEmployeeId;
-    public TableColumn colDescription;
-    public TableColumn colStatus;
+    public TableView<TaskTM> tblTask;
+    public TableColumn<TaskTM,String> colTaskId;
+    public TableColumn<TaskTM,String> colEmployeeId;
+    public TableColumn<TaskTM,String> colDescription;
+    public TableColumn<TaskTM,String> colStatus;
+
+    private final TaskModel taskModel = new TaskModel();
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
     }

@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.finalProject.dto.tm.InventoryTM;
+import lk.ijse.finalProject.model.InventoryModel;
 
 public class InventoryController {
     public AnchorPane ancInventoryContainer;
@@ -20,14 +22,16 @@ public class InventoryController {
     public Button btnUpdate;
     public Button btnDelete;
     public Button btnReset;
-    public TableView tblInventory;
-    public TableColumn colStoredLocation;
-    public TableColumn colQuantityAvailable;
-    public TableColumn colUnitPrice;
-    public TableColumn colSize;
-    public TableColumn colPrinterEmbroidered;
-    public TableColumn colItemName;
-    public TableColumn colInventoryId;
+    public TableView<InventoryTM> tblInventory;
+    public TableColumn<InventoryTM,String> colStoredLocation;
+    public TableColumn<InventoryTM,String> colQuantityAvailable;
+    public TableColumn<InventoryTM,String> colUnitPrice;
+    public TableColumn<InventoryTM,String> colSize;
+    public TableColumn<InventoryTM,String> colPrinterEmbroidered;
+    public TableColumn<InventoryTM,String> colItemName;
+    public TableColumn<InventoryTM,String> colInventoryId;
+
+    private final InventoryModel inventoryModel = new InventoryModel();
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
     }

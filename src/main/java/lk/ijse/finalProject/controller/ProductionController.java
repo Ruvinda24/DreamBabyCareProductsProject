@@ -5,6 +5,9 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.finalProject.dto.tm.ProductionTM;
+import lk.ijse.finalProject.dto.tm.ProductionTaskTM;
+import lk.ijse.finalProject.model.ProductionModel;
 
 public class ProductionController {
     public AnchorPane ancProductionContainer;
@@ -17,11 +20,13 @@ public class ProductionController {
     public Button btnUpdate;
     public Button btnDelete;
     public Button btnReset;
-    public TableColumn colProductionId;
-    public TableView tblProduction;
-    public TableColumn colInventoryId;
-    public TableColumn colDescription;
-    public TableColumn colStatus;
+    public TableView<ProductionTM> tblProduction;
+    public TableColumn<ProductionTM,String> colProductionId;
+    public TableColumn<ProductionTM,String> colInventoryId;
+    public TableColumn<ProductionTM,String> colDescription;
+    public TableColumn<ProductionTM,String> colStatus;
+
+    private final ProductionModel productionModel = new ProductionModel();
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
     }

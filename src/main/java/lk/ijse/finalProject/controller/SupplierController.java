@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.finalProject.dto.tm.SupplierTM;
 
 public class SupplierController {
     public AnchorPane ancSupplierContainer;
@@ -17,11 +18,11 @@ public class SupplierController {
     public Button btnUpdate;
     public Button btnDelete;
     public Button btnReset;
-    public TableView tblSupplier;
-    public TableColumn colAccountDetails;
-    public TableColumn colContact;
-    public TableColumn colName;
-    public TableColumn colSupplierId;
+    public TableView<SupplierTM> tblSupplier;
+    public TableColumn<SupplierTM,String> colAccountDetails;
+    public TableColumn<SupplierTM,String> colContact;
+    public TableColumn<SupplierTM,String> colName;
+    public TableColumn<SupplierTM,String> colSupplierId;
 
 
     public void labelOverViewClickOnAction(MouseEvent mouseEvent) {
