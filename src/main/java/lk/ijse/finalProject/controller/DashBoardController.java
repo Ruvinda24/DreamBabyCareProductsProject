@@ -24,9 +24,11 @@ public class DashBoardController implements Initializable {
     }
 
     public void orderPlacementOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/OrderPlacementView.fxml");
     }
 
     public void productionPlacementOnAction(ActionEvent actionEvent) {
+        navigateTo("/view/ProductionPlacementView.fxml");
     }
 
     public void OverViewOnAction(ActionEvent actionEvent) {

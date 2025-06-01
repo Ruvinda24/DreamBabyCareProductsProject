@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class MaterialModel {
 
-    public String saveMaterials(MaterialDto materialDto) throws ClassNotFoundException, SQLException {
+    public boolean saveMaterials(MaterialDto materialDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO material VALUES (?,?,?,?)",
@@ -19,7 +19,7 @@ public class MaterialModel {
                 materialDto.getQuantity()
         );
     }
-    public String updateMaterials(MaterialDto materialDto) throws ClassNotFoundException, SQLException{
+    public boolean updateMaterials(MaterialDto materialDto) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "UPDATE material SET name = ?, color_type = ?, quantity = ? WHERE material_id= ?",
@@ -30,27 +30,30 @@ public class MaterialModel {
         );
     }
 
-    public String deleteMaterials(String material_id) throws ClassNotFoundException, SQLException{
+    public boolean deleteMaterials(String material_id) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "DELETE FROM material WHERE material_id = ?",material_id
         );
     }
 
-    public MaterialDto searchMaterials(String material_id) throws ClassNotFoundException, SQLException{
+    public ArrayList<MaterialDto> searchMaterials(String searchText) throws ClassNotFoundException, SQLException{
 
-        ResultSet rst = CrudUtil.execute("SELECT * FROM material WHERE material_id = ?", material_id);
+        ArrayList<MaterialDto> materialDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM material WHERE material_id LIKE ? OR name LIKE ? OR color_type LIKE ? OR quantity LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet rst = CrudUtil.execute(sql, pattern, pattern, pattern, pattern);
 
-        if(rst.next()){
+        while (rst.next()){
             MaterialDto dto = new MaterialDto(
                     rst.getString("material_id"),
                     rst.getString("name"),
                     rst.getString("color_type"),
-                    rst.getInt("address")
+                    rst.getInt("quantity")
             );
-            return dto;
+            materialDtoArrayList.add(dto);
         }
-        return null;
+        return materialDtoArrayList;
     }
     public ArrayList<MaterialDto> getAllMaterials() throws ClassNotFoundException, SQLException{
 
