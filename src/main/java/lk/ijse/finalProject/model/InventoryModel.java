@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class InventoryModel {
 
-    public String saveItems(InventoryDto inventoryDto) throws ClassNotFoundException, SQLException {
+    public boolean saveItems(InventoryDto inventoryDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO inventory VALUES (?,?,?,?,?,?,?)",
@@ -25,7 +25,7 @@ public class InventoryModel {
                 inventoryDto.getStored_location()
         );
     }
-    public String updateItems(InventoryDto inventoryDto) throws ClassNotFoundException, SQLException{
+    public boolean updateItems(InventoryDto inventoryDto) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "UPDATE inventory SET item_name = ?, printed_embroidered = ?, size = ?, unit_price = ?, quantity_available = ? ,stored_location = ? WHERE inventory_id= ?",
@@ -39,7 +39,7 @@ public class InventoryModel {
         );
     }
 
-    public String deleteItems(String inventory_id) throws ClassNotFoundException, SQLException{
+    public boolean deleteItems(String inventory_id) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "DELETE FROM inventory WHERE inventory_id = ?",
@@ -47,23 +47,26 @@ public class InventoryModel {
         );
     }
 
-    public InventoryDto searchItems(String inventory_id) throws ClassNotFoundException, SQLException{
+    public ArrayList<InventoryDto> searchItems(String searchText) throws ClassNotFoundException, SQLException{
 
-        ResultSet rst = CrudUtil.execute("SELECT * FROM inventory WHERE inventory_id = ?", inventory_id);
+        ArrayList<InventoryDto> inventoryDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM inventory WHERE inventory_id LIKE ? OR item_name LIKE ? OR printed_embroidered LIKE ? OR size LIKE ? OR unit_price LIKE ? OR quantity_available LIKE ? OR stored_location LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet rst = CrudUtil.execute(sql,pattern,pattern,pattern,pattern,pattern,pattern,pattern);
 
-        if(rst.next()){
+        while (rst.next()){
             InventoryDto dto = new InventoryDto(
-                    rst.getString("inventory_id"),
-                    rst.getString("item_name"),
-                    rst.getString("printed_embroidered"),
-                    rst.getString("size"),
-                    rst.getDouble("unit_price"),
-                    rst.getInt("quantity_available"),
-                    rst.getString("stored_location")
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getDouble(5),
+                    rst.getInt(6),
+                    rst.getString(7)
             );
-            return dto;
+            inventoryDtoArrayList.add(dto);
         }
-        return null;
+        return inventoryDtoArrayList;
     }
     public ArrayList<InventoryDto> getAllItems() throws ClassNotFoundException, SQLException{
 
@@ -72,13 +75,13 @@ public class InventoryModel {
 
         while (rst.next()) {
             InventoryDto dto = new InventoryDto(
-                    rst.getString("inventory_id"),
-                    rst.getString("item_name"),
-                    rst.getString("printed_embroidered"),
-                    rst.getString("size"),
-                    rst.getDouble("unit_price"),
-                    rst.getInt("quantity_available"),
-                    rst.getString("stored_location")
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getDouble(5),
+                    rst.getInt(6),
+                    rst.getString(7)
             );
             inventoryDto.add(dto);
         }
