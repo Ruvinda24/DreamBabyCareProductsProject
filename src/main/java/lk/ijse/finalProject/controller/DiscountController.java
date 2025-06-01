@@ -251,6 +251,7 @@ public class DiscountController implements Initializable {
             cmbPaymentId1.getSelectionModel().clearSelection();
             cmbDiscountType1.getSelectionModel().clearSelection();
             txtDiscountAmount.setText("");
+            searchField.clear();
             btnSave.setDisable(false);
             btnUpdate.setDisable(true);
             btnDelete.setDisable(true);

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ShipmentModel {
 
-    public String saveShipments(ShipmentDto shipmentDto) throws ClassNotFoundException, SQLException {
+    public boolean saveShipments(ShipmentDto shipmentDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO shipment VALUES (?,?,?)",
@@ -22,7 +22,7 @@ public class ShipmentModel {
         );
     }
 
-    public String updateShipments(ShipmentDto shipmentDto) throws ClassNotFoundException, SQLException{
+    public boolean updateShipments(ShipmentDto shipmentDto) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "UPDATE shipment SET tracking_number = ?, shipment_date = ? WHERE shipment_id= ?",
@@ -32,24 +32,27 @@ public class ShipmentModel {
         );
     }
 
-    public String deleteShipments(String shipment_id) throws ClassNotFoundException, SQLException{
+    public boolean deleteShipments(String shipment_id) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute("DELETE FROM shipment WHERE shipment_id = ?", shipment_id);
     }
 
-    public ShipmentDto searchShipments(String shipment_id) throws ClassNotFoundException, SQLException{
+    public ArrayList<ShipmentDto> searchShipments(String searchText) throws ClassNotFoundException, SQLException{
 
-        ResultSet rst = CrudUtil.execute("SELECT * FROM shipment WHERE shipment_id = ?", shipment_id);
+        ArrayList<ShipmentDto> shipmentDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM shipment WHERE shipment_id LIKE ? OR tracking_number LIKE ? OR shipment_date LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet rst = CrudUtil.execute(sql, pattern, pattern, pattern);
 
-        if(rst.next()){
+        while(rst.next()){
             ShipmentDto dto = new ShipmentDto(
                     rst.getString("shipment_id"),
                     rst.getString("tracking_number"),
                     rst.getString("shipment_date")
             );
-            return dto;
+            shipmentDtoArrayList.add(dto);
         }
-        return null;
+        return shipmentDtoArrayList;
     }
     public ArrayList<ShipmentDto> getAllShipments() throws ClassNotFoundException, SQLException{
 
@@ -73,7 +76,7 @@ public class ShipmentModel {
         String tableCharacter = "SHP"; // Use any character Ex:- customer table for C, item table for I
         if (resultSet.next()) {
             String lastId = resultSet.getString(1); // "C001"
-            String lastIdNumberString = lastId.substring(1); // "001"
+            String lastIdNumberString = lastId.substring(tableCharacter.length()); // "001"
             int lastIdNumber = Integer.parseInt(lastIdNumberString); // 1
             int nextIdNUmber = lastIdNumber + 1; // 2
             // "C002"

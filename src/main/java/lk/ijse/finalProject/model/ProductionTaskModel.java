@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ProductionTaskModel {
 
-    public String saveProductionTasks(ProductionTaskDto productionTaskDto) throws ClassNotFoundException, SQLException {
+    public boolean saveProductionTasks(ProductionTaskDto productionTaskDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO production_task VALUES (?,?,?)",
@@ -22,7 +22,7 @@ public class ProductionTaskModel {
         );
     }
 
-    public String updateProductionTasks(ProductionTaskDto productionTaskDto) throws ClassNotFoundException, SQLException{
+    public boolean updateProductionTasks(ProductionTaskDto productionTaskDto) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "UPDATE production_task SET production_id = ?, task_id = ?WHERE production_task_id= ?",
@@ -32,25 +32,28 @@ public class ProductionTaskModel {
         );
     }
 
-    public String deleteProductionTasks(String production_task_id) throws ClassNotFoundException, SQLException{
+    public boolean deleteProductionTasks(String production_task_id) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute("DELETE FROM production_task WHERE production_task_id = ?", production_task_id);
 
     }
 
-    public ProductionTaskDto searchProductionTasks(String production_task_id) throws ClassNotFoundException, SQLException{
+    public ArrayList<ProductionTaskDto> searchProductionTasks(String searchText) throws ClassNotFoundException, SQLException{
 
-        ResultSet rst = CrudUtil.execute("SELECT * FROM production_task WHERE production_task_id = ?", production_task_id);
+        ArrayList<ProductionTaskDto> productionTaskDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM production_task WHERE production_task_id LIKE ? OR production_id LIKE ? OR task_id LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet rst = CrudUtil.execute(sql, pattern, pattern, pattern);
 
-        if(rst.next()){
+        while (rst.next()){
             ProductionTaskDto dto = new ProductionTaskDto(
                     rst.getString("production_task_id"),
                     rst.getString("production_id"),
                     rst.getString("task_id")
             );
-            return dto;
+            productionTaskDtoArrayList.add(dto);
         }
-        return null;
+        return productionTaskDtoArrayList;
     }
     public ArrayList<ProductionTaskDto> getAllProductionTasks() throws ClassNotFoundException, SQLException{
 
@@ -74,7 +77,7 @@ public class ProductionTaskModel {
         String tableCharacter = "PTASK"; // Use any character Ex:- customer table for C, item table for I
         if (resultSet.next()) {
             String lastId = resultSet.getString(1); // "C001"
-            String lastIdNumberString = lastId.substring(1); // "001"
+            String lastIdNumberString = lastId.substring(tableCharacter.length()); // "001"
             int lastIdNumber = Integer.parseInt(lastIdNumberString); // 1
             int nextIdNUmber = lastIdNumber + 1; // 2
             // "C002"
@@ -82,6 +85,24 @@ public class ProductionTaskModel {
         }
         // No data recode in table so return initial primary key
         return tableCharacter + "001";
+    }
+
+    public ArrayList<String> getAllProductionIds() throws ClassNotFoundException, SQLException {
+        ArrayList<String> productionIds = new ArrayList<>();
+        ResultSet rst = CrudUtil.execute("SELECT production_id FROM production");
+        while (rst.next()) {
+            productionIds.add(rst.getString("production_id"));
+        }
+        return productionIds;
+    }
+
+    public ArrayList<String> getAllTaskIds() throws ClassNotFoundException, SQLException {
+        ArrayList<String> taskIds = new ArrayList<>();
+        ResultSet rst = CrudUtil.execute("SELECT task_id FROM task");
+        while (rst.next()) {
+            taskIds.add(rst.getString("task_id"));
+        }
+        return taskIds;
     }
 
 }

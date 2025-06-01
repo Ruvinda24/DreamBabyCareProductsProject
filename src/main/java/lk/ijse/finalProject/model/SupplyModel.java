@@ -113,7 +113,7 @@ public class SupplyModel {
         return materialIds;
     }
 
-    public String getMaterialNameById(String materialId) throws ClassNotFoundException, SQLException {
+/*    public String getMaterialNameById(String materialId) throws ClassNotFoundException, SQLException {
         ResultSet rst = CrudUtil.execute("SELECT name FROM material WHERE material_id = ?", materialId);
         if (rst.next()) {
             return rst.getString("name");
@@ -127,6 +127,6 @@ public class SupplyModel {
             return rst.getString("name");
         }
         return null;
-    }
+    }*/
 
 }

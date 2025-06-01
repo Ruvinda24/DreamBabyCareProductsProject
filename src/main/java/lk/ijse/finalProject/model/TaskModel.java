@@ -81,7 +81,7 @@ public class TaskModel{
         String tableCharacter = "TASK"; // Use any character Ex:- customer table for C, item table for I
         if (resultSet.next()) {
             String lastId = resultSet.getString(1); // "C001"
-            String lastIdNumberString = lastId.substring(1); // "001"
+            String lastIdNumberString = lastId.substring(tableCharacter.length()); // "001"
             int lastIdNumber = Integer.parseInt(lastIdNumberString); // 1
             int nextIdNUmber = lastIdNumber + 1; // 2
             // "C002"
