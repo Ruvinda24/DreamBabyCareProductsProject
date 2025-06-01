@@ -57,6 +57,16 @@ public class TaskController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load status options").show();
         }
+
+        try {
+            loadTaskTableData();
+            loadNextId();
+            loadStatusOptions();
+            loadEmployeeId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR,"Fail to Initialize");
+        }
     }
 
 
@@ -241,6 +251,14 @@ public class TaskController implements Initializable {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load next task ID").show();
+        }
+    }
+
+    private void loadEmployeeId(){
+        try {
+            cmbEmployeeId.setItems(FXCollections.observableArrayList(taskModel.getAllEmployeeIds()));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
