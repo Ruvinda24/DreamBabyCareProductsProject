@@ -2,6 +2,7 @@ package lk.ijse.finalProject.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
@@ -17,7 +18,7 @@ public class ShipmentDto extends ArrayList<ShipmentDto> {
 
     private String shipment_id;
     private String tracking_number;
-    private String shipment_date;
+    private LocalDate shipment_date;
 
     @Override
     public <T> T[] toArray(IntFunction<T[]> generator) {

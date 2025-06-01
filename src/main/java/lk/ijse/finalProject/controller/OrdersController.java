@@ -390,6 +390,8 @@ public class OrdersController implements Initializable {
                         LocalDate date = rowData.getOrder_date();
                         ordersDatePicker.setValue(date);
                     } catch (Exception e) {
+                        e.printStackTrace();
+                        new Alert(Alert.AlertType.ERROR, "Failed to set order date").show();
                         ordersDatePicker.setValue(null);
                     }
                 }
