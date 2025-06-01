@@ -4,6 +4,7 @@ package lk.ijse.finalProject.model;
 import lk.ijse.finalProject.dto.ProductionDto;
 import lk.ijse.finalProject.util.CrudUtil;
 
+import java.lang.ref.SoftReference;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class ProductionModel {
 
 
-    public String saveProductions(ProductionDto productionDto) throws ClassNotFoundException, SQLException {
+    public boolean saveProductions(ProductionDto productionDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO production VALUES (?,?,?,?)",
@@ -22,7 +23,7 @@ public class ProductionModel {
         );
     }
 
-    public String updateProductions(ProductionDto productionDto) throws ClassNotFoundException, SQLException{
+    public boolean updateProductions(ProductionDto productionDto) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "UPDATE production SET inventory_id = ?, description = ?, status = ?WHERE production_id= ?",
@@ -33,25 +34,28 @@ public class ProductionModel {
         );
     }
 
-    public String deleteProductions(String production_id) throws ClassNotFoundException, SQLException{
+    public boolean deleteProductions(String production_id) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute("DELETE FROM production WHERE production_id = ?", production_id);
     }
 
-    public ProductionDto searchProductions(String production_id) throws ClassNotFoundException, SQLException{
+    public ArrayList<ProductionDto> searchProductions(String searchText) throws ClassNotFoundException, SQLException{
 
-        ResultSet rst = CrudUtil.execute("SELECT * FROM production WHERE production_id = ?", production_id);
+        ArrayList<ProductionDto> productionDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM production WHERE production_id LIKE ? OR inventory_id LIKE ? OR description LIKE ? OR status LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet rst = CrudUtil.execute(sql, pattern, pattern, pattern, pattern);
 
-        if(rst.next()){
+        while (rst.next()){
             ProductionDto dto = new ProductionDto(
                     rst.getString("production_id"),
                     rst.getString("inventory_id"),
                     rst.getString("description"),
                     rst.getString("status")
             );
-            return dto;
+            productionDtoArrayList.add(dto);
         }
-        return null;
+        return productionDtoArrayList;
     }
     public ArrayList<ProductionDto> getAllProductions() throws ClassNotFoundException, SQLException{
 
@@ -86,4 +90,13 @@ public class ProductionModel {
         return tableCharacter + "001";
     }
 
+    public ArrayList<String> getAllInventoryIds() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT inventory_id FROM inventory");
+        ArrayList<String> inventoryIds = new ArrayList<>();
+        while (resultSet.next()) {
+            inventoryIds.add(resultSet.getString("inventory_id"));
+        }
+        return inventoryIds;
+    }
 }
+

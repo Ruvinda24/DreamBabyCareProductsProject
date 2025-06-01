@@ -11,10 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TaskModel {
+public class TaskModel{
 
 
-    public String saveTasks(TaskDto taskDto) throws ClassNotFoundException, SQLException {
+    public boolean saveTasks(TaskDto taskDto) throws ClassNotFoundException, SQLException {
 
         return CrudUtil.execute(
                 "INSERT INTO task VALUES (?,?,?,?)",
@@ -24,7 +24,7 @@ public class TaskModel {
                 taskDto.getStatus()
         );
     }
-    public String updateTasks(TaskDto taskDto) throws ClassNotFoundException, SQLException{
+    public boolean updateTasks(TaskDto taskDto) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute(
                 "UPDATE task SET employee_id = ?, description = ?, status = ?WHERE task_id= ?",
@@ -35,25 +35,28 @@ public class TaskModel {
         );
     }
 
-    public String deleteTasks(String task_id) throws ClassNotFoundException, SQLException{
+    public boolean deleteTasks(String task_id) throws ClassNotFoundException, SQLException{
 
         return CrudUtil.execute("DELETE FROM task WHERE task_id = ?", task_id);
     }
 
-    public TaskDto searchTasks(String task_id) throws ClassNotFoundException, SQLException{
+    public ArrayList<TaskDto> searchTasks(String searchText) throws ClassNotFoundException, SQLException{
 
-        ResultSet rst = CrudUtil.execute("SELECT * FROM task WHERE task_id = ?", task_id);
+        ArrayList<TaskDto> taskDtoArrayList = new ArrayList<>();
+        String sql = "SELECT * FROM task WHERE task_id LIKE ? OR employee_id LIKE ? OR description LIKE ? OR status LIKE ?";
+        String pattern = "%" + searchText + "%";
+        ResultSet rst = CrudUtil.execute(sql, pattern, pattern, pattern, pattern);
 
-        if(rst.next()){
+        while(rst.next()){
             TaskDto dto = new TaskDto(
                     rst.getString("task_id"),
                     rst.getString("employee_id"),
                     rst.getString("description"),
                     rst.getString("status")
             );
-            return dto;
+            taskDtoArrayList.add(dto);
         }
-        return null;
+        return taskDtoArrayList;
     }
     public ArrayList<TaskDto> getAllTasks() throws ClassNotFoundException, SQLException{
 
@@ -86,6 +89,14 @@ public class TaskModel {
         }
         // No data recode in table so return initial primary key
         return tableCharacter + "001";
+    }
+    public ArrayList<String> getAllEmployeeIds() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT employee_id FROM employee");
+        ArrayList<String> employeeIds = new ArrayList<>();
+        while (resultSet.next()) {
+            employeeIds.add(resultSet.getString("employee_id"));
+        }
+        return employeeIds;
     }
 
 }
