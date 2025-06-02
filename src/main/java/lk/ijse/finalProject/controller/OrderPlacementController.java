@@ -70,6 +70,7 @@ public class OrderPlacementController implements Initializable {
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) {
+        resetPage();
     }
 
     public void btnPlaceOrderOnAction(ActionEvent actionEvent) {
@@ -139,6 +140,35 @@ public class OrderPlacementController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load data..!").show();
+        }
+    }
+
+    private void resetPage(){
+        //lblOrderId.setText("");
+
+        loadNextId();
+        loadCustomerIds();
+        loadItemIds();
+
+        orderPlacementDate.setText("");
+        txtCustomerContact.setText("");
+        lblCustomerName.setText("");
+        cmbItemId.getSelectionModel().clearSelection();
+        lblItemName.setText("");
+        lblItemQty.setText("");
+        txtAddToCartQty.setText("");
+        lblItemPrice.setText("");
+        cartData.clear();
+        tblOrderPlacement.refresh();
+    }
+
+    private void loadNextId() {
+        try {
+            String nextId = ordersModel.getNextOrderId();
+            lblOrderId.setText(nextId);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load next order ID..!").show();
         }
     }
 }
