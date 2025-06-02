@@ -4,6 +4,7 @@ module lk.ijse.finalProject {
     requires javafx.fxml;
     requires java.sql;
     requires lombok;
+    requires java.desktop;
 
     opens lk.ijse.finalProject.dto.tm to javafx.base;
     opens lk.ijse.finalProject to javafx.graphics;

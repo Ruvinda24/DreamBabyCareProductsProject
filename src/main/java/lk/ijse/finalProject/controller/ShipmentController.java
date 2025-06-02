@@ -131,6 +131,7 @@ public class ShipmentController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to search shipments").show();
         }
+
     }
 
     public void saveBtnOnAction(ActionEvent actionEvent) {

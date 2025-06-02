@@ -103,4 +103,13 @@ public class InventoryModel {
         // No data recode in table so return initial primary key
         return tableCharacter + "001";
     }
+
+    public ArrayList<String> getAllItemIds() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT inventory_id FROM inventory");
+        ArrayList<String> inventoryIds = new ArrayList<>();
+        while (resultSet.next()) {
+            inventoryIds.add(resultSet.getString("inventory_id"));
+        }
+        return inventoryIds;
+    }
 }

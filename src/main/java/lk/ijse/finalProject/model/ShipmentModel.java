@@ -48,7 +48,7 @@ public class ShipmentModel {
             ShipmentDto dto = new ShipmentDto(
                     rst.getString("shipment_id"),
                     rst.getString("tracking_number"),
-                    rst.getString("shipment_date")
+                    rst.getDate("shipment_date").toLocalDate()
             );
             shipmentDtoArrayList.add(dto);
         }
@@ -63,7 +63,7 @@ public class ShipmentModel {
             ShipmentDto dto = new ShipmentDto(
                     rst.getString("shipment_id"),
                     rst.getString("tracking_number"),
-                    rst.getString("shipment_date")
+                    rst.getDate("shipment_date").toLocalDate()
             );
             shipmentDto.add(dto);
         }

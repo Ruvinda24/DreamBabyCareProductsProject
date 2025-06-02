@@ -116,4 +116,13 @@ public class CustomerModel {
 
         return customerDtoArrayList;
     }
+
+    public ArrayList<String> getAllCustomerIds() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT customer_id FROM customer");
+        ArrayList<String> customerIdArrayList = new ArrayList<>();
+        while (resultSet.next()) {
+            customerIdArrayList.add(resultSet.getString("customer_id"));
+        }
+        return customerIdArrayList;
+    }
 }
