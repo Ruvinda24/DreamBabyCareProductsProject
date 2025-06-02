@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.finalProject.dto.InventoryDto;
 import lk.ijse.finalProject.dto.tm.CartTM;
 import lk.ijse.finalProject.model.CustomerModel;
 import lk.ijse.finalProject.model.InventoryModel;
@@ -72,7 +73,7 @@ public class OrderPlacementController implements Initializable {
 
     public void btnAddToCartOnAction(ActionEvent actionEvent) {
         String selectedItemId = (String) cmbItemId.getSelectionModel().getSelectedItem();
-        String cartQtyString = txtAddToCartQty.getText();
+        String cartQtyString = lblItemQty.getText();
 
         if (selectedItemId == null) {
             new Alert(Alert.AlertType.WARNING, "Please select item..!").show();
@@ -84,7 +85,7 @@ public class OrderPlacementController implements Initializable {
             return;
         }
 
-        String itemQtyOnStockString = lblItemQty.getText();
+        String itemQtyOnStockString = txtAddToCartQty.getText();
 
         int cartQty = Integer.parseInt(cartQtyString);
         int itemQtyOnStock = Integer.parseInt(itemQtyOnStockString);
@@ -95,6 +96,7 @@ public class OrderPlacementController implements Initializable {
             return;
         }
 
+        String selectedCustomerId = lblCustomerName.getText();
         String itemName = lblItemName.getText();
         String itemUnitPriceString = lblItemPrice.getText();
 
@@ -110,7 +112,10 @@ public class OrderPlacementController implements Initializable {
                     new Alert(Alert.AlertType.WARNING, "Not enough item quantity..!").show();
                     return;
                 }
-                txtAddToCartQty.setText("");
+                txtAddToCartQty.setText("");//write a method in a model to update the item quantity in stock & remember fix the few errors in this method
+                cartTM.setCustomerId(selectedCustomerId);
+                cartTM.setItemId(selectedItemId);
+                cartTM.setItemName(itemName);
                 cartTM.setCartQty(newQty);
                 cartTM.setTotal(newQty * itemUnitPrice);
 
@@ -122,6 +127,7 @@ public class OrderPlacementController implements Initializable {
 
         Button removeBtn = new Button("Remove");
         CartTM cartTM = new CartTM(
+                selectedCustomerId,
                 selectedItemId,
                 itemName,
                 cartQty,
@@ -208,6 +214,30 @@ public class OrderPlacementController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load data..!").show();
+        }
+
+        cmbItemId.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                loadItemDetails((String) newValue);
+            }
+        });
+    }
+
+    private void loadItemDetails(String itemId) {
+        try {
+            InventoryDto item = inventoryModel.getItemsByIds(itemId);
+            if (item != null) {
+                lblItemName.setText(item.getItem_name());
+                txtAddToCartQty.setText(String.valueOf(item.getQuantity_available()));
+                lblItemPrice.setText(String.valueOf(item.getUnit_price()));
+            } else {
+                lblItemName.setText("");
+                lblItemQty.setText("");
+                lblItemPrice.setText("");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load item details..!").show();
         }
     }
 

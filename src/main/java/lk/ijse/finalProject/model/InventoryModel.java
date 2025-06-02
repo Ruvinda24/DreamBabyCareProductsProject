@@ -1,11 +1,9 @@
 package lk.ijse.finalProject.model;
 
-import lk.ijse.finalProject.db.DBConnection;
+import javafx.scene.control.Alert;
 import lk.ijse.finalProject.dto.InventoryDto;
 import lk.ijse.finalProject.util.CrudUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -111,5 +109,26 @@ public class InventoryModel {
             inventoryIds.add(resultSet.getString("inventory_id"));
         }
         return inventoryIds;
+    }
+
+    public InventoryDto getItemsByIds(String itemId) {
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM inventory WHERE inventory_id = ?", itemId);
+            if (resultSet.next()) {
+                return new InventoryDto(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getDouble(5),
+                        resultSet.getInt(6),
+                        resultSet.getString(7)
+                );
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load items by Item ID...").show();
+        }
+        return null;
     }
 }
