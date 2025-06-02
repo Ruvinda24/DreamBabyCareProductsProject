@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancOrderPlacementPage" prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.OrderPlacementController">
+<AnchorPane fx:id="ancOrderPlacementPage" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.OrderPlacementController">
     <children>
         <VBox prefHeight="70.0" prefWidth="550.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
@@ -40,7 +40,7 @@
                                 <Insets left="41.0" />
                             </HBox.margin>
                         </Label>
-                        <Label fx:id="lblOrderId" prefHeight="70.0" prefWidth="46.0" text="01">
+                        <Label fx:id="lblOrderId" prefHeight="30.0" prefWidth="134.0" text="01">
                             <font>
                                 <Font name="Arial Bold" size="25.0" />
                             </font>
@@ -52,28 +52,28 @@
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="1176.0" layoutY="14.0" prefHeight="38.0" prefWidth="209.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <VBox layoutX="1176.0" layoutY="14.0" prefHeight="38.0" prefWidth="209.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="10.0">
             <children>
                 <HBox prefHeight="78.0" prefWidth="400.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;">
                     <children>
-                        <Label fx:id="orderPlacementDate" prefHeight="66.0" prefWidth="295.0" text="2022-12-20">
+                        <Label fx:id="orderPlacementDate" prefHeight="34.0" prefWidth="230.0" text="2022-12-20">
                             <font>
                                 <Font name="Arial Bold" size="25.0" />
                             </font>
                             <HBox.margin>
-                                <Insets left="41.0" />
+                                <Insets left="25.0" />
                             </HBox.margin>
                         </Label>
                     </children>
                     <VBox.margin>
-                        <Insets />
+                        <Insets right="13.0" />
                     </VBox.margin>
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="14.0" layoutY="100.0" prefHeight="70.0" prefWidth="400.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
+        <VBox layoutX="14.0" layoutY="100.0" prefHeight="70.0" prefWidth="1319.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="100.0">
             <children>
-                <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;">
+                <HBox prefHeight="70.0" prefWidth="1348.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;">
                     <children>
                         <Label prefHeight="66.0" prefWidth="141.0" text="Customer Contact">
                             <font>
@@ -83,7 +83,7 @@
                                 <Insets left="41.0" />
                             </HBox.margin>
                         </Label>
-                        <TextField fx:id="txtCustomerContact" onKeyTyped="#searchCustomerContact" prefHeight="26.0" prefWidth="281.0">
+                        <TextField fx:id="txtCustomerContact" onKeyTyped="#searchCustomerContact" prefHeight="26.0" prefWidth="281.0" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;">
                             <HBox.margin>
                                 <Insets left="97.0" top="19.0" />
                             </HBox.margin>
@@ -96,12 +96,12 @@
                                 <Insets left="100.0" />
                             </HBox.margin>
                         </Label>
-                        <Label fx:id="lblCustomerName" prefHeight="66.0" prefWidth="140.0">
+                        <Label fx:id="lblCustomerName" prefHeight="66.0" prefWidth="251.0">
                             <font>
                                 <Font name="Arial Bold" size="15.0" />
                             </font>
                             <HBox.margin>
-                                <Insets left="50.0" />
+                                <Insets left="-11.0" />
                             </HBox.margin>
                         </Label>
                   <Label fx:id="labelPopUpCustomer" alignment="CENTER" onMouseClicked="#goToCustomerPopUp" prefHeight="66.0" prefWidth="183.0" text="+ Add New Customer">
@@ -113,7 +113,7 @@
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="20.0" layoutY="178.0" prefHeight="135.0" prefWidth="1360.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-width: 2; -fx-border-radius: 20;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="180.0">
+        <VBox layoutX="20.0" layoutY="178.0" prefHeight="135.0" prefWidth="1321.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-width: 2; -fx-border-radius: 20;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="180.0">
             <children>
                 <HBox prefHeight="58.0" prefWidth="1355.0">
                     <children>
@@ -158,12 +158,12 @@
                                 <Insets left="30.0" />
                             </HBox.margin>
                         </Label>
-                        <TextField fx:id="lblItemQty" prefHeight="26.0" prefWidth="170.0">
+                        <TextField fx:id="txtCartQty" prefHeight="26.0" prefWidth="170.0" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;">
                             <HBox.margin>
                                 <Insets left="109.0" top="21.0" />
                             </HBox.margin>
                         </TextField>
-                        <Label prefHeight="66.0" prefWidth="179.0" text="On Stock Qty                :">
+                        <Label prefHeight="66.0" prefWidth="179.0" text="On Stock Qty             :">
                             <font>
                                 <Font name="Arial Bold" size="15.0" />
                             </font>
@@ -193,7 +193,7 @@
                 </HBox>
             </children>
         </VBox>
-        <HBox layoutX="20.0" layoutY="324.0" prefHeight="77.0" prefWidth="1360.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <HBox layoutX="20.0" layoutY="324.0" prefHeight="77.0" prefWidth="1360.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0">
             <children>
                 <Button mnemonicParsing="false" onAction="#btnAddToCartOnAction" prefHeight="31.0" prefWidth="1333.0" style="-fx-background-color: linear-gradient(to right, #B2FEFA, #0ED2F7); -fx-background-radius: 20;" text="Add ToCart" HBox.hgrow="ALWAYS">
                     <font>
@@ -205,7 +205,7 @@
                 </Button>
             </children>
         </HBox>
-        <VBox layoutX="20.0" layoutY="410.0" prefHeight="239.0" prefWidth="1360.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <VBox layoutX="20.0" layoutY="410.0" prefHeight="271.0" prefWidth="1340.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0">
             <children>
                 <TableView fx:id="tblOrderPlacement" prefHeight="229.0" prefWidth="1360.0" stylesheets="@../styles/tableView.css">
                     <columns>
@@ -223,7 +223,7 @@
                 </TableView>
             </children>
         </VBox>
-        <HBox layoutX="20.0" layoutY="650.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="660.0">
+        <HBox layoutX="20.0" layoutY="695.2" prefHeight="45.0" prefWidth="1340.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="695.0">
             <children>
                 <Button mnemonicParsing="false" onAction="#btnResetOnAction" prefWidth="670.0" style="-fx-background-color: linear-gradient(to right, #FF5F6D, #FFC371);" text="Reset">
                     <font>

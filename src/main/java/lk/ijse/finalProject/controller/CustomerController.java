@@ -44,7 +44,7 @@ public class CustomerController implements Initializable {
     private final String namePattern = "^[A-Za-z ]+$";
     private final String numberPattern = "^[0-9]{10}$";
     private final String addressPattern = "^[A-Za-z0-9 ,./-]+$";
-    ;
+
 
     public AnchorPane ancCustomerViewContainer;
     public TextField searchField;

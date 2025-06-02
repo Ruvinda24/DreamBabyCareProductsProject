@@ -125,4 +125,28 @@ public class CustomerModel {
         }
         return customerIdArrayList;
     }
+
+    public String getCustomerIdByContact(String contact) {
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT customer_id FROM customer WHERE phone = ?", contact);
+            if (resultSet.next()) {
+                return resultSet.getString("customer_id");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "Customer Not Found"; // Return null if no customer found with the given contact
+    }
+
+    public String getCustomerNameById(String customerId) {
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT name FROM customer WHERE customer_id = ?", customerId);
+            if (resultSet.next()) {
+                return resultSet.getString("name");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "Customer Not Found"; // Return null if no customer found with the given ID
+    }
 }

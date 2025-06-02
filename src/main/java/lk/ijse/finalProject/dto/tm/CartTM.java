@@ -2,7 +2,7 @@ package lk.ijse.finalProject.dto.tm;
 
 import lombok.*;
 
-import java.awt.*;
+import javafx.scene.control.Button;
 
 @AllArgsConstructor
 @NoArgsConstructor
