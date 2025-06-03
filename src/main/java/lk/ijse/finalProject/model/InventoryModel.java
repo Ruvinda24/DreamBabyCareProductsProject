@@ -131,4 +131,14 @@ public class InventoryModel {
         }
         return null;
     }
+
+    public boolean updateItemQuantity(String itemId, int newQty) throws SQLException {
+        String sql = "UPDATE inventory SET quantity_available = ? WHERE item_id = ?";
+        try (Connection con = DBConnection.getInstance().getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+            pst.setInt(1, newQty);
+            pst.setString(2, itemId);
+            return pst.executeUpdate() > 0;
+        }
+    }
 }

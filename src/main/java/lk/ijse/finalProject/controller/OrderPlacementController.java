@@ -34,7 +34,6 @@ public class OrderPlacementController implements Initializable {
     public Label lblCustomerName;
     public ComboBox cmbItemId;
     public Label lblItemName;
-    public TextField lblItemQty;
     public Label txtAddToCartQty;
     public Label lblItemPrice;
     public TableView<CartTM> tblOrderPlacement;
@@ -44,6 +43,7 @@ public class OrderPlacementController implements Initializable {
     public TableColumn<CartTM, Integer> colQuantity;
     public TableColumn<CartTM, Double> qtyPrice;
     public TableColumn<CartTM, Double> colTotal;
+    public TableColumn colPaymentMethod;
     public TableColumn<?, ?> colAction;
     public Label labelPopUpCustomer;
 
@@ -53,6 +53,8 @@ public class OrderPlacementController implements Initializable {
 
     private final ObservableList<CartTM> cartData = FXCollections.observableArrayList();
     public TextField txtCartQty;
+    public ComboBox cmbPaymentMethod;
+
 
 
     public void goToDashBoardPage(MouseEvent mouseEvent) {
@@ -66,6 +68,7 @@ public class OrderPlacementController implements Initializable {
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("cartQty"));
         qtyPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+        colPaymentMethod.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("btnRemove"));
 
         tblOrderPlacement.setItems(cartData);
@@ -73,7 +76,7 @@ public class OrderPlacementController implements Initializable {
 
     public void btnAddToCartOnAction(ActionEvent actionEvent) {
         String selectedItemId = (String) cmbItemId.getSelectionModel().getSelectedItem();
-        String cartQtyString = lblItemQty.getText();
+        String cartQtyString = txtCartQty.getText();
 
         if (selectedItemId == null) {
             new Alert(Alert.AlertType.WARNING, "Please select item..!").show();
@@ -86,11 +89,9 @@ public class OrderPlacementController implements Initializable {
         }
 
         String itemQtyOnStockString = txtAddToCartQty.getText();
-
         int cartQty = Integer.parseInt(cartQtyString);
         int itemQtyOnStock = Integer.parseInt(itemQtyOnStockString);
 
-        // 10 < 15
         if (itemQtyOnStock < cartQty) {
             new Alert(Alert.AlertType.WARNING, "Not enough item quantity..!").show();
             return;
@@ -102,27 +103,27 @@ public class OrderPlacementController implements Initializable {
 
         double itemUnitPrice = Double.parseDouble(itemUnitPriceString);
         double total = itemUnitPrice * cartQty;
+        String paymentMethod = (String) cmbPaymentMethod.getSelectionModel().getSelectedItem();
 
+        if (paymentMethod == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select a payment method..!").show();
+            return;
+        }
 
         for (CartTM cartTM : cartData) {
             if (cartTM.getItemId().equals(selectedItemId)) {
                 int newQty = cartTM.getCartQty() + cartQty;
-
                 if (itemQtyOnStock < newQty) {
                     new Alert(Alert.AlertType.WARNING, "Not enough item quantity..!").show();
                     return;
                 }
-                txtAddToCartQty.setText("");//write a method in a model to update the item quantity in stock & remember fix the few errors in this method
-                cartTM.setCustomerId(selectedCustomerId);
-                cartTM.setItemId(selectedItemId);
-                cartTM.setItemName(itemName);
                 cartTM.setCartQty(newQty);
                 cartTM.setTotal(newQty * itemUnitPrice);
-
                 tblOrderPlacement.refresh();
+                // Update available quantity in UI only
+                txtAddToCartQty.setText(String.valueOf(itemQtyOnStock - cartQty));
                 return;
             }
-
         }
 
         Button removeBtn = new Button("Remove");
@@ -133,17 +134,19 @@ public class OrderPlacementController implements Initializable {
                 cartQty,
                 itemUnitPrice,
                 total,
+                paymentMethod,
                 removeBtn
         );
 
         removeBtn.setOnAction(action -> {
             cartData.remove(cartTM);
-
             tblOrderPlacement.refresh();
         });
 
-        txtAddToCartQty.setText("");
         cartData.add(cartTM);
+        // Update available quantity in UI only
+        txtAddToCartQty.setText(String.valueOf(itemQtyOnStock - cartQty));
+        // Do not update inventory in the database here
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) {
@@ -215,12 +218,16 @@ public class OrderPlacementController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load data..!").show();
         }
+        cmbPaymentMethod.setItems(FXCollections.observableArrayList("Online", "Cash on Delivery", "Card Payment"));
+
 
         cmbItemId.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 loadItemDetails((String) newValue);
             }
         });
+
+
     }
 
     private void loadItemDetails(String itemId) {
@@ -232,7 +239,7 @@ public class OrderPlacementController implements Initializable {
                 lblItemPrice.setText(String.valueOf(item.getUnit_price()));
             } else {
                 lblItemName.setText("");
-                lblItemQty.setText("");
+                txtCartQty.setText("");
                 lblItemPrice.setText("");
             }
         } catch (Exception e) {
@@ -281,12 +288,12 @@ public class OrderPlacementController implements Initializable {
         loadCustomerIds();
         loadItemIds();
 
-        orderPlacementDate.setText("");
+        //orderPlacementDate.setText("");
         txtCustomerContact.setText("");
         lblCustomerName.setText("");
         cmbItemId.getSelectionModel().clearSelection();
         lblItemName.setText("");
-        lblItemQty.setText("");
+        txtCartQty.setText("");
         txtAddToCartQty.setText("");
         lblItemPrice.setText("");
         cartData.clear();
@@ -301,5 +308,14 @@ public class OrderPlacementController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load next order ID..!").show();
         }
+    }
+
+    private void resetWhenAddToCart() {
+        cmbItemId.getSelectionModel().clearSelection();
+        txtCartQty.clear();
+        lblItemName.setText("");
+        txtAddToCartQty.setText("");
+        lblItemPrice.setText("");
+        cmbPaymentMethod.getSelectionModel().clearSelection();
     }
 }

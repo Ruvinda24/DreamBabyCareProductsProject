@@ -16,6 +16,7 @@ public class CartTM {
     private int cartQty;
     private double unitPrice;
     private double total;
+    private String paymentMethod;
     private Button btnRemove;
 
 }
