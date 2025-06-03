@@ -99,4 +99,19 @@ public class PaymentModel {
         }
         return orderIds;
     }
+
+    /*public boolean saveNewPayments(PaymentDto paymentDto) {
+        try {
+            return CrudUtil.execute(
+                    "INSERT INTO payment VALUES (?,?,?)",
+                    paymentDto.getPayment_id(),
+                    paymentDto.getOrder_id(),
+                    paymentDto.getAmount(),
+                    paymentDto.getPayment_method()
+            );
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }*/
 }

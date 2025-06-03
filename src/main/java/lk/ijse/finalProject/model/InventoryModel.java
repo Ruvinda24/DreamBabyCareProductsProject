@@ -132,7 +132,33 @@ public class InventoryModel {
         return null;
     }
 
-    public boolean updateItemQuantity(String itemId, int newQty) throws SQLException {
+    public boolean reduceItemQty(String itemId, int cartQty) {
+        try {
+            ResultSet resultSet = CrudUtil.execute(
+                    "SELECT quantity_available FROM inventory WHERE inventory_id = ?",
+                    itemId
+            );
+            if (resultSet.next()) {
+                int currentQty = resultSet.getInt("quantity_available");
+                if (currentQty >= cartQty) {
+                    int newQty = currentQty - cartQty;
+                    return CrudUtil.execute(
+                            "UPDATE inventory SET quantity_available = ? WHERE inventory_id = ?",
+                            newQty,
+                            itemId);
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Insufficient stock for Item ID: " + itemId).show();
+                    return false;
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error reducing item quantity...").show();
+        }
+        return false;
+    }
+
+/*    public boolean updateItemQuantity(String itemId, int newQty) throws SQLException {
         String sql = "UPDATE inventory SET quantity_available = ? WHERE item_id = ?";
         try (Connection con = DBConnection.getInstance().getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -140,5 +166,6 @@ public class InventoryModel {
             pst.setString(2, itemId);
             return pst.executeUpdate() > 0;
         }
-    }
+    }*/
+    
 }

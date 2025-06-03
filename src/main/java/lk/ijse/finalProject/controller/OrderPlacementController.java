@@ -13,13 +13,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.finalProject.db.DBConnection;
 import lk.ijse.finalProject.dto.InventoryDto;
+import lk.ijse.finalProject.dto.PaymentDto;
+import lk.ijse.finalProject.dto.ShipmentDto;
 import lk.ijse.finalProject.dto.tm.CartTM;
-import lk.ijse.finalProject.model.CustomerModel;
-import lk.ijse.finalProject.model.InventoryModel;
-import lk.ijse.finalProject.model.OrdersModel;
+import lk.ijse.finalProject.model.*;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -50,11 +52,14 @@ public class OrderPlacementController implements Initializable {
     private final OrdersModel ordersModel = new OrdersModel();
     private final CustomerModel customerModel = new CustomerModel();
     private final InventoryModel inventoryModel = new InventoryModel();
+    private final OrderItemModel orderItemModel = new OrderItemModel();
+    private final PaymentModel paymentModel = new PaymentModel();
+    private final ShipmentModel shipmentModel = new ShipmentModel();
 
     private final ObservableList<CartTM> cartData = FXCollections.observableArrayList();
     public TextField txtCartQty;
     public ComboBox cmbPaymentMethod;
-
+    public TextField txtShipmentTrackingNumber;
 
 
     public void goToDashBoardPage(MouseEvent mouseEvent) {
@@ -154,8 +159,114 @@ public class OrderPlacementController implements Initializable {
     }
 
     public void btnPlaceOrderOnAction(ActionEvent actionEvent) {
-    }
+        Connection connection = null;
+        try {
+            connection = DBConnection.getInstance().getConnection();
+            connection.setAutoCommit(false);
 
+            // 1. Prepare IDs and data
+            String shipmentId = shipmentModel.getNextShipmentId();
+            String shipmentDate = orderPlacementDate.getText();
+            String trackingNumber = txtShipmentTrackingNumber.getText();
+
+            String orderId = lblOrderId.getText();
+            String orderDate = orderPlacementDate.getText();
+            String customerContact = txtCustomerContact.getText();
+            String customerId = customerModel.getCustomerIdByContact(customerContact);
+            String status = "Shipped";
+
+            String paymentId = paymentModel.getNextPaymentId();
+            String paymentMethod = (String) cmbPaymentMethod.getSelectionModel().getSelectedItem();
+            double totalAmount = cartData.stream().mapToDouble(CartTM::getTotal).sum();
+
+            // 2. Save shipment
+            boolean shipmentSaved = shipmentModel.saveShipments(
+                    new ShipmentDto(
+                            shipmentId,
+                            trackingNumber,
+                            LocalDate.parse(shipmentDate))
+            );
+            if (!shipmentSaved) {
+                connection.rollback();
+                new Alert(Alert.AlertType.ERROR, "Failed to save shipment!").show();
+                return;
+            }
+
+            // 3. Save order
+            boolean orderSaved = ordersModel.saveNewOrder(
+                    orderId,
+                    orderDate,
+                    customerId,
+                    shipmentId,
+                    status
+            );
+            if (!orderSaved) {
+                connection.rollback();
+                new Alert(Alert.AlertType.ERROR, "Failed to save order!").show();
+                return;
+            }
+
+            // 4. Save order items and update inventory
+            boolean allItemsSaved = true;
+            for (CartTM cartTM : cartData) {
+                String orderItemId = orderItemModel.getNextOrderItemId();
+                boolean itemSaved = orderItemModel.saveNewOrderItem(
+                        orderItemId,
+                        orderId,
+                        cartTM.getItemId(),
+                        cartTM.getCartQty(),
+                        cartTM.getUnitPrice() * cartTM.getCartQty() // amount = unit price * qty
+                );
+                boolean inventoryUpdated = inventoryModel.reduceItemQty(
+                        cartTM.getItemId(),
+                        cartTM.getCartQty()
+                );
+                if (!itemSaved || !inventoryUpdated) {
+                    allItemsSaved = false;
+                    break;
+                }
+            }
+            if (!allItemsSaved) {
+                connection.rollback();
+                new Alert(Alert.AlertType.ERROR, "Failed to save order items or update inventory!").show();
+                return;
+            }
+
+            // 5. Save payment
+            boolean paymentSaved = paymentModel.savePayments(
+                    new PaymentDto(
+                            paymentId,
+                            orderId,
+                            totalAmount,
+                            paymentMethod)
+            );
+            if (!paymentSaved) {
+                connection.rollback();
+                new Alert(Alert.AlertType.ERROR, "Failed to save payment!").show();
+                return;
+            }
+
+            // 6. Commit transaction
+            connection.commit();
+            new Alert(Alert.AlertType.INFORMATION, "Order placed successfully!").show();
+            resetPage();
+
+        } catch (Exception e) {
+            try {
+                if (connection != null) connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error placing order!").show();
+        } finally {
+            try {
+                if (connection != null) connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public void goToCustomerPopUp(MouseEvent mouseEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomerPagePopUp.fxml"));

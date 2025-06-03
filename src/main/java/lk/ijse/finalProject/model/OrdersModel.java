@@ -139,4 +139,20 @@ public class OrdersModel {
         }
         return shipmentIds;
     }
+
+    public boolean saveNewOrder(String orderId, String orderDate, String customerId, String shipmentId, String status) {
+        try{
+                return CrudUtil.execute(
+                        "INSERT INTO orders (order_id, order_date, customer_id, shipment_id, status) VALUES (?, ?, ?, ?, ?)",
+                        orderId,
+                        orderDate,
+                        customerId,
+                        shipmentId,
+                        status
+                );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

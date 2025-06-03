@@ -125,12 +125,12 @@
                                 <Insets left="30.0" />
                             </HBox.margin>
                         </Label>
-                        <ComboBox fx:id="cmbItemId" prefHeight="26.0" prefWidth="280.0">
+                        <ComboBox fx:id="cmbItemId" prefHeight="26.0" prefWidth="146.0">
                             <HBox.margin>
-                                <Insets left="110.0" top="14.0" />
+                                <Insets left="16.0" top="14.0" />
                             </HBox.margin>
                         </ComboBox>
-                        <Label prefHeight="58.0" prefWidth="153.0" text="Item Name             :">
+                        <Label prefHeight="58.0" prefWidth="110.0" text="Item Name   :">
                             <font>
                                 <Font name="Arial Bold" size="15.0" />
                             </font>
@@ -143,18 +143,37 @@
                                 <Font name="Arial Bold" size="15.0" />
                             </font>
                             <HBox.margin>
-                                <Insets left="14.0" />
+                                <Insets left="-1.0" />
                             </HBox.margin>
                         </Label>
-                        <Label prefHeight="66.0" prefWidth="179.0" text="Item Price                :">
+                        <Label prefHeight="58.0" prefWidth="95.0" text="Item Price   :">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                        </Label>
+                        <Label fx:id="lblItemPrice" prefHeight="58.0" prefWidth="116.0">
                             <font>
                                 <Font name="Arial Bold" size="15.0" />
                             </font>
                         </Label>
-                        <Label fx:id="lblItemPrice" prefHeight="58.0" prefWidth="153.0">
+                        <Label prefHeight="66.0" prefWidth="146.0" text="On Stock Qty          :">
                             <font>
                                 <Font name="Arial Bold" size="15.0" />
                             </font>
+                            <HBox.margin>
+                                <Insets left="15.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="txtAddToCartQty" prefHeight="58.0" prefWidth="115.0">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="15.0" right="13.0" />
+                            </HBox.margin>
                         </Label>
                     </children>
                <VBox.margin>
@@ -171,37 +190,37 @@
                                 <Insets left="30.0" />
                             </HBox.margin>
                         </Label>
-                        <TextField fx:id="txtCartQty" prefHeight="26.0" prefWidth="170.0" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;">
+                        <TextField fx:id="txtCartQty" prefHeight="30.0" prefWidth="146.0" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;">
                             <HBox.margin>
-                                <Insets left="109.0" top="21.0" />
+                                <Insets left="17.0" top="21.0" />
                             </HBox.margin>
                         </TextField>
-                        <Label prefHeight="66.0" prefWidth="146.0" text="On Stock Qty          :">
-                            <font>
-                                <Font name="Arial Bold" size="15.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="141.0" />
-                            </HBox.margin>
-                        </Label>
-                        <Label fx:id="txtAddToCartQty" prefHeight="58.0" prefWidth="181.0">
-                            <font>
-                                <Font name="Arial Bold" size="15.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="15.0" right="13.0" />
-                            </HBox.margin>
-                        </Label>
                   <Label prefHeight="66.0" prefWidth="151.0" text="Payment Method    :">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets left="51.0" />
+                     </HBox.margin>
                   </Label>
-                  <ComboBox fx:id="cmbPaymentMethod" prefHeight="26.0" prefWidth="181.0">
+                  <ComboBox fx:id="cmbPaymentMethod" prefHeight="26.0" prefWidth="109.0">
                      <HBox.margin>
                         <Insets left="8.0" top="18.0" />
                      </HBox.margin>
                   </ComboBox>
+                  <Label prefHeight="66.0" prefWidth="150.0" text="Tracking Number   :">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="115.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtShipmentTrackingNumber" prefHeight="26.0" prefWidth="183.0" promptText="56245693" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20">
+                     <HBox.margin>
+                        <Insets left="6.0" top="22.0" />
+                     </HBox.margin>
+                  </TextField>
                     </children>
                 </HBox>
             </children>
@@ -228,7 +247,7 @@
                         <TableColumn fx:id="colQuantity" prefWidth="75.0" text="Qty" />
                         <TableColumn fx:id="qtyPrice" prefWidth="75.0" text="Unit Price" />
                         <TableColumn fx:id="colTotal" prefWidth="75.0" text="Total" />
-                        <TableColumn fx:id="colPaymentMethod" prefWidth="75.0" text="Paayment Method" />
+                        <TableColumn fx:id="colPaymentMethod" prefWidth="75.0" text="Payment Method" />
                   <TableColumn fx:id="colAction" prefWidth="75.0" text="Action" />
                     </columns>
                <columnResizePolicy>

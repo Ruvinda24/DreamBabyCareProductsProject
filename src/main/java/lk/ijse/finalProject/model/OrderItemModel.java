@@ -122,4 +122,20 @@ public class OrderItemModel {
         }
         return null;
     }
+
+    public boolean saveNewOrderItem(String orderItemId, String orderId, String itemId, int cartQty, double amount) {
+        try {
+            return CrudUtil.execute(
+                    "INSERT INTO order_item (order_item_id, order_id, inventory_id, quantity, amount) VALUES (?, ?, ?, ?, ?)",
+                    orderItemId,
+                    orderId,
+                    itemId,
+                    cartQty,
+                    amount
+            );
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
