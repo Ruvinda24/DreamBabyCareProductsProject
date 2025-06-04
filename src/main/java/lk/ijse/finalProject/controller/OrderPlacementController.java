@@ -17,7 +17,7 @@ import lk.ijse.finalProject.db.DBConnection;
 import lk.ijse.finalProject.dto.InventoryDto;
 import lk.ijse.finalProject.dto.PaymentDto;
 import lk.ijse.finalProject.dto.ShipmentDto;
-import lk.ijse.finalProject.dto.tm.CartTM;
+import lk.ijse.finalProject.dto.tm.OrderCartTM;
 import lk.ijse.finalProject.model.*;
 
 import java.net.URL;
@@ -38,14 +38,14 @@ public class OrderPlacementController implements Initializable {
     public Label lblItemName;
     public Label txtAddToCartQty;
     public Label lblItemPrice;
-    public TableView<CartTM> tblOrderPlacement;
-    public TableColumn<CartTM, String> colCustomerId;
-    public TableColumn<CartTM, String> colItemId;
-    public TableColumn<CartTM, String> colItemName;
-    public TableColumn<CartTM, Integer> colQuantity;
-    public TableColumn<CartTM, Double> qtyPrice;
-    public TableColumn<CartTM, Double> colTotal;
-    public TableColumn colPaymentMethod;
+    public TableView<OrderCartTM> tblOrderPlacement;
+    public TableColumn<OrderCartTM, String> colCustomerId;
+    public TableColumn<OrderCartTM, String> colItemId;
+    public TableColumn<OrderCartTM, String> colItemName;
+    public TableColumn<OrderCartTM, Integer> colQuantity;
+    public TableColumn<OrderCartTM, Double> qtyPrice;
+    public TableColumn<OrderCartTM, Double> colTotal;
+    public TableColumn<OrderCartTM, String> colPaymentMethod;
     public TableColumn<?, ?> colAction;
     public Label labelPopUpCustomer;
 
@@ -56,7 +56,7 @@ public class OrderPlacementController implements Initializable {
     private final PaymentModel paymentModel = new PaymentModel();
     private final ShipmentModel shipmentModel = new ShipmentModel();
 
-    private final ObservableList<CartTM> cartData = FXCollections.observableArrayList();
+    private final ObservableList<OrderCartTM> cartData = FXCollections.observableArrayList();
     public TextField txtCartQty;
     public ComboBox cmbPaymentMethod;
     public TextField txtShipmentTrackingNumber;
@@ -115,7 +115,7 @@ public class OrderPlacementController implements Initializable {
             return;
         }
 
-        for (CartTM cartTM : cartData) {
+        for (OrderCartTM cartTM : cartData) {
             if (cartTM.getItemId().equals(selectedItemId)) {
                 int newQty = cartTM.getCartQty() + cartQty;
                 if (itemQtyOnStock < newQty) {
@@ -132,7 +132,7 @@ public class OrderPlacementController implements Initializable {
         }
 
         Button removeBtn = new Button("Remove");
-        CartTM cartTM = new CartTM(
+        OrderCartTM cartTM = new OrderCartTM(
                 selectedCustomerId,
                 selectedItemId,
                 itemName,
@@ -177,7 +177,7 @@ public class OrderPlacementController implements Initializable {
 
             String paymentId = paymentModel.getNextPaymentId();
             String paymentMethod = (String) cmbPaymentMethod.getSelectionModel().getSelectedItem();
-            double totalAmount = cartData.stream().mapToDouble(CartTM::getTotal).sum();
+            double totalAmount = cartData.stream().mapToDouble(OrderCartTM::getTotal).sum();
 
             // 2. Save shipment
             boolean shipmentSaved = shipmentModel.saveShipments(
@@ -208,7 +208,7 @@ public class OrderPlacementController implements Initializable {
 
             // 4. Save order items and update inventory
             boolean allItemsSaved = true;
-            for (CartTM cartTM : cartData) {
+            for (OrderCartTM cartTM : cartData) {
                 String orderItemId = orderItemModel.getNextOrderItemId();
                 boolean itemSaved = orderItemModel.saveNewOrderItem(
                         orderItemId,

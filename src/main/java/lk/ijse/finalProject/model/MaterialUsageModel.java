@@ -76,7 +76,7 @@ public class MaterialUsageModel {
 
     public String getNextMaterialUsageId() throws SQLException, ClassNotFoundException {
 
-        ResultSet resultSet = CrudUtil.execute("SELECT material_usage_id FROM material_usage ORDER BY material_usage_id DESC LIMIT 1");
+        ResultSet resultSet = CrudUtil.execute("SELECT usage_id FROM material_usage ORDER BY usage_id DESC LIMIT 1");
         String tableCharacter = "MU"; // Use any character Ex:- customer table for C, item table for I
         if (resultSet.next()) {
             String lastId = resultSet.getString(1); // "C001"

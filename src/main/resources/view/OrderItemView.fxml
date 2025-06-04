@@ -268,7 +268,7 @@
                                 </ImageView>
                             </right>
                         </BorderPane>
-                        <TableView fx:id="tblOrderItems" fixedCellSize="0.0" onMouseClicked="#onClickTable" prefHeight="400.0" prefWidth="925.0" stylesheets="@../styles/tableView.css" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="tblOrderItems" fixedCellSize="0.0" onMouseClicked="#onClickTable" prefHeight="400.0" prefWidth="925.0" stylesheets="@../styles/tableView.css">
                             <columns>
                                 <TableColumn fx:id="colOrderItemId" prefWidth="127.73327445983887" text="Order Item ID" />
                                 <TableColumn fx:id="colOrderId" prefWidth="199.46673583984375" text="Order ID" />

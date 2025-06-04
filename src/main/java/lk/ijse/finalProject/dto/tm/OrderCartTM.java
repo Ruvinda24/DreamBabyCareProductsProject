@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 @Getter
 @Setter
 @ToString
-public class CartTM {
+public class OrderCartTM {
     private String customerId;
     private String itemId;
     private String itemName;

@@ -1,14 +1,333 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="lk.ijse.finalProject.controller.ProductionPlacementController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="ancProductionPlacementPage" prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.finalProject.controller.ProductionPlacementController">
+    <children>
+        <VBox prefHeight="70.0" prefWidth="550.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <Label fx:id="homeLabel" alignment="CENTER" onMouseClicked="#goToDashBoardPage" prefHeight="48.0" prefWidth="100.0" text="Home">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label prefHeight="36.0" prefWidth="217.0" text="&gt; Production Placement">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox prefHeight="70.0" prefWidth="474.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;">
+                    <children>
+                        <Label prefHeight="30.0" prefWidth="178.0" text="Production ID">
+                            <font>
+                                <Font name="Arial Bold" size="25.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="41.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="lblProductionId" prefHeight="30.0" prefWidth="134.0" text="01">
+                            <font>
+                                <Font name="Arial Bold" size="25.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="108.0" />
+                            </HBox.margin>
+                        </Label>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <VBox layoutX="1176.0" layoutY="14.0" prefHeight="44.0" prefWidth="210.0" AnchorPane.bottomAnchor="746.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <HBox prefHeight="41.0" prefWidth="197.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;">
+                    <children>
+                        <Label fx:id="productionPlacementDate" prefHeight="34.0" prefWidth="230.0" text="2022-12-20">
+                            <font>
+                                <Font name="Arial Bold" size="25.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="25.0" />
+                            </HBox.margin>
+                        </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets right="13.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+        <VBox layoutX="14.0" layoutY="100.0" prefHeight="188.0" prefWidth="1340.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0">
+            <children>
+                <HBox prefHeight="70.0" prefWidth="1348.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;">
+                    <children>
+                        <Label prefHeight="66.0" prefWidth="141.0" text="Employee ID">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="41.0" />
+                            </HBox.margin>
+                        </Label>
+                  <ComboBox fx:id="cmbEmployeeId" prefHeight="26.0" prefWidth="146.0">
+                     <HBox.margin>
+                        <Insets top="21.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                        <Label prefHeight="66.0" prefWidth="168.0" text="Employee Name     : ">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="100.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="lblEmployeeName" prefHeight="66.0" prefWidth="251.0">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="-11.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="labelPopUpCustomer" alignment="CENTER" prefHeight="66.0" prefWidth="113.0" text="Role   :">
+                            <font>
+                                <Font name="System Bold" size="15.0" />
+                            </font>
+                        </Label>
+                  <Label fx:id="lblEmployeeRole" alignment="CENTER" layoutX="849.0" layoutY="12.0" prefHeight="66.0" prefWidth="279.0">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <VBox layoutX="20.0" layoutY="178.0" prefHeight="138.0" prefWidth="1340.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-width: 2; -fx-border-radius: 20;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0">
+            <children>
+                <HBox prefHeight="58.0" prefWidth="1355.0">
+                    <children>
+                        <Label prefHeight="66.0" prefWidth="140.0" text="Item ID   :">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="30.0" />
+                            </HBox.margin>
+                        </Label>
+                        <ComboBox fx:id="cmbInventoryId" prefHeight="26.0" prefWidth="146.0">
+                            <HBox.margin>
+                                <Insets left="14.0" top="14.0" />
+                            </HBox.margin>
+                        </ComboBox>
+                        <Label prefHeight="58.0" prefWidth="110.0" text="Item Name   :">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="51.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="lblItemName" prefHeight="58.0" prefWidth="258.0">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="-1.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label prefHeight="58.0" prefWidth="199.0" text="Product Description   :">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="15.0" />
+                            </HBox.margin>
+                        </Label>
+                  <TextField fx:id="txtProductionDescription" prefHeight="30.0" prefWidth="343.0" promptText="Baby Sleeping Bag - Small" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20">
+                     <HBox.margin>
+                        <Insets left="10.0" top="16.0" />
+                     </HBox.margin>
+                  </TextField>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+                <HBox prefHeight="66.0" prefWidth="1355.0">
+                    <children>
+                        <Label prefHeight="66.0" prefWidth="140.0" text="Product Count   :">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="30.0" />
+                            </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txtProductQty" prefHeight="30.0" prefWidth="146.0" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;">
+                            <HBox.margin>
+                                <Insets left="15.0" top="15.0" />
+                            </HBox.margin>
+                        </TextField>
+                  <Label layoutX="40.0" layoutY="10.0" prefHeight="66.0" prefWidth="140.0" text="Task Description   :">
+                     <font>
+                        <Font name="Arial Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtTaskDescription" layoutX="196.0" layoutY="31.0" prefHeight="30.0" prefWidth="286.0" promptText="Sewing Baby Sleeping Bag - Small" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;">
+                     <HBox.margin>
+                        <Insets left="10.0" top="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label layoutX="392.0" layoutY="10.0" prefHeight="66.0" prefWidth="174.0" text="Needed Material Qty   :">
+                     <font>
+                        <Font name="Arial Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtMaterialUsageQty" layoutX="196.0" layoutY="31.0" prefHeight="30.0" prefWidth="146.0" style="-fx-background-radius: 20; -fx-border-color: #003049; -fx-border-width: 2px; -fx-border-radius: 20;">
+                     <HBox.margin>
+                        <Insets left="6.0" top="14.0" />
+                     </HBox.margin>
+                  </TextField>
+                    </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+        <HBox layoutX="20.0" layoutY="325.0" prefHeight="81.0" prefWidth="1340.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0">
+         <children>
+            <HBox prefHeight="66.0" prefWidth="1335.0">
+               <children>
+                  <Label prefHeight="66.0" prefWidth="151.0" text="Material ID    :">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="51.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="cmbMaterialId" prefHeight="26.0" prefWidth="161.0">
+                     <HBox.margin>
+                        <Insets left="8.0" top="20.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <Label prefHeight="66.0" prefWidth="194.0" text="Material Name &amp; Color   :">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="87.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblMaterialName" prefHeight="58.0" prefWidth="221.0">
+                     <font>
+                        <Font name="Arial Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblMaterialColorType" layoutX="973.0" layoutY="10.0" prefHeight="58.0" prefWidth="147.0">
+                     <font>
+                        <Font name="Arial Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblMaterialColorType11" layoutX="863.0" layoutY="10.0" prefHeight="58.0" prefWidth="118.0" text="Material Qty   :">
+                     <font>
+                        <Font name="Arial Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblMaterialQty" layoutX="1010.0" layoutY="10.0" prefHeight="58.0" prefWidth="147.0">
+                     <font>
+                        <Font name="Arial Bold" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets top="3.0" />
+               </HBox.margin>
+            </HBox>
+         </children></HBox>
+      <HBox layoutX="20.0" layoutY="418.0" prefHeight="44.0" prefWidth="1340.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20; -fx-border-width: 2;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0">
+         <children>
+            <Button fx:id="btnAddToCart" mnemonicParsing="false" onAction="#btnAddToCartOnAction" prefHeight="31.0" prefWidth="1333.0" style="-fx-background-color: linear-gradient(to right, #B2FEFA, #0ED2F7); -fx-background-radius: 20;" text="Add ToCart" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" top="3.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+        <VBox layoutX="20.0" layoutY="473.0" prefHeight="243.0" prefWidth="1340.0" style="-fx-background-color: #fff; -fx-background-radius: 20; -fx-border-color: #7209b7; -fx-border-radius: 20;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0">
+            <children>
+                <TableView fx:id="tblProductionPlacement" prefHeight="229.0" prefWidth="1338.0" stylesheets="@../styles/tableView.css">
+                    <columns>
+                        <TableColumn fx:id="colEmployeeName" prefWidth="140.79998111724854" text="Employee Name" />
+                        <TableColumn fx:id="colItemName" prefWidth="138.13336181640625" text="Item Name" />
+                  <TableColumn fx:id="colProductDescription" prefWidth="224.79998779296875" text="Product Description" />
+                        <TableColumn fx:id="colQuantity" prefWidth="81.60003662109375" text="Qty" />
+                        <TableColumn fx:id="colTaskDescription" prefWidth="224.79998779296875" text="Task Description" />
+                        <TableColumn fx:id="colMaterialName" prefWidth="137.5999755859375" text="Material" />
+                        <TableColumn fx:id="colQtyNeeded" prefWidth="104.79986572265625" text=" Needed Qty" />
+                        <TableColumn fx:id="colColorType" prefWidth="110.66650390625" text="Color Type" />
+                  <TableColumn fx:id="colAction" prefWidth="159.199951171875" text="Action" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+        <HBox layoutX="20.0" layoutY="736.8" prefHeight="46.0" prefWidth="1340.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="40.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#btnResetOnAction" prefWidth="670.0" style="-fx-background-color: linear-gradient(to right, #FF5F6D, #FFC371);" text="Reset">
+                    <font>
+                        <Font name="Arial Bold" size="16.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets left="70.0" />
+                    </HBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#btnPlaceProductionOnAction" prefWidth="670.0" style="-fx-background-color: linear-gradient(to right, #00b09b, #96c93d);" text="Place Production">
+                    <font>
+                        <Font name="Arial Bold" size="16.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+    </children>
 </AnchorPane>

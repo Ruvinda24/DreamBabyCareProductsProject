@@ -69,7 +69,7 @@ public class OverViewController {
     }
 
     public void goToTasksPageOnAction(ActionEvent actionEvent) {
-        navigateTo("/view/TasksView.fxml");
+        navigateTo("/view/TaskView.fxml");
     }
     private void navigateTo(String path) {
         try {

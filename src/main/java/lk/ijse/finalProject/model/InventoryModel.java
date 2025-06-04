@@ -158,6 +158,54 @@ public class InventoryModel {
         return false;
     }
 
+    public ArrayList<String> getAllInventoryIds() {
+        ArrayList<String> inventoryIds = new ArrayList<>();
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT inventory_id FROM inventory");
+            while (resultSet.next()) {
+                inventoryIds.add(resultSet.getString("inventory_id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load inventory IDs...").show();
+        }
+        return inventoryIds;
+    }
+
+    public String getItemNameById(String newVal) {
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT item_name FROM inventory WHERE inventory_id = ?", newVal);
+            if (resultSet.next()) {
+                return resultSet.getString("item_name");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load item name by ID...").show();
+        }
+        return null;
+    }
+
+    public boolean increaseInventoryQty(String inventoryId, int productQty) {
+        try {
+            ResultSet resultSet = CrudUtil.execute(
+                    "SELECT quantity_available FROM inventory WHERE inventory_id = ?",
+                    inventoryId
+            );
+            if (resultSet.next()) {
+                int currentQty = resultSet.getInt("quantity_available");
+                int newQty = currentQty + productQty;
+                return CrudUtil.execute(
+                        "UPDATE inventory SET quantity_available = ? WHERE inventory_id = ?",
+                        newQty,
+                        inventoryId);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error increasing inventory quantity...").show();
+        }
+        return false;
+    }
+
 /*    public boolean updateItemQuantity(String itemId, int newQty) throws SQLException {
         String sql = "UPDATE inventory SET quantity_available = ? WHERE item_id = ?";
         try (Connection con = DBConnection.getInstance().getConnection();

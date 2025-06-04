@@ -1,5 +1,6 @@
 package lk.ijse.finalProject.model;
 
+import javafx.scene.control.Alert;
 import lk.ijse.finalProject.db.DBConnection;
 import lk.ijse.finalProject.dto.EmployeeDto;
 import lk.ijse.finalProject.util.CrudUtil;
@@ -100,4 +101,43 @@ public class EmployeeModel {
         return tableCharacter + "001";
     }
 
+    public ArrayList<String> getAllEmployeeIds() {
+        ArrayList<String> employeeIds = new ArrayList<>();
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT employee_id FROM employee");
+            while (resultSet.next()) {
+                employeeIds.add(resultSet.getString("employee_id"));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load employee IDs..!").show();
+        }
+        return employeeIds;
+    }
+
+    public String getEmployeeNameById(String newVal) {
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT name FROM employee WHERE employee_id = ?", newVal);
+            if (resultSet.next()) {
+                return resultSet.getString("name");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load employee name..!").show();
+        }
+        return null;
+    }
+
+    public String getEmployeeRoleById(String newVal) {
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT role FROM employee WHERE employee_id = ?", newVal);
+            if (resultSet.next()) {
+                return resultSet.getString("role");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load employee role..!").show();
+        }
+        return null;
+    }
 }

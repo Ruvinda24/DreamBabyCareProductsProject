@@ -1,5 +1,6 @@
 package lk.ijse.finalProject.model;
 
+import javafx.scene.control.Alert;
 import lk.ijse.finalProject.dto.MaterialDto;
 import lk.ijse.finalProject.util.CrudUtil;
 
@@ -65,7 +66,7 @@ public class MaterialModel {
                     rst.getString("material_id"),
                     rst.getString("name"),
                     rst.getString("color_type"),
-                    rst.getInt("address")
+                    rst.getInt("quantity")
             );
             materialDto.add(dto);
         }
@@ -88,4 +89,82 @@ public class MaterialModel {
         return tableCharacter + "001";
     }
 
+    public ArrayList<String> getAllMaterialIds() {
+        ArrayList<String> materialIds = new ArrayList<>();
+        try {
+            ResultSet rst = CrudUtil.execute("SELECT material_id FROM material");
+            while (rst.next()) {
+                materialIds.add(rst.getString("material_id"));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load material IDs..!").show();
+        }
+        return materialIds;
+    }
+
+    public String getMaterialNameById(String newVal) {
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT name FROM material WHERE material_id = ?", newVal);
+            if (resultSet.next()) {
+                return resultSet.getString("name");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load material name..!").show();
+        }
+        return null;
+    }
+
+    public String getMaterialColorTypeById(String newVal) {
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT color_type FROM material WHERE material_id = ?", newVal);
+            if (resultSet.next()) {
+                return resultSet.getString("color_type");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load material color type..!").show();
+        }
+        return null;
+    }
+
+    public String getMaterialQtyById(String newVal) {
+    try {
+            ResultSet resultSet = CrudUtil.execute("SELECT quantity FROM material WHERE material_id = ?", newVal);
+            if (resultSet.next()) {
+                return String.valueOf(resultSet.getInt("quantity"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load material quantity..!").show();
+        }
+        return null;
+    }
+
+    public boolean reduceMaterialQty(String materialId, int materialUsageQty) {
+        try {
+            ResultSet resultSet = CrudUtil.execute(
+                    "SELECT quantity FROM material WHERE material_id = ?",
+                    materialId
+            );
+            if (resultSet.next()) {
+                int currentQty = resultSet.getInt("quantity");
+                if (currentQty >= materialUsageQty) {
+                    int newQty = currentQty - materialUsageQty;
+                    return CrudUtil.execute(
+                            "UPDATE material SET quantity = ? WHERE material_id = ?",
+                            newQty,
+                            materialId);
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Insufficient stock for Material ID: " + materialId).show();
+                    return false;
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error reducing material quantity...").show();
+        }
+        return false;
+    }
 }

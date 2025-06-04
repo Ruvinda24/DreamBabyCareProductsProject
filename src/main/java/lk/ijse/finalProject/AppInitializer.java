@@ -26,7 +26,7 @@ public class AppInitializer extends Application {
             System.err.println("Icon image not found");
         }
         stage.setScene(new Scene(root));
-        stage.setResizable(true);
+        stage.setResizable(false);
         Platform.runLater(() -> {
             stage.setMaximized(true);
         });

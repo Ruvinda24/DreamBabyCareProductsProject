@@ -98,5 +98,15 @@ public class ProductionModel {
         }
         return inventoryIds;
     }
+
+    public String generateNewProductionId() throws SQLException, ClassNotFoundException {
+        return getNextProductionId();
+    }
+
+/*    public String getCurrentDate() {
+        java.util.Date date = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
+    }*/
 }
 
