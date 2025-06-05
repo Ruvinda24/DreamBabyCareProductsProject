@@ -19,12 +19,15 @@ import lk.ijse.finalProject.dto.PaymentDto;
 import lk.ijse.finalProject.dto.ShipmentDto;
 import lk.ijse.finalProject.dto.tm.OrderCartTM;
 import lk.ijse.finalProject.model.*;
+import lk.ijse.finalProject.util.EmailUtil;
 
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class OrderPlacementController implements Initializable {
@@ -179,7 +182,7 @@ public class OrderPlacementController implements Initializable {
             String paymentMethod = (String) cmbPaymentMethod.getSelectionModel().getSelectedItem();
             double totalAmount = cartData.stream().mapToDouble(OrderCartTM::getTotal).sum();
 
-            // 2. Save shipment
+            // Save shipment
             boolean shipmentSaved = shipmentModel.saveShipments(
                     new ShipmentDto(
                             shipmentId,
@@ -192,7 +195,7 @@ public class OrderPlacementController implements Initializable {
                 return;
             }
 
-            // 3. Save order
+            // Save order
             boolean orderSaved = ordersModel.saveNewOrder(
                     orderId,
                     orderDate,
@@ -206,7 +209,7 @@ public class OrderPlacementController implements Initializable {
                 return;
             }
 
-            // 4. Save order items and update inventory
+            // Save order items and update inventory
             boolean allItemsSaved = true;
             for (OrderCartTM cartTM : cartData) {
                 String orderItemId = orderItemModel.getNextOrderItemId();
@@ -232,7 +235,7 @@ public class OrderPlacementController implements Initializable {
                 return;
             }
 
-            // 5. Save payment
+            // Save payment
             boolean paymentSaved = paymentModel.savePayments(
                     new PaymentDto(
                             paymentId,
@@ -246,9 +249,30 @@ public class OrderPlacementController implements Initializable {
                 return;
             }
 
-            // 6. Commit transaction
+            //Send Email Notification
+/*            boolean isEmailSent = EmailUtil.sendMailWithAttachment(
+
+            );*/
+/*
+            if (!isEmailSent) {
+                connection.rollback();
+                new Alert(Alert.AlertType.ERROR, "Failed to send email notification!").show();
+                return;
+            }
+*/
+
+            // Commit transaction
             connection.commit();
             new Alert(Alert.AlertType.INFORMATION, "Order placed successfully!").show();
+
+//            orderId
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("P_ORDER_ID", orderId);
+
+            String outputFilePath = LocalDate.now().toString() + ".pdf";
+
+
+
             resetPage();
 
         } catch (Exception e) {
@@ -267,6 +291,7 @@ public class OrderPlacementController implements Initializable {
             }
         }
     }
+
     public void goToCustomerPopUp(MouseEvent mouseEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/CustomerPagePopUp.fxml"));
@@ -277,7 +302,7 @@ public class OrderPlacementController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.showAndWait();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load customer pop-up..!").show();
         }
@@ -294,6 +319,7 @@ public class OrderPlacementController implements Initializable {
             String customerId = customerModel.getCustomerIdByContact(contact);
             if (customerId != null) {
                 lblCustomerName.setText(customerModel.getCustomerNameById(customerId));
+
             } else {
                 lblCustomerName.setText("No customer found with this contact");
             }
@@ -392,7 +418,7 @@ public class OrderPlacementController implements Initializable {
         }
     }
 
-    private void resetPage(){
+    private void resetPage() {
         //lblOrderId.setText("");
 
         loadNextId();

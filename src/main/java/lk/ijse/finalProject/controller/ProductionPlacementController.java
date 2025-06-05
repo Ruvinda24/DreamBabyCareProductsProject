@@ -15,6 +15,7 @@ import lk.ijse.finalProject.dto.ProductionTaskDto;
 import lk.ijse.finalProject.dto.TaskDto;
 import lk.ijse.finalProject.dto.tm.ProductionCartTM;
 import lk.ijse.finalProject.model.*;
+import lk.ijse.finalProject.util.EmailUtil;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -203,12 +204,11 @@ public class ProductionPlacementController implements Initializable {
             int materialUsageQty = Integer.parseInt(txtMaterialUsageQty.getText());
             int productQty = Integer.parseInt(txtProductQty.getText());
 
-            // Generate next IDs
             String productionTaskId = productionTaskModel.getNextProductionTaskId();
             String taskId = taskModel.getNextTaskId();
             String usageId = materialUsageModel.getNextMaterialUsageId();
 
-            // 1. Save new production
+            //Save new production
             boolean productionSaved = productionModel.saveProductions(
                     new ProductionDto(
                             productionId, inventoryId, productionDescription, productionStatus
@@ -220,7 +220,7 @@ public class ProductionPlacementController implements Initializable {
                 return;
             }
 
-            // 2. Save new task
+            //Save new task
             boolean taskSaved = taskModel.saveTasks(
                     new TaskDto(
                             taskId, employeeId, taskDescription, taskStatus
@@ -232,7 +232,7 @@ public class ProductionPlacementController implements Initializable {
                 return;
             }
 
-            // 3. Save new production_task
+            //Save new production_task
             boolean productionTaskSaved = productionTaskModel.saveProductionTasks(
                     new ProductionTaskDto(
                             productionTaskId, productionId, taskId
@@ -244,7 +244,7 @@ public class ProductionPlacementController implements Initializable {
                 return;
             }
 
-            // 4. Save new material_usage
+            //Save new material_usage
             boolean materialUsageSaved = materialUsageModel.saveMaterialUsage(
                     new MaterialUsageDto(
                             usageId, productionId, materialId, materialUsageQty
@@ -256,7 +256,7 @@ public class ProductionPlacementController implements Initializable {
                 return;
             }
 
-            // 5. Update material quantity (reduce)
+            //Update material quantity (reduce)
             boolean materialUpdated = materialModel.reduceMaterialQty(materialId, materialUsageQty);
             if (!materialUpdated) {
                 connection.rollback();
@@ -264,7 +264,7 @@ public class ProductionPlacementController implements Initializable {
                 return;
             }
 
-            // 6. Update inventory quantity (increase)
+            //Update inventory quantity (increase)
             boolean inventoryUpdated = inventoryModel.increaseInventoryQty(inventoryId, productQty);
             if (!inventoryUpdated) {
                 connection.rollback();
@@ -272,7 +272,15 @@ public class ProductionPlacementController implements Initializable {
                 return;
             }
 
-            // 7. Commit transaction
+/*            boolean isEmailSent = EmailUtil.sendSimpleMail();
+            if (!isEmailSent) {
+                connection.rollback();
+                new Alert(Alert.AlertType.ERROR, "Failed to send email notification!").show();
+                return;
+            }*/
+
+
+            //Commit transaction
             connection.commit();
             new Alert(Alert.AlertType.INFORMATION, "Production placed successfully!").show();
             refreshPage();

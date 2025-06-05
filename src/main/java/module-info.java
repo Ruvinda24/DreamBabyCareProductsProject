@@ -5,6 +5,8 @@ module lk.ijse.finalProject {
     requires java.sql;
     requires lombok;
     requires java.desktop;
+    requires java.mail;
+    requires activation;
 
     opens lk.ijse.finalProject.dto.tm to javafx.base;
     opens lk.ijse.finalProject to javafx.graphics;
