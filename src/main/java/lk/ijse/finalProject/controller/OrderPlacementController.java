@@ -1,5 +1,6 @@
 package lk.ijse.finalProject.controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import lk.ijse.finalProject.dto.ShipmentDto;
 import lk.ijse.finalProject.dto.tm.OrderCartTM;
 import lk.ijse.finalProject.model.*;
 import lk.ijse.finalProject.util.EmailUtil;
+import lk.ijse.finalProject.util.OrderReportMailer;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -218,7 +220,7 @@ public class OrderPlacementController implements Initializable {
                         orderId,
                         cartTM.getItemId(),
                         cartTM.getCartQty(),
-                        cartTM.getUnitPrice() * cartTM.getCartQty() // amount = unit price * qty
+                        cartTM.getUnitPrice() * cartTM.getCartQty()
                 );
                 boolean inventoryUpdated = inventoryModel.reduceItemQty(
                         cartTM.getItemId(),
@@ -249,31 +251,30 @@ public class OrderPlacementController implements Initializable {
                 return;
             }
 
-            //Send Email Notification
-/*            boolean isEmailSent = EmailUtil.sendMailWithAttachment(
+            resetPage();
+            new Alert(Alert.AlertType.INFORMATION, "Order placed successfully!").show();
 
-            );*/
-/*
-            if (!isEmailSent) {
-                connection.rollback();
-                new Alert(Alert.AlertType.ERROR, "Failed to send email notification!").show();
-                return;
-            }
-*/
+            // Send order report email in a new thread (after commit)
+            new Thread(() -> {
+                try {
+                    boolean isEmailSent = OrderReportMailer.sendLastOrderReport();
+                    Platform.runLater(() -> {
+                        if (isEmailSent) {
+                            new Alert(Alert.AlertType.INFORMATION, "Order report sent to email successfully!").show();
+                        } else {
+                            new Alert(Alert.AlertType.ERROR, "Failed to send order report via email!").show();
+                        }
+                    });
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
 
             // Commit transaction
             connection.commit();
-            new Alert(Alert.AlertType.INFORMATION, "Order placed successfully!").show();
-
-//            orderId
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("P_ORDER_ID", orderId);
-
-            String outputFilePath = LocalDate.now().toString() + ".pdf";
 
 
-
-            resetPage();
 
         } catch (Exception e) {
             try {
@@ -286,6 +287,7 @@ public class OrderPlacementController implements Initializable {
         } finally {
             try {
                 if (connection != null) connection.setAutoCommit(true);
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -389,7 +391,7 @@ public class OrderPlacementController implements Initializable {
         lblOrderId.setText(ordersModel.getNextOrderId());
         orderPlacementDate.setText(LocalDate.now().toString());
 
-        loadCustomerIds();
+        //loadCustomerIds();
         loadItemIds();
     }
 
@@ -406,7 +408,7 @@ public class OrderPlacementController implements Initializable {
 
     }
 
-    private void loadCustomerIds() {
+/*    private void loadCustomerIds() {
         try {
             ArrayList<String> customerIdsList = customerModel.getAllCustomerIds();
             ObservableList<String> customerIds = FXCollections.observableArrayList();
@@ -416,13 +418,13 @@ public class OrderPlacementController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load data..!").show();
         }
-    }
+    }*/
 
     private void resetPage() {
         //lblOrderId.setText("");
 
         loadNextId();
-        loadCustomerIds();
+        //loadCustomerIds();
         loadItemIds();
 
         //orderPlacementDate.setText("");

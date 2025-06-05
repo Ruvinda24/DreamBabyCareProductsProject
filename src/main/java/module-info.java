@@ -7,6 +7,7 @@ module lk.ijse.finalProject {
     requires java.desktop;
     requires java.mail;
     requires activation;
+    requires net.sf.jasperreports.core;
 
     opens lk.ijse.finalProject.dto.tm to javafx.base;
     opens lk.ijse.finalProject to javafx.graphics;

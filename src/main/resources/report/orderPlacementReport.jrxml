@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="orderPlacementReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7cbb355a-d404-4caa-92c8-5e4ea125292f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<parameter name="orderId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[
+            select *
+            from orders o
+                join order_item oi on o.order_id = oi.order_id
+                join inventory i on oi.inventory_id = i.inventory_id
+                join shipment s on o.shipment_id = s.shipment_id
+                join customer c on o.customer_id = c.customer_id
+            where o.order_id = $P{orderId};
+        ]]>
+	</queryString>
+
+	<!-- Order fields -->
+	<field name="order_id" class="java.lang.String"/>
+	<field name="order_date" class="java.sql.Date"/>
+	<field name="customer_id" class="java.lang.String"/>
+	<field name="shipment_id" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+
+	<!-- Order item fields -->
+	<field name="order_item_id" class="java.lang.String"/>
+	<field name="COLUMN_7" class="java.lang.String"/>
+	<field name="inventory_id" class="java.lang.String"/>
+	<field name="quantity" class="java.lang.Integer"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+
+	<!-- Inventory fields -->
+	<field name="COLUMN_11" class="java.lang.String"/>
+	<field name="item_name" class="java.lang.String"/>
+	<field name="printed_embroidered" class="java.lang.String"/>
+	<field name="size" class="java.lang.String"/>
+	<field name="unit_price" class="java.math.BigDecimal"/>
+	<field name="quantity_available" class="java.lang.Integer"/>
+	<field name="stored_location" class="java.lang.String"/>
+
+	<!-- Shipment fields -->
+	<field name="COLUMN_18" class="java.lang.String"/>
+	<field name="tracking_number" class="java.lang.String"/>
+	<field name="shipment_date" class="java.sql.Date"/>
+
+	<!-- Customer fields (added) -->
+	<field name="customer_name" class="java.lang.String"/>
+	<field name="contact_number" class="java.lang.String"/>
+
+	<!-- Groups (unchanged) -->
+	<group name="order_id">
+		<expression>
+			<![CDATA[$F{order_id}]]>
+		</expression>
+	</group>
+	<group name="order_date">
+		<expression>
+			<![CDATA[$F{order_date}]]>
+		</expression>
+	</group>
+	<group name="customer_id">
+		<expression>
+			<![CDATA[$F{customer_id}]]>
+		</expression>
+	</group>
+	<group name="shipment_id">
+		<expression>
+			<![CDATA[$F{shipment_id}]]>
+		</expression>
+	</group>
+	<group name="status">
+		<expression>
+			<![CDATA[$F{status}]]>
+		</expression>
+	</group>
+	<group name="order_item_id">
+		<expression>
+			<![CDATA[$F{order_item_id}]]>
+		</expression>
+	</group>
+	<group name="COLUMN_7">
+		<expression>
+			<![CDATA[$F{COLUMN_7}]]>
+		</expression>
+	</group>
+	<group name="inventory_id">
+		<expression>
+			<![CDATA[$F{inventory_id}]]>
+		</expression>
+	</group>
+	<group name="quantity">
+		<expression>
+			<![CDATA[$F{quantity}]]>
+		</expression>
+	</group>
+	<group name="amount">
+		<expression>
+			<![CDATA[$F{amount}]]>
+		</expression>
+	</group>
+	<group name="COLUMN_11">
+		<expression>
+			<![CDATA[$F{COLUMN_11}]]>
+		</expression>
+	</group>
+	<group name="item_name">
+		<expression>
+			<![CDATA[$F{item_name}]]>
+		</expression>
+	</group>
+	<group name="printed_embroidered">
+		<expression>
+			<![CDATA[$F{printed_embroidered}]]>
+		</expression>
+	</group>
+	<group name="size">
+		<expression>
+			<![CDATA[$F{size}]]>
+		</expression>
+	</group>
+	<group name="unit_price">
+		<expression>
+			<![CDATA[$F{unit_price}]]>
+		</expression>
+	</group>
+	<group name="quantity_available">
+		<expression>
+			<![CDATA[$F{quantity_available}]]>
+		</expression>
+	</group>
+	<group name="stored_location">
+		<expression>
+			<![CDATA[$F{stored_location}]]>
+		</expression>
+	</group>
+	<group name="COLUMN_18">
+		<expression>
+			<![CDATA[$F{COLUMN_18}]]>
+		</expression>
+	</group>
+	<group name="tracking_number">
+		<expression>
+			<![CDATA[$F{tracking_number}]]>
+		</expression>
+	</group>
+	<group name="shipment_date">
+		<expression>
+			<![CDATA[$F{shipment_date}]]>
+		</expression>
+	</group>
+
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch"/>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch"/>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

@@ -1,5 +1,6 @@
 package lk.ijse.finalProject.controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import lk.ijse.finalProject.dto.TaskDto;
 import lk.ijse.finalProject.dto.tm.ProductionCartTM;
 import lk.ijse.finalProject.model.*;
 import lk.ijse.finalProject.util.EmailUtil;
+import lk.ijse.finalProject.util.ProductReportMailer;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -272,12 +274,22 @@ public class ProductionPlacementController implements Initializable {
                 return;
             }
 
-/*            boolean isEmailSent = EmailUtil.sendSimpleMail();
-            if (!isEmailSent) {
-                connection.rollback();
-                new Alert(Alert.AlertType.ERROR, "Failed to send email notification!").show();
-                return;
-            }*/
+            new Thread(() -> {
+                try {
+                    // Send email with report
+                    boolean emailSent = ProductReportMailer.sendLastProductionReport();
+                    Platform.runLater(() -> {
+                        if (emailSent) {
+                            System.out.println("Production report sent successfully!");
+                        } else {
+                            System.out.println("Failed to send production report.");
+                        }
+                    });
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
 
 
             //Commit transaction

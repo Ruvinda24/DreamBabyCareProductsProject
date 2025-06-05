@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="productPlacementReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="prod-placement-001">
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+    <parameter name="productionId" class="java.lang.String"/>
+    <queryString>
+        <![CDATA[
+            select *
+            from production p
+                join production_item pi on p.production_id = pi.production_id
+                join inventory i on pi.item_id = i.inventory_id
+                join employee e on p.employee_id = e.employee_id
+            where p.production_id = $P{productionId};
+        ]]>
+    </queryString>
+
+    <!-- Production fields -->
+    <field name="production_id" class="java.lang.String"/>
+    <field name="production_date" class="java.sql.Date"/>
+    <field name="employee_id" class="java.lang.String"/>
+    <field name="employee_name" class="java.lang.String"/>
+
+    <!-- Production item fields -->
+    <field name="production_item_id" class="java.lang.String"/>
+    <field name="item_id" class="java.lang.String"/>
+    <field name="production_description" class="java.lang.String"/>
+    <field name="product_quantity" class="java.lang.Integer"/>
+    <field name="task_description" class="java.lang.String"/>
+
+    <!-- Inventory fields -->
+    <field name="inventory_id" class="java.lang.String"/>
+    <field name="item_name" class="java.lang.String"/>
+
+    <!-- Groups (optional, similar to orderPlacementReport) -->
+    <group name="production_id">
+        <expression>
+            <![CDATA[$F{production_id}]]>
+        </expression>
+    </group>
+    <group name="production_date">
+        <expression>
+            <![CDATA[$F{production_date}]]>
+        </expression>
+    </group>
+    <group name="employee_id">
+        <expression>
+            <![CDATA[$F{employee_id}]]>
+        </expression>
+    </group>
+    <group name="item_id">
+        <expression>
+            <![CDATA[$F{item_id}]]>
+        </expression>
+    </group>
+
+    <background splitType="Stretch"/>
+    <title height="79" splitType="Stretch">
+        <band height="79" splitType="Stretch">
+            <!-- Production Date (top left) -->
+            <textField>
+                <reportElement x="0" y="0" width="200" height="20"/>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression><![CDATA["Production Date: " + $F{production_date}]]></textFieldExpression>
+            </textField>
+            <!-- Header (centered) -->
+            <staticText>
+                <reportElement x="0" y="25" width="555" height="30"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Production Placement]]></text>
+            </staticText>
+            <!-- Employee ID and Name (next line) -->
+            <textField>
+                <reportElement x="0" y="60" width="555" height="20"/>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression><![CDATA["Employee ID: " + $F{employee_id} + "   Name: " + $F{employee_name}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <pageHeader height="35" splitType="Stretch"/>
+    <columnHeader height="61" splitType="Stretch">
+        <band height="25">
+            <staticText>
+                <reportElement x="0" y="0" width="120" height="25"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle" />
+                <text><![CDATA[Item Name]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="120" y="0" width="150" height="25"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle" />
+                <text><![CDATA[Production Description]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="270" y="0" width="100" height="25"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle" />
+                <text><![CDATA[Product Quantity]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="370" y="0" width="185" height="25"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle" />
+                <text><![CDATA[Task Description]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="20" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="120" height="20"/>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="120" y="0" width="150" height="20"/>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression><![CDATA[$F{production_description}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="270" y="0" width="100" height="20"/>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression><![CDATA[$F{product_quantity}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="370" y="0" width="185" height="20"/>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression><![CDATA[$F{task_description}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter height="45" splitType="Stretch"/>
+    <pageFooter height="54" splitType="Stretch"/>
+    <summary height="42" splitType="Stretch"/>
+</jasperReport>
