@@ -96,14 +96,11 @@
                                 <Insets left="100.0" />
                             </HBox.margin>
                         </Label>
-                        <Label fx:id="lblCustomerName" prefHeight="66.0" prefWidth="251.0">
-                            <font>
-                                <Font name="Arial Bold" size="15.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="-11.0" />
-                            </HBox.margin>
-                        </Label>
+                  <ComboBox fx:id="cmbCustomerName" prefHeight="26.0" prefWidth="209.0" promptText="Customer Name">
+                     <HBox.margin>
+                        <Insets top="21.0" />
+                     </HBox.margin>
+                  </ComboBox>
                   <Label fx:id="labelPopUpCustomer" alignment="CENTER" onMouseClicked="#goToCustomerPopUp" prefHeight="66.0" prefWidth="183.0" text="+ Add New Customer">
                      <font>
                         <Font name="System Bold" size="13.0" />
@@ -203,7 +200,7 @@
                         <Insets left="51.0" />
                      </HBox.margin>
                   </Label>
-                  <ComboBox fx:id="cmbPaymentMethod" prefHeight="26.0" prefWidth="109.0">
+                  <ComboBox fx:id="cmbPaymentMethod" prefHeight="26.0" prefWidth="173.0">
                      <HBox.margin>
                         <Insets left="8.0" top="18.0" />
                      </HBox.margin>

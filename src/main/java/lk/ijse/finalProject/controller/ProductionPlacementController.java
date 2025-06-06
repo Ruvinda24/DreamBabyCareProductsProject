@@ -274,6 +274,7 @@ public class ProductionPlacementController implements Initializable {
                 return;
             }
 
+/*
             new Thread(() -> {
                 try {
                     // Send email with report
@@ -290,6 +291,7 @@ public class ProductionPlacementController implements Initializable {
                     e.printStackTrace();
                 }
             }).start();
+*/
 
 
             //Commit transaction

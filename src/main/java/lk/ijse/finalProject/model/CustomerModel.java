@@ -149,4 +149,17 @@ public class CustomerModel {
         }
         return "Customer Not Found"; // Return null if no customer found with the given ID
     }
+
+    public ArrayList<String> getCustomerNamesByPartialPhone(String contact) {
+        ArrayList<String> customerNames = new ArrayList<>();
+        try {
+            ResultSet resultSet = CrudUtil.execute("SELECT name FROM customer WHERE phone LIKE ?", "%" + contact + "%");
+            while (resultSet.next()) {
+                customerNames.add(resultSet.getString("name"));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+    }
+        return customerNames;
+    }
 }

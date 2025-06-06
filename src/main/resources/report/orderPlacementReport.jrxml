@@ -1,163 +1,271 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
 <jasperReport name="orderPlacementReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7cbb355a-d404-4caa-92c8-5e4ea125292f">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
-	<parameter name="orderId" class="java.lang.String"/>
-	<queryString>
-		<![CDATA[
-            select *
+	<parameter name="P_ORDER_ID" class="java.lang.String"/>
+	<query language="SQL"><![CDATA[select *
             from orders o
                 join order_item oi on o.order_id = oi.order_id
                 join inventory i on oi.inventory_id = i.inventory_id
                 join shipment s on o.shipment_id = s.shipment_id
                 join customer c on o.customer_id = c.customer_id
-            where o.order_id = $P{orderId};
-        ]]>
-	</queryString>
-
-	<!-- Order fields -->
-	<field name="order_id" class="java.lang.String"/>
-	<field name="order_date" class="java.sql.Date"/>
-	<field name="customer_id" class="java.lang.String"/>
-	<field name="shipment_id" class="java.lang.String"/>
-	<field name="status" class="java.lang.String"/>
-
-	<!-- Order item fields -->
-	<field name="order_item_id" class="java.lang.String"/>
-	<field name="COLUMN_7" class="java.lang.String"/>
-	<field name="inventory_id" class="java.lang.String"/>
-	<field name="quantity" class="java.lang.Integer"/>
-	<field name="amount" class="java.math.BigDecimal"/>
-
-	<!-- Inventory fields -->
-	<field name="COLUMN_11" class="java.lang.String"/>
-	<field name="item_name" class="java.lang.String"/>
-	<field name="printed_embroidered" class="java.lang.String"/>
-	<field name="size" class="java.lang.String"/>
-	<field name="unit_price" class="java.math.BigDecimal"/>
-	<field name="quantity_available" class="java.lang.Integer"/>
-	<field name="stored_location" class="java.lang.String"/>
-
-	<!-- Shipment fields -->
-	<field name="COLUMN_18" class="java.lang.String"/>
-	<field name="tracking_number" class="java.lang.String"/>
-	<field name="shipment_date" class="java.sql.Date"/>
-
-	<!-- Customer fields (added) -->
-	<field name="customer_name" class="java.lang.String"/>
-	<field name="contact_number" class="java.lang.String"/>
-
-	<!-- Groups (unchanged) -->
+            where o.order_id =$P{P_ORDER_ID}]]></query>
+	<field name="order_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="order_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="order_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+	</field>
+	<field name="order_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="order_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="order_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+	</field>
+	<field name="customer_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+	</field>
+	<field name="shipment_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="shipment_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="shipment_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+	</field>
+	<field name="status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status"/>
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="orders"/>
+	</field>
+	<field name="order_item_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="order_item_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="order_item_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_item"/>
+	</field>
+	<field name="COLUMN_7" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="order_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="order_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_item"/>
+	</field>
+	<field name="inventory_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inventory_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="inventory_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_item"/>
+	</field>
+	<field name="quantity" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_item"/>
+	</field>
+	<field name="amount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="amount"/>
+		<property name="com.jaspersoft.studio.field.label" value="amount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_item"/>
+	</field>
+	<field name="COLUMN_11" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="inventory_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="inventory_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inventory"/>
+	</field>
+	<field name="item_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="item_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="item_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inventory"/>
+	</field>
+	<field name="printed_embroidered" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="printed_embroidered"/>
+		<property name="com.jaspersoft.studio.field.label" value="printed_embroidered"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inventory"/>
+	</field>
+	<field name="size" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="size"/>
+		<property name="com.jaspersoft.studio.field.label" value="size"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inventory"/>
+	</field>
+	<field name="unit_price" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="unit_price"/>
+		<property name="com.jaspersoft.studio.field.label" value="unit_price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inventory"/>
+	</field>
+	<field name="quantity_available" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quantity_available"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantity_available"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inventory"/>
+	</field>
+	<field name="stored_location" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="stored_location"/>
+		<property name="com.jaspersoft.studio.field.label" value="stored_location"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="inventory"/>
+	</field>
+	<field name="COLUMN_18" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="shipment_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="shipment_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="shipment"/>
+	</field>
+	<field name="tracking_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tracking_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="tracking_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="shipment"/>
+	</field>
+	<field name="shipment_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="shipment_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="shipment_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="shipment"/>
+	</field>
+	<field name="COLUMN_21" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phone"/>
+		<property name="com.jaspersoft.studio.field.label" value="phone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address"/>
+		<property name="com.jaspersoft.studio.field.label" value="address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
+	<field name="order_platform" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="order_platform"/>
+		<property name="com.jaspersoft.studio.field.label" value="order_platform"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="customer"/>
+	</field>
 	<group name="order_id">
-		<expression>
-			<![CDATA[$F{order_id}]]>
-		</expression>
+		<expression><![CDATA[$F{order_id}]]></expression>
 	</group>
 	<group name="order_date">
-		<expression>
-			<![CDATA[$F{order_date}]]>
-		</expression>
+		<expression><![CDATA[$F{order_date}]]></expression>
 	</group>
 	<group name="customer_id">
-		<expression>
-			<![CDATA[$F{customer_id}]]>
-		</expression>
+		<expression><![CDATA[$F{customer_id}]]></expression>
 	</group>
 	<group name="shipment_id">
-		<expression>
-			<![CDATA[$F{shipment_id}]]>
-		</expression>
+		<expression><![CDATA[$F{shipment_id}]]></expression>
 	</group>
 	<group name="status">
-		<expression>
-			<![CDATA[$F{status}]]>
-		</expression>
+		<expression><![CDATA[$F{status}]]></expression>
 	</group>
 	<group name="order_item_id">
-		<expression>
-			<![CDATA[$F{order_item_id}]]>
-		</expression>
+		<expression><![CDATA[$F{order_item_id}]]></expression>
 	</group>
 	<group name="COLUMN_7">
-		<expression>
-			<![CDATA[$F{COLUMN_7}]]>
-		</expression>
+		<expression><![CDATA[$F{COLUMN_7}]]></expression>
 	</group>
 	<group name="inventory_id">
-		<expression>
-			<![CDATA[$F{inventory_id}]]>
-		</expression>
+		<expression><![CDATA[$F{inventory_id}]]></expression>
 	</group>
 	<group name="quantity">
-		<expression>
-			<![CDATA[$F{quantity}]]>
-		</expression>
+		<expression><![CDATA[$F{quantity}]]></expression>
 	</group>
 	<group name="amount">
-		<expression>
-			<![CDATA[$F{amount}]]>
-		</expression>
+		<expression><![CDATA[$F{amount}]]></expression>
 	</group>
 	<group name="COLUMN_11">
-		<expression>
-			<![CDATA[$F{COLUMN_11}]]>
-		</expression>
+		<expression><![CDATA[$F{COLUMN_11}]]></expression>
 	</group>
 	<group name="item_name">
-		<expression>
-			<![CDATA[$F{item_name}]]>
-		</expression>
+		<expression><![CDATA[$F{item_name}]]></expression>
 	</group>
 	<group name="printed_embroidered">
-		<expression>
-			<![CDATA[$F{printed_embroidered}]]>
-		</expression>
+		<expression><![CDATA[$F{printed_embroidered}]]></expression>
 	</group>
 	<group name="size">
-		<expression>
-			<![CDATA[$F{size}]]>
-		</expression>
+		<expression><![CDATA[$F{size}]]></expression>
 	</group>
 	<group name="unit_price">
-		<expression>
-			<![CDATA[$F{unit_price}]]>
-		</expression>
+		<expression><![CDATA[$F{unit_price}]]></expression>
 	</group>
 	<group name="quantity_available">
-		<expression>
-			<![CDATA[$F{quantity_available}]]>
-		</expression>
+		<expression><![CDATA[$F{quantity_available}]]></expression>
 	</group>
 	<group name="stored_location">
-		<expression>
-			<![CDATA[$F{stored_location}]]>
-		</expression>
+		<expression><![CDATA[$F{stored_location}]]></expression>
 	</group>
 	<group name="COLUMN_18">
-		<expression>
-			<![CDATA[$F{COLUMN_18}]]>
-		</expression>
+		<expression><![CDATA[$F{COLUMN_18}]]></expression>
 	</group>
 	<group name="tracking_number">
-		<expression>
-			<![CDATA[$F{tracking_number}]]>
-		</expression>
+		<expression><![CDATA[$F{tracking_number}]]></expression>
 	</group>
 	<group name="shipment_date">
-		<expression>
-			<![CDATA[$F{shipment_date}]]>
-		</expression>
+		<expression><![CDATA[$F{shipment_date}]]></expression>
 	</group>
-
 	<background splitType="Stretch"/>
-	<title height="79" splitType="Stretch"/>
-	<pageHeader height="35" splitType="Stretch"/>
-	<columnHeader height="61" splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="92a582d8-90ab-45a4-a6c9-45192ec55bea" x="-20" y="20" width="595" height="59" fontName="Arial Black" fontSize="30.0" hTextAlign="Center">
+			<text><![CDATA[Order Details]]></text>
+		</element>
+	</title>
+	<pageHeader height="50" splitType="Stretch"/>
+	<columnHeader height="161" splitType="Stretch">
+		<element kind="staticText" uuid="178d7cdc-99f6-4492-a9fe-c581bffbe771" x="-10" y="20" width="100" height="30">
+			<text><![CDATA[order_id]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a6b4ca44-a9c6-487e-b8b1-0f767c02e107"/>
+		</element>
+		<element kind="textField" uuid="9a08dcc7-09f4-4f9d-bab0-3af29734464c" x="100" y="20" width="100" height="30">
+			<expression><![CDATA[$F{order_id}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a6b4ca44-a9c6-487e-b8b1-0f767c02e107"/>
+		</element>
+		<element kind="textField" uuid="cf002402-a155-4aa3-8d70-858c23ee4484" x="320" y="65" width="100" height="30">
+			<expression><![CDATA[$F{quantity}]]></expression>
+		</element>
+		<element kind="textField" uuid="04c016a0-94c1-43dc-aa93-b3abae0a08e1" x="210" y="65" width="100" height="30">
+			<expression><![CDATA[$F{size}]]></expression>
+		</element>
+		<element kind="textField" uuid="7f26646d-7ba1-49dc-b042-e6ef0d0db3c5" x="440" y="65" width="100" height="30">
+			<expression><![CDATA[$F{unit_price}]]></expression>
+		</element>
+		<element kind="textField" uuid="235e25d9-f22b-4d26-b3f0-def0aa0c4ce9" x="440" y="-20" width="135" height="45">
+			<expression><![CDATA[$P{P_ORDER_ID}]]></expression>
+		</element>
+		<element kind="textField" uuid="de738f62-1c8e-41ab-b34c-47c07a1062b8" x="-10" y="65" width="100" height="30">
+			<expression><![CDATA[$F{inventory_id}]]></expression>
+		</element>
+		<element kind="textField" uuid="2d174fc1-2a4c-456d-87bc-3e99f6bf0712" x="100" y="65" width="100" height="30">
+			<expression><![CDATA[$F{item_name}]]></expression>
+		</element>
+		<element kind="textField" uuid="ca4b26db-5120-4472-86dd-fad74308cacf" x="200" y="20" width="100" height="30">
+			<expression><![CDATA[$F{name}]]></expression>
+		</element>
+	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="130" splitType="Stretch">
+			<element kind="staticText" uuid="528e523b-7a2b-49e0-98fa-1a685289ba32" x="0" y="80" width="100" height="30">
+				<text><![CDATA[tracking_number]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6a84d767-9dfe-4540-9701-aa83bf5e2e6f"/>
+			</element>
+			<element kind="textField" uuid="329cbf66-e29a-44a1-9be5-becc2e530c77" x="120" y="80" width="100" height="30">
+				<expression><![CDATA[$F{tracking_number}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6a84d767-9dfe-4540-9701-aa83bf5e2e6f"/>
+			</element>
+			<element kind="staticText" uuid="87f31f94-19fc-4b85-bfe3-8fc02cb72265" x="0" y="10" width="90" height="30">
+				<text><![CDATA[order_date]]></text>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cb52c0c4-adc8-4058-9ec8-3dc160339d5f"/>
+			</element>
+			<element kind="textField" uuid="cacd4f45-490e-45df-9e97-9cebf9c0105c" x="120" y="10" width="100" height="30">
+				<expression><![CDATA[$F{order_date}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cb52c0c4-adc8-4058-9ec8-3dc160339d5f"/>
+			</element>
+		</band>
 	</detail>
-	<columnFooter height="45" splitType="Stretch"/>
+	<columnFooter height="62" splitType="Stretch">
+		<element kind="staticText" uuid="08722185-852b-4c14-ae1b-c8736a2571ad" x="0" y="-10" width="100" height="30">
+			<text><![CDATA[shipment_date]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="388bce89-df93-4963-bfbc-a3ad805967db"/>
+		</element>
+		<element kind="textField" uuid="89193cce-ff53-43df-9114-255cbed48137" x="120" y="-10" width="100" height="30">
+			<expression><![CDATA[$F{shipment_date}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="388bce89-df93-4963-bfbc-a3ad805967db"/>
+		</element>
+		<element kind="textField" uuid="105e1e5b-91ac-4b32-bd0f-bfed3dbf9b59" x="0" y="30" width="100" height="30">
+			<expression><![CDATA[$F{amount}]]></expression>
+		</element>
+	</columnFooter>
 	<pageFooter height="54" splitType="Stretch"/>
 	<summary height="42" splitType="Stretch"/>
 </jasperReport>

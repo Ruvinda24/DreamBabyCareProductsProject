@@ -2,6 +2,8 @@ package lk.ijse.finalProject.util;
 
 import lk.ijse.finalProject.db.DBConnection;
 import net.sf.jasperreports.engine.*;
+
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -10,7 +12,7 @@ import java.util.Map;
 
 public class OrderReportMailer {
 
-    public static boolean sendLastOrderReport() {
+    public boolean sendLastOrderReport() {
         try {
             // 1. Get last order id
             String lastOrderId = getLastOrderId();
@@ -19,16 +21,21 @@ public class OrderReportMailer {
             // 2. Prepare Jasper report
             String jrxmlPath = "/report/orderPlacementReport.jrxml";
             JasperReport report = JasperCompileManager.compileReport(
-                    OrderReportMailer.class.getResourceAsStream(jrxmlPath)
+                    getClass().getResourceAsStream(jrxmlPath)
             );
             Map<String, Object> parameters = new HashMap<>();
-            parameters.put("orderId", lastOrderId);
+            parameters.put("P_ORDER_ID", lastOrderId);
 
             Connection connection = DBConnection.getInstance().getConnection();
             JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, connection);
 
             // 3. Export to PDF
-            String outputFilePath = "order_report_" + lastOrderId + LocalDate.now() + ".pdf";
+            String outPutDirectory = "reportPdf";
+            File directory = new File(outPutDirectory);
+            if (!directory.exists()) {
+                directory.mkdirs(); // Create the directory if it does not exist
+            }
+            String outputFilePath = outPutDirectory + "/order_report_" + lastOrderId + LocalDate.now() + ".pdf";
             JasperExportManager.exportReportToPdfFile(jasperPrint, outputFilePath);
 
             // 4. Send email with attachment

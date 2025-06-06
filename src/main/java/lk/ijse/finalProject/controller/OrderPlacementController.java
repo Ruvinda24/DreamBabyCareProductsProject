@@ -20,7 +20,6 @@ import lk.ijse.finalProject.dto.PaymentDto;
 import lk.ijse.finalProject.dto.ShipmentDto;
 import lk.ijse.finalProject.dto.tm.OrderCartTM;
 import lk.ijse.finalProject.model.*;
-import lk.ijse.finalProject.util.EmailUtil;
 import lk.ijse.finalProject.util.OrderReportMailer;
 
 import java.net.URL;
@@ -28,8 +27,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class OrderPlacementController implements Initializable {
@@ -38,7 +35,7 @@ public class OrderPlacementController implements Initializable {
     public Label lblOrderId;
     public Label orderPlacementDate;
     public TextField txtCustomerContact;
-    public Label lblCustomerName;
+    public ComboBox cmbCustomerName;
     public ComboBox cmbItemId;
     public Label lblItemName;
     public Label txtAddToCartQty;
@@ -107,7 +104,7 @@ public class OrderPlacementController implements Initializable {
             return;
         }
 
-        String selectedCustomerId = lblCustomerName.getText();
+        String selectedCustomerId = (String) cmbCustomerName.getValue();
         String itemName = lblItemName.getText();
         String itemUnitPriceString = lblItemPrice.getText();
 
@@ -255,25 +252,22 @@ public class OrderPlacementController implements Initializable {
             new Alert(Alert.AlertType.INFORMATION, "Order placed successfully!").show();
 
             // Send order report email in a new thread (after commit)
-            new Thread(() -> {
                 try {
-                    boolean isEmailSent = OrderReportMailer.sendLastOrderReport();
-                    Platform.runLater(() -> {
-                        if (isEmailSent) {
-                            new Alert(Alert.AlertType.INFORMATION, "Order report sent to email successfully!").show();
-                        } else {
-                            new Alert(Alert.AlertType.ERROR, "Failed to send order report via email!").show();
-                        }
-                    });
+                    boolean isEmailSent =new OrderReportMailer().sendLastOrderReport();
+
+                    if (isEmailSent) {
+                        new Alert(Alert.AlertType.INFORMATION, "Order report sent to email successfully!").show();
+                    } else {
+                        new Alert(Alert.AlertType.ERROR, "Failed to send order report via email!").show();
+                    }
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }).start();
 
             // Commit transaction
             connection.commit();
-
 
 
         } catch (Exception e) {
@@ -287,7 +281,6 @@ public class OrderPlacementController implements Initializable {
         } finally {
             try {
                 if (connection != null) connection.setAutoCommit(true);
-                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -315,15 +308,17 @@ public class OrderPlacementController implements Initializable {
         String contact = txtCustomerContact.getText();
         try {
             if (contact.isEmpty()) {
-                lblCustomerName.setText("");
+                cmbCustomerName.setItems(FXCollections.observableArrayList());
+                cmbCustomerName.getSelectionModel().clearSelection();
                 return;
             }
-            String customerId = customerModel.getCustomerIdByContact(contact);
-            if (customerId != null) {
-                lblCustomerName.setText(customerModel.getCustomerNameById(customerId));
-
+            ArrayList<String> matchingNames = customerModel.getCustomerNamesByPartialPhone(contact);
+            if (!matchingNames.isEmpty()) {
+                cmbCustomerName.setItems(FXCollections.observableArrayList(matchingNames));
+                cmbCustomerName.getSelectionModel().selectFirst();
             } else {
-                lblCustomerName.setText("No customer found with this contact");
+                cmbCustomerName.setItems(FXCollections.observableArrayList("No customer found with this contact"));
+                cmbCustomerName.getSelectionModel().selectFirst();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -429,7 +424,7 @@ public class OrderPlacementController implements Initializable {
 
         //orderPlacementDate.setText("");
         txtCustomerContact.setText("");
-        lblCustomerName.setText("");
+        cmbCustomerName.getSelectionModel().clearSelection();
         cmbItemId.getSelectionModel().clearSelection();
         lblItemName.setText("");
         txtCartQty.setText("");

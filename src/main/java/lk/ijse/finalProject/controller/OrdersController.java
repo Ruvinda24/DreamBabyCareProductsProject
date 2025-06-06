@@ -221,7 +221,7 @@ public class OrdersController implements Initializable {
             btnDelete.setDisable(true);
 
             //txtOrderDate.setText("");
-            //lblCustomerName.setText("");
+            //cmbCustomerName.setText("");
             //lbTrackingNumber.setText("");
             ordersDatePicker.setValue(null);
             cmbCustomerId.getSelectionModel().clearSelection();
@@ -320,7 +320,7 @@ public class OrdersController implements Initializable {
     /*private void displayCustomerName(String customerId) {
         try {
             String customerName = ordersModel.getCustomerNameById(customerId);
-            lblCustomerName.setText(customerName);
+            cmbCustomerName.setText(customerName);
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load customer name").show();

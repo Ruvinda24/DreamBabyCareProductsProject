@@ -42,7 +42,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Label text="Orders">
+                                <Label text="Inventory">
                                     <HBox.margin>
                                         <Insets top="2.0" />
                                     </HBox.margin>
@@ -310,7 +310,7 @@
                     <children>
                         <BorderPane prefHeight="125.0" prefWidth="974.0">
                             <center>
-                                <Label text="Order Details" BorderPane.alignment="CENTER">
+                                <Label text="Inventory Details" BorderPane.alignment="CENTER">
                                     <font>
                                         <Font name="Bookman Old Style Bold" size="32.0" />
                                     </font>
